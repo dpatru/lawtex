@@ -1,0 +1,1 @@
+../arbitrationbrief.cls
