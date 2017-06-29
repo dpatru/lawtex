@@ -1,0 +1,13 @@
+
+\newcounter{tst}
+% \setcounter{tst}{9}
+
+\newcommand\assert[3][]{%
+  \ttfamily
+  \def\output{#2}
+  \def\correct{#3}
+  \def\name{\if \relax#1\relax\detokenize{#2} = \correct \else #1\fi}
+  \def\desc{\space Test:\,\stepcounter{tst}\thetst (\name)\par}
+   \ifx\output\correct\textcolor{green}{Passed} \desc%
+     \else \textcolor{red}{Failed} \desc \par~~~~~~~~\output $\ne$ \correct\par\fi}
+   
