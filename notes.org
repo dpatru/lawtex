@@ -1,0 +1,16 @@
+* LaWTeX notes
+** Objectives
+- Maintain backward compatibility.
+- Allow state customizations.
+- Allow for modifications.
+
+** Tasks
+*** TODO Testing
+Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-api-for-latex.
+*** TODO Extension
+Extend the existing framework to allow parallel citations and slip opinions.
+
+** Thoughts
+*** Localization
+States have different rules for citations. It would be nice to make all the localizations in one file to avoid the development of incompatible development between different states.
+
