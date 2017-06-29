@@ -1,0 +1,614 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Respondent's Brief for YLS Vis Moot 2012
+%
+%For starters, note that everything between a % and the end of the line is
+%ignored by LaTeX. These ignored regions are called comments, and can be used
+%to make notes in the text (or to temporarily remove things). It also has the 
+%effect that an actual % must be written as \%. 
+%
+%The backslash char \ is special, it indicates that the word that follows is
+%to be treated as a command, rather than its usual meaning. 
+%
+%Most of the document should be relatively self-explanatory, some small points:
+%First, while some  versions of LaTeX can deal with extended alphabetic symbols
+%I've switched the document here to include the LaTeX version of those symbols,
+%as I think it will avoid more hassles. If this is more trouble, I can figure
+%a work around. These are:
+%
+% en-dash:         --
+% em-dash:         ---
+% pilcrow:         \P
+% section:         \S
+% curly quotes:    ``  and ''
+% umlaut:          \"{o}, \"{A}, etc.
+% circumflex:      \^{e}
+% acute accent:    \'{a}
+% grave accent:    \`{a}
+%
+%In the body of the document, you will see the following tags:
+%
+% headings:   \section, \subsection, \subsubsection, \paragraph, \subparagraph
+% citations:  \cite{CISG Rules}
+% italic:     \textit{this text is italicized}
+% bold:       \textbf{this text is bold}
+% smallcap:   \textsc{this text is small capped}
+% blockquote: \begin{quote} this text is a block quote \end{quote}
+% list:       \begin{enumerate} \item Point 1 \item Point 2, etc \end{enumerate}
+% page break: \clearpage
+%
+%Everything else I have indicated with a comment. Note that a lot of the work goes
+%on in arbitrationbrief.cls (including all the formatting and the title page).
+
+\documentclass[article,12pt,oneside]{arbitrationbrief}
+%\DisemulatePackage{setspace}
+%\usepackage{setspace}
+\usepackage[top=1.1in,left=1.3in,right=1.3in,bottom=1.2in]{geometry}  %Page margin width
+\usepackage{microtype,newcent}
+\usepackage{longtable}
+
+\newcommand{\seeeg}{\textit{see}, \textit{e.g.}, }
+
+%\usepackage{makerobust}
+%\MakeRobustCommand\%
+
+\makeoddhead{plain}{\includegraphics[width=.4in]{shield.pdf} }{}{\small\textsc{Yale Law School}\\ \textsc{Memorandum for Respondent}}
+\makeheadrule{plain}{\textwidth}{1pt}
+%\settypeblocksize{9in}{6.5in}{*}
+\setheadfoot{.5in}{.5in}
+\setlength{\textheight}{8.5in}
+%\setulmargins{1in}{*}{*}
+
+%\setlrmarginsandblock{0in}{1in}{*}
+
+\begin{document}
+\frontmatter						%Switches to paragraph numbers and Arabic page numbers
+
+\title{MEMORANDUM FOR\par RESPONDENT}
+\author{Christopher De Coro \and Nathaniel Khng \and Alisa Shekhtman \\ 
+Elizabeth Song \and William Sullivan \and Romain Zamour}
+\respondent
+
+\maketitle                          %Uses the title in .cls file
+%\setstretch{1.7}
+\begingroup
+%\raggedright
+\rightskip=3pt plus 1fil
+%\hyphenpenalty=10000
+
+\makeatletter
+\renewcommand{\@tocrmarg}{2em plus1fil}
+\makeatother
+\OnehalfSpacing
+\tableofcontents*                   %Creates the ToC from sections
+\endgroup
+\newpage  
+
+\newauthority{Cases}{Siag & Vecchi}{Siag v. Arab Republic of Egypt, ICSID Case No. ARB/05/15, Dissenting Opinion (June 1, 2009)}
+\newauthority{Cases}{Andros Compania Maritima}{In re Andros Compania Maritima, S.A., 579 F.2d 691 (2d Cir. 1978) (U.S.)}
+\newauthority{Cases}{Bank of New York}{Bank of New York v. Amoco Oil Co., 35 F.3d 643, (2d Cir. 1994) (U.S.)}
+%\newauthority{Cases}{Calzados Magnanni}{Cour d'appel [CA] [regional court of appeal] Grenoble, Oct. 21, 1999, D. 2000 Cah. dr. aff., No. 42/7007, p. 441, note Witz (France), \availableat{http://cisgw3.law.pace.edu/cases/991021f1.html}}
+\newauthority{Cases}{Centrozap}{Bundesgericht [BGer] [Federal Supreme Court] Oct. 26, 1966, 92 \textsc{Entscheidungen des schweizerischen Bundesgerichts} [BGE] I 271 (Switz.)}
+\newauthority{Cases}{Cheese Case}{Bundesgerichtshof [BGH] [Federal Court of Justice] October 24, 1979 (Ger.), \availableat{http://cisgw3.law.pace.edu/cases/791024g1.html}}
+\newauthority{Cases}{Chemical Fertilizer Case}{Case No. 8128 of 1995 (ICC Int'l Ct. Arb.), \availableat{http://cisgw3.law.pace.edu/cases/958128i1.html}}
+\newauthority{Cases}{China Yituo}{China Yituo Grp. Co. v. Ger. Gerhard Freyso Ltd. GmbH & Co. KG, June 22, 1998 (Shanghai Interm. People's Ct.) (China), \availableat{http://cisgw3.law.pace.edu/cases/980622c1.html}}
+\newauthority{Cases}{Chinese Goods Case}{Case of Mar. 21, 1996 (Trib. Hamburg Chamber of Commerce 1996), \availableat{http://cisgw3.law.pace.edu/cases/960321g1.html}}
+\newauthority{Cases}{Cmty. Dev. Comm'n}{Cmty. Dev. Comm'n v. Asaro, 261 Cal. Rptr. 231 (Cal. Ct. App. 1989) (U.S.)}
+\newauthority{Cases}{Corner House Research}{Corner House Research v. Sec'y of State for Trade & Indus., [2005] EWCA (Civ) 192 (England)}
+\newauthority{Cases}{Crudex}{Hovioikeus [HO] [appellate court] Helsinki, S 01/269, May 31, 2004 (Crudex Chemicals Oy v. Landmark Chemicals S.A.) (Fin.) \availableat{http://cisgw3.law.pace.edu/cases/040531f5.html}}
+\newauthority{Cases}{Excelsior Motor}{Excelsior Motor Mfg. & Supply Co. v. Sound Equip., Inc., 73 F.2d 725 (7th Cir. 1934) (U.S.)}
+\newauthority{Cases}{Ferrer}{Ferrer v. Trustees of the Univ. of Pennsylvania, 825 A.2d 591 (Pa. 2002) (U.S.)}
+\newauthority{Cases}{Fiona Trust-Holding Corp.}{Fiona Trust-Holding Corp. v. Privalov, [2007] EWCA (Civ) 20 (Eng.)}
+\newauthority{Cases}{Gruma}{Johnson v. Gruma Corp., 614 F.3d 1062 (9th Cir. 2010) (U.S.)}
+\newauthority{Cases}{Guseinov}{Guseinov v. Burns, 51 Cal. Rptr. 3d 903 (Ct. App. 2006) (U.S.)}
+\newauthority{Cases}{HUBCO v. WAPDA}{The Hub Power Co. v. Pakistan Water & Power Auth., (2000) 841 PLD (SC) (Pak.)}
+\newauthority{Cases}{Hrvatska}{Hrvatska Elektroprivreda, d.d. v. Republic of Slovenia, ICSID Case No. ARB/05/24, Order Concerning the Participation of a Counsel (May 6, 2008), \availableat{http://icsid.worldbank.org/ICSID/FrontServlet?requestType=CasesRH&actionVal=showDoc&docId=DC950_En&caseId=C69}}
+\newauthority{Cases}{Hunt}{Hunt v. Mobil Oil Corp., 654 F. Supp. 1487 (S.D.N.Y. 1987) (U.S.)}
+\newauthority{Cases}{ICC Case No. 1110}{Award of 1963 in ICC Case No. 1110, Arbitration International (Kluwer Law Int'l 1994 Volume 10 Issue 3)}
+\newauthority{Cases}{ICC Case No. 1110}{Case No. 1110 of 1963, \textsc{10 Arb. Int'l 282} (ICC Int'l Ct. Arb. 1994)}
+\newauthority{Cases}{ICC Case No. 4145}{Case No. 4145 of 1983, 12 Y.B. Comm. Arb. 97 (ICC Int'l Ct. Arb. 1987)}
+\newauthority{Cases}{ICC Case No. 6248}{Case No. 6248 of 1990, 19 Y.B. Comm. Arb. 124 (ICC Int'l Ct. Arb. 1994)}
+\newauthority{Cases}{ICC Case No. 6286}{Case No. 6286 of 1991, 19 Y.B. Comm. Arb. 141 (ICC Int'l Ct. Arb. 1994)}
+\newauthority{Cases}{ICC Case No. 6497}{Case No. 6497 of 1994, 24 Y.B. Comm. Arb. 71 (ICC Int'l Ct. Arb. 1999)}
+\newauthority{Cases}{Karlseng}{Karlseng v. Cooke, 346 S.W.3d 85 (Tex. App. 2011) (U.S.)}
+\newauthority{Cases}{Master Records, Inc.}{Master Records, Inc. v. Backman, 652 P.2d 1017 (Ariz. 1982) (U.S.)}
+\newauthority{Cases}{Merrill Lynch}{Merrill Lynch v. Lambros, 1 F. Supp. 2d 1337 (M.D. Fla. 1998) (U.S.)}
+\newauthority{Cases}{Metallic Sodium Case}{Case No. 155 of 1994 (Trib. Int'l Arb. Russ. Fed'n Chamber of Commerce & Indus. 1995), \availableat{http://cisgw3.law.pace.edu/cases/950316r1.html}}
+\newauthority{Cases}{Midwest Generation}{Midwest Generation EME, LLC v. Continuum Chem. Corp., 768 F. Supp. 2d 939 (N.D. Ill. 2010) (U.S.)}
+\newauthority{Cases}{Monarch S.S. Co. Ltd.}{Monarch S.S. Co. Ltd. v. Karlshamns Oljefabriker (A/B), [1949] A.C. 562 (H.L.) (appeal taken from Scotland) (U.K.)}
+\newauthority{Cases}{Pac. & Arctic Ry.}{Pac. & Arctic Ry. & Navigation Co. v. United Transp. Union, 952 F.2d 1144 (9th Cir. 1991) (U.S.)}
+\newauthority{Cases}{Paris 12 janvier 1999}{Cour d'appel [CA] [regional court of appeal] Paris, January 12, 1999, Rev. arb. 1999, 381 (Fr.)}
+\newauthority{Cases}{Paris 28 juin 1991}{Cour d'appel [CA] [regional court of appeal] Paris, June 28, 1991, Rev. arb. 1991, 568 (Fr.)}
+\newauthority{Cases}{Paris 29 janvier 2002}{Cour de cassation [Cass.] [supreme court for judicial matters] 1e civ., January 29, 2002, no. 00-12173, unpublished (Fr.)}
+\newauthority{Cases}{Peterson}{Peterson v. Ek, 93 P.3d 458 (Alaska 2004) (U.S.)}
+\newauthority{Cases}{Rompetrol}{Rompetrol Grp. N.V. v. Romania, ICSID Case No. ARB/06/3, Decision on the Participation of a Counsel (Jan. 14, 2010) \availableat{http://icsid.worldbank.org/ICSID/FrontServlet?requestType=CasesRH&actionVal=showDoc&docId=DC1370_En&caseId=C72}}
+\newauthority{Cases}{Sport Clothing Case}{Landgericht [LG] [regional court] Landshut Apr. 5, 1995 \availableat{http://www.cisg.law.pace.edu/cases/950405g1.html}}
+\newauthority{Cases}{Stallworth Timber Co.}{Stallworth Timber Co. v. Triad Bldg. Supply, 968 F. Supp. 279 (D.V.I. 1997) (U.S.)}.
+\newauthority{Cases}{Stone Products Case}{Case No. CISG/1996/50 of 1996 (CIETAC), \availableat{http://cisgw3.law.pace.edu/cases/961107c1.html}}
+\newauthority{Cases}{Suez}{Suez v. Argentine Republic, ICSID Case No. ARB/03/17, Decision on the Proposal for the Disqualification of a Member of the Arbitral Tribunal (October 22, 2007) \availableat{http://icsid.worldbank.org/ICSID/FrontServlet?requestType=CasesRH&actionVal=showDoc&docId=DC689_En&caseId=C18}}
+\newauthority{Cases}{Summer Cloth Case}{Obergericht des Kantons Basel-Landschaft [OG] [Court of Appeal of the Canton of Basel-Landschaft] Oct. 5, 1999 (Switz.) \availableat{http://cisgw3.law.pace.edu/cases/991005s1.html} }
+\newauthority{Cases}{Sweden 60/1999}{SCC Arb. 60/1999}
+\newauthority{Cases}{Sweden 87/2000}{SCC Arb. 87/2000}
+%\newauthority{Cases}{Szilard}{Szilard v. Szasz, [1955] S.C.R. 3 (Can.)}
+\newauthority{Cases}{Vanderbeek}{Vanderbeek v. Vernon Corp., 50 P.3d 866 (Colo. 2002) (U.S.)}
+\newauthority{Cases}{Vick}{William C. Vick Constr. Co. v. N.C. Farm Bureau Fed'n, 472 S.E.2d 346 (N.C. Ct. App. 1996) (U.S.)}
+\newauthority{Cases}{Vine Wax Case}{Bundesgerichtshof [BGH] [Federal Court of Justice] Mar. 24, 1999 (Ger.) \availableat{http://cisgw3.law.pace.edu/cases/990324g1.html}}
+\newauthority{Cases}{Vivendi}{Compan\'{i}a de Aguas del Aconquija S.A. v. Argentine Republic, ICSID Case No. ARB/97/3, Decision on the Challenge to the President of the Committee (Oct. 3, 2001), 6 ICSID Rep. 330 (2004)}
+\newauthority{Cases}{Westacre Case}{Case No. 7074 of 1996, \textsc{13 ASA Bull. 300} (ICC Int'l Ct. Arb. 1995)}
+\newauthority{Cases}{World Duty Free Case}{World Duty Free Co. Ltd. v. Republic of Kenya, ICSID Case No. ARB/02/6, Award (October 4, 2006), IIC 2007}
+\newauthority{Cases}{Zhinvali}{Zhinvali Dev. Ltd. v. Republic of Georgia, ICSID Case No. ARB/00/1, Decision on Respondent's Proposal to Disqualify Arbitrator (Jan. 19, 2001) (unpublished), reviewed by Compan\"{i}a de Aguas del Aconquija S.A. v. Argentine Republic, ICSID Case No. ARB/97/3, Decision on the Challenge to the President of the Committee (Oct. 3, 2001), 6 ICSID Rep. 330 (2004)}
+\newauthority{Commentar}{Atamer}{Yesim Atamer, \textit{Commentary on Article 79 in} \textsc{U.N. Convention on the International Sale of Goods} (Stefan Kr\"{o}ll et al., eds.)}
+\newauthority{Commentary}{Huber Mullis}{Peter Huber & Alastair Mullis, \textsc{The CISG: A New Textbook for Students and Practitioners} (2007)}
+\newauthority{Commentary}{Ansley et al.}{Jeffrey J. Ansley, Don R. Berthiaume & Josh Zive, \textit{Commercial Bribery and the New International Norms}, \textsc{1 Bloomberg L. Rep.: White Collar Crime} 4 (2009)}
+\newauthority{Commentary}{Argandona}{Antonio Argando\protect\~{n}a, \textit{Private-to-Private Corruption} 47 J. Bus. Ethics 253 (2003)}
+\newauthority{Commentary}{Barraclough & Waincymer}{Andrew Barraclough & Jeff Waincymer, \textit{Mandatory Rules of Law in International Commercial Arbitration}, \textsc{6 Melbourne J. Int'l L.} 205 (2005)}
+\newauthority{Commentary}{Bermann}{George A. Bermann, \textit{Introduction: Mandatory Rules of Law in International Arbitration}, \textsc{18 Am. R. Int'l Arb.} 1 (2007)}
+\newauthority{Commentary}{Bishop & Stevens}{R. Doak Bishop and Margrete Stevens, \textit{The Compelling Need for a Code of Ethics in International Arbitration: Transparency, Integrity and Legitimacy}, \textit{in} \textsc{Arbitration Advocacy in Changing Times} 391--407 (Albert Jan van den Berg ed., 2011)}
+\newauthority{Commentary}{Blessing}{Marc Blessing, \textit{Mandatory Rules of Law Versus Party Autonomy in International Arbitration}, \textsc{14 J. Int'l Arb.} 23 (1997)}
+\newauthority{Commentary}{Bond}{Stephen R. Bond, \textit{The ICC Arbitrator's Statement of Independence: A Response to Prof. Alain Hirsch}, \textsc{8 ASA Bull. 226} (1990)}
+\newauthority{Commentary}{Born 2001}{\textsc{Gary B. Born, International Commercial Arbitration in the United States: Commentary and Materials} (2001)}
+\newauthority{Commentary}{Born 2009}{\textsc{Gary B. Born, International Commercial Arbitration} (2009)}
+\newauthority{Commentary}{Brown}{Chester Brown, \textit{The Inherent Powers of International Courts and Tribunals}, 76 \textsc{Brit. Y.B. Int'l L. 195} (2005)}  
+\newauthority{Commentary}{CISG-AC Op. No. 6}{Advisory Council of the United Nations Convention on Contracts for the Int'l Sale of Goods, CISG-AC Opinion No. 6, Calculation of Damages Under CISG Article 74, \availableat{http://www.cisg.law.pace.edu/cisg/CISG-AC-op6.html}}
+\newauthority{Commentary}{CISG-AC Op. No. 7}{Advisory Council of the United Nations Convention on Contracts for the Int'l Sale of Goods, CISG-AC Opinion No. 7, Exemption of Liability for Damages Under Article 79 of the CISG,\availableat{http://www.cisg.law.pace.edu/cisg/CISG-AC-op7.html}}
+\newauthority{Commentary}{Craig et al.}{\textsc{W. Laurence Craig, William W. Park & Jan Paulsson, International Chamber of Commerce Arbitration} (3d ed. 2000)}
+\newauthority{Commentary}{Crivellaro}{Antonio Crivellaro, \textit{Arbitration Case Law on Bribery: Issues of Arbitrability, Contract Validity, Merits and Evidence}, \textit{in} \textsc{Arbitration: Money Laundering, Corruption and Fraud} (Kristine Karsten & Andrew Berkeley eds., 2003)}
+\newauthority{Commentary}{Fathallah}{Raed Fathallah, \textit{Corruption in International Commercial and Investment Arbitration: Recent Trends and Prospects for Arab Countries}, \textsc{2 Int'l J. Arab Arb. 65} (2010)}
+\newauthority{Commentary}{Fouchard Gaillard Goldman}{\textsc{Emmanuel Gaillard, Fouchard Gaillard Goldman on International Commercial Arbitration} (Emmanuel Gaillard & John Savage eds., 1999)}
+\newauthority{Commentary}{Hanotiau Caprasse}{Bernard Hanotiau and Oliver Caprasse, \textit{Public Policy in International Commercial Arbitration}, \textit{in} \textsc{Enforcement of Arbitration Agreements and International Arbitral Awards} (Emmanuel Gaillard & Domenico Di Pietro eds., 2008)}
+\newauthority{Commentary}{Hirsch}{Alain Hirsch, \textit{Les arbitres peuvent-ils conna\^{i}tre les avocats des parties?}, \textsc{8 ASA Bull. 7} (1990)}
+\newauthority{Commentary}{Holtzmann Neuhaus}{\textsc{Howard M Holtzmann & Joseph E Neuhaus, A Guide to the UNCITRAL Model Law on International Commercial Arbitration: Legislative History and Commentary} (1989)}
+\newauthority{Commentary}{Honnold}{John O. Honnold, \textsc{Comments on Article 79} (3d ed. 1999)}
+\newauthority{Commentary}{ICC Memorandum to the OECD}{International Chamber of Commerce, \textit{Memorandum to the OECD Working Group on Bribery in International Business Transactions}, Sep. 13, 1996, \availableat{http://www.iccwbo.org/uploadedFiles/ICC/policy/anticorruption/pages/Memorandum\%20to\%20OECD\%20working\%20group.pdf}}
+\newauthority{Commentary}{Jarvin}{Sigvard Jarvin, \textit{Objections to Jurisdiction}, \textit{in} \textsc{The Leading Arbitrator's Guide to International Arbitration} (Lawrence W. Newman & Richard D. Hill eds., 2d ed. 2008)}
+\newauthority{Commentary}{Kreindler}{Richard H. Kreindler, \textit{Aspects of Illegality in the Formation and Peformance of Contracts}, \textit{in} \textsc{International Commercial Arbitration: Important Contemporary Questions} (Albert Jan van den Berg ed., 2003)}
+\newauthority{Commentary}{Kurkela}{Matti S. Kurkela, \textit{Criminal Laws in International Arbitration---The May, the Must, the Should, and the Should Not}, \textsc{26 ASA Bull. 280} (2008)}
+\newauthority{Commentary}{Lamm et al.}{Carolyn B. Lamm, Hansel T. Pham & Rahim Moloo, \textit{Fraud and Corruption in International Arbitration}, \textit{in} \textsc{Liber Amicorum Bernardo Cremades} (M.\protect\'{A}. Fern\protect\'{a}ndez-Ballesteros & David Arias eds., 2010)}
+\newauthority{Commentary}{Lew et al.}{\textsc{Julian M. Lew, Loukas A. Mistelis & Stefan Michael Kr\protect\"{o}ll, Comparative International Commercial Arbitration} (2003)}
+\newauthority{Commentary}{Lowenfeld}{Andreas F. Lowenfeld, \textit{An Arbitrator's Declaration of Independence}, \textsc{9 ASA Bull. 85} (1991)}
+\newauthority{Commentary}{Luttrell}{Sam Luttrell, Bias Challenges in International Commercial Arbitration: The Need for a `Real Danger' Test (Sep. 15, 2008) (unpublished Ph.D. dissertation, Monash University), \availableat{http://researchrepository.murdoch.edu.au/698/2/02Whole.pdf}}
+\newauthority{Commentary}{Martin}{A. Timothy Martin, International Arbitration and Corruption: An Evolving Standard, \textsc{Tim Martin}, \availableat{http://www.timmartin.ca/fileadmin/user_upload/pdfs/Corruption_and_Intn_l_Arbitration_Apr2003.pdf} (last visited Dec. 8, 2011)}
+\newauthority{Commentary}{Mauro}{Paolo Mauro, Why Worry About Corruption? (Int'l Monetary Fund, Economic Issues No. 6, 1997), \availableat{http://www.imf.org/external/pubs/ft/issues6/issue6.pdf}}
+\newauthority{Commentary}{Merkin Hjalmarsson}{\textsc{Robert Merkin & Johanna Hjalmarsson, Singapore Arbitration Legislation Annotated} (2009)}
+\newauthority{Commentary}{Mourre 2006}{Alexis Mourre, \textit{Arbitration and Criminal Law: Reflections on the Duties of the Arbitrator}, \textsc{22 Arb. Int'l 95} (2006)}
+\newauthority{Commentary}{Mourre 2009}{Alexis Mourre, \textit{Arbitration and Criminal Law: Jurisdiction, Arbitrability and Duties of the Arbitral Tribunal}, \textit{in} \textsc{Arbitrability: International and Comparative Perspectives} (Loukas A. Mistelis & Stavros L. Brekoulakis, 2009)}
+\newauthority{Commentary}{PECL}{\textit{Comment and Notes on PECL 8:108} \textit{in} \textsc{Ole Lando & Hugh Beale eds., Principles of European Contract Law} (2000)}
+\newauthority{Commentary}{Pengelley}{Nicholas Pengelley, \textit{Separability Revisited: Arbitration Clauses and Bribery}, \textsc{24 J. Int'l Arb. 445} (2007)}
+\newauthority{Commentary}{Raeschke-Kessler}{Hilmar Raeschke-Kessler, \textit{Corrupt Practices in the Foreign Investment Context: Contractual and Procedural Aspects}, \textit{in} \textsc{Arbitrating Foreign Investment Disputes: Procedural and Substantive Legal Aspects} (Norbert Horn & Stefan Michael Kr\"{o}ll eds., 2004)}
+\newauthority{Commentary}{Raouf}{Mohamed Abdel Raouf, \textit{How Should International Arbitrators Tackle Corruption Issues?}, \textit{in} \textsc{Liber Amicorum Bernardo Cremades} (M.\'{A}. Fern\'{a}ndez-Ballesteros & David Arias eds., 2010)}
+\newauthority{Commentary}{Redfern & Hunter}{\textsc{Nigel Blackaby, Constantine Partasides, Alan Redfern & Martin Hunter, Redfern and Hunter on International Arbitration} (4th ed. 2004)}
+\newauthority{Commentary}{Redfern & Hunter}{\textsc{Nigel Blackaby, Constantine Partasides, Alan Redfern \& Martin Hunter, Redfern \& Hunter on International Arbitration} (5th ed. 2009)}
+\newauthority{Commentary}{Restatement (2d) of Conflict of Laws}{\textsc{Restatement (Second) of Conflict of Laws (1969)}}
+\newauthority{Commentary}{Restatement (2d) of Contracts}{\textsc{Restatement (Second) of Contracts} (1979)}
+\newauthority{Commentary}{Saidov}{\textsc{Djakhongir Saidov, The Law of Damages in International Sales: The CISG and Other International Instruments} (2008)}
+\newauthority{Commentary}{Sayed}{\textsc{Corruption in International Trade and Commercial Arbitration (2004)}}
+\newauthority{Commentary}{Schlechtriem}{Peter Schlectriem, \textit{Non-Material Damages: Recovery Under the CISG?}, \textsc{19 Pace Int'l L. Rev. 89 (2007)}}
+\newauthority{Commentary}{Schlechtriem}{\textsc{Peter Schlechtriem, Uniform Sales Law: The UN-Convention on Contracts for the International Sale of Goods} (1986)}
+\newauthority{Commentary}{Schwenzer}{\textsc{Ingeborg Schwenzer, Commentary on the U.N. Convention on the International Sale of Goods} (3rd ed. 2010)}  
+\newauthority{Commentary}{Sec. Commentary}{CISG Secretariat Commentary on Article 65 of the 1978 Draft, \availableat{http://cisgw3.law.pace.edu/cisg/text/secomm/secomm-79.html}} 
+\newauthority{Commentary}{Sornarajah 2000}{\textsc{Muthucumaraswamy Sornarajah, The Settlement of Foreign Investment Disputes} (2000)}
+\newauthority{Commentary}{Sornarajah 1990}{\textsc{Muthucumaraswamy Sornarajah, International Commercial Arbitration} (1990)}
+\newauthority{Commentary}{Tallon}{Dennis Tallon, \textit{Article 79}, \textit{in} \textsc{Commentary on the International Sales Law: The 1980 Vienna Sales Convention (C.M. Bianca & Michael Joachim Bonell eds., 1987)}}
+\newauthority{Commentary}{Waincymer}{Jeff Waincymer, \textit{Reconciling Conflicting Rights in International Arbitration: The Right to Choice of Counsel and the Right to an Independent and Impartial Tribunal}, \textsc{26 Arb. Int'l 597} (2010)}
+\newauthority{Commentary}{Williston}{\textsc{Samuel Williston & Richard A. Lord, A Treatise on the Law of Contracts} (4th ed. 1993)}
+
+\newauthority{Commentary}{Wilske Fox}{Steven Wilske & Todd Fox, \textit{Corruption in International Arbitration and Problems with Standard of Proof}, \textit{in} \textsc{International Arbitration and International Commercial Law: Synergy, Convergence, and Evolution} (Stefan Michael Kr\protect\"{o}ll et al. eds., 2011)}
+\newauthority{Commentary}{Youssef}{Karim Youssef, \textit{The Death of Inarbitrability}, \textit{in} \textsc{Arbitrability: International and Comparative Perspectives} (Loukas A. Mistelis & Stavros L. Brekoulakis eds., 2009)}
+\newauthority{Commentary}{Zeller}{Bruno Zeller, \textit{Comparison Between the Provisions of the CISG on Mitigation of Losses (Article 77) and the Counterpart Provisions of PECL (Article 9:505)}, \textsc{CISG Database}, \availableat{http://www.cisg.law.pace.edu/cisg/text/peclcomp77.html}}
+\newauthority{Rules}{CIETAC Rules}{\textsc{China International Economic and Trade Arbitration Commission Rules} (2011)}
+\newauthority{Rules}{IBA Guidelines}{\textsc{IBA Guidelines on Conflicts of Interest in International Arbitration} (2004)}
+\newauthority{Rules}{ICSID Rules}{\textsc{ICSID Rules of Procedure for Arbitration Proceedings (1966)}}
+\newauthority{Statutes}{Bribery Act}{Bribery Act, 2010 c. 23 (U.K.), \availableat{http://www.legislation.gov.uk/ukpga/2010/23/contents}}
+\newauthority{Statutes}{CISG}{United Nations Convention on Contracts for the Int'l Sale of Goods (1980), \availableat{http://www.cisg.law.pace.edu/cisg/text/treaty.html}}
+\newauthority{Statutes}{CoE Corruption Convention}{Criminal Law Convention on Corruption of the Council of Europe, Jan. 27, 1999, E.T.S. no. 173, \availableat{http://conventions.coe.int/Treaty/en/Treaties/html/173.htm}}
+\newauthority{Statutes}{ICSID Convention}{ICSID Convention on the Settlement of Investment Disputes Between States and Nationals of Other States (1966), \availableat{http://icsid.worldbank.org/ICSID/ICSID/RulesMain.jsp}}
+\newauthority{Statutes}{New York Convention}{Convention on the Recognition and Enforcement of Foreign Arbitral Awards, June 10, 1958, 30 U.N.T.S. 3}
+\newauthority{Statutes}{OECD Anti-Bribery Convention}{Convention on Combating Bribery of Foreign Public Officials in International Business Transactions (November 21, 1997)}
+\newauthority{Statutes}{Rome Convention}{Convention on the Law Applicable to Contractual Obligations, June 19, 1980, 1980 O.J. (L 266) 1}
+\newauthority{Statutes}{ULIS}{Convention Relating to a Uniform Law on the International Sale of Goods (July 1, 1964)}
+\newauthority{Statutes}{UNCITRAL Model Law}{\textsc{UNCITRAL Model Law on International Commercial Arbitration} (2006), \availableat{http://www.uncitral.org/uncitral/uncitral_texts/arbitration/1985Model_arbitration.html}}
+\newauthority{Statutes}{United Nations Convention on Corruption}{United Nations Convention on Corruption (2005) U.N. Doc. A/58/422, \availableat{http://www.unodc.org/documents/treaties/UNCAC/Publications/Convention/08-50026_E.pdf}}
+
+\vspace*{-.5in}
+\section{TABLE OF AUTHORITIES}     
+%\setstretch{2.3}
+\DoubleSpacing
+\tableofauthorities                %Creates the ToA from indices
+
+\clearpage
+
+\makeatletter
+\def\section#1{\penalty-5000\everypar{}\old@section{#1}}
+\def\subsection#1{\penalty-5000\everypar{}\old@subsection{#1}}
+\def\subsubsection#1{\penalty-5000\everypar{}\old@subsubsection{#1}}
+\def\paragraph#1{\penalty-5000\everypar{}\old@paragraph{#1}}
+\makeatother
+
+
+%\DoubleSpace
+%\setSingleSpace{10}
+%\setstretch{1.9}
+
+\section{TABLE OF ABBREVIATIONS}
+\vspace{8pt}
+%Create a table that spans pages (i.e. longtable), is left aligned on the page, 
+%and has two paragraph-wrapping columns with widths as given
+\begin{longtable}[l]{p{1.3in}p{5.1in}}
+%N.V.        | Naamloze vennootschap \\
+%S.A.        | Soci\protect\'{e}t\protect\'{e} anonyme \\
+%S.C.R.      | Supreme Court Reports \\
+2d Cir.     | United States Court of Appeals for the Second Circuit \\
+7th Cir.    | United States Court of Appeals for the Seventh Circuit \\
+9th Cir.    | United States Court of Appeals for the Ninth Circuit \\
+A.2d        | Atlantic Reporter, Second Series \\
+A/B         | Aktiebolag \\
+A.C.        | Appeals Court \\
+Am. R. Int'l Arb.| American Review of International Arbitration\\
+Arb. App.   | Application for Arbitration \\
+Arb. Int'l  | Arbitration International \\
+Ariz.       | Arizona \\
+art.        | Article \\
+Auth.       | Authority \\
+ASA Bull.   | Swiss Arbitration Association Bulletin \\
+BGer        | Bundesgericht  \\
+Bldg.       | Building \\
+Brit. Y.B. Int'l L. | British Year Book of International Law \\
+Bus.        | Business \\
+Cah. dr. aff. | Cahiers de droit des affaires \\
+Cal. Ct. App. | California Court of Appeals \\
+Cal. Rptr.  | California Reporter \\
+Can.        | Canada \\
+Cass.       | Cour de cassation \\
+cf.         | Confer \\
+Chem.       | Chemical \\
+CIETAC      | China International Economic and Trade Arbitration Commission \\
+CISG        | Convention on the International Sale of Goods \\
+CISG-AC Op. | CISG Advisory Committee Opinion \\
+Cl. App.    | Claimant's Application for Arbitration \\
+Cl. Ex. No. | Claimant's Exhibit Number \\
+Cl. Memo.   | Claimant's Memorandum \\ 
+CLCC        | Criminal Law Convention on Corruption \\
+cmt.        | Comment \\
+Cmty.       | Community \\
+Co.         | Company \\
+Colo.       | Colorado \\
+Comm'n      | Commission \\
+Corp.       | Corporation \\
+Ct.         | Court \\
+d.d.        | Delni\v{s}ka dru\v{z}ba\\  
+D.V.I.      | District Court of the United States Virgin Islands \\
+Def. Stmt.  | Statement of Defense \\
+Dev.        | Development \\
+Doc.        | Document \\
+Dr.         | Doctor \\
+e.g.        | Exempli gratia\\
+E.T.S.      | European Treaty Series\\
+ed.         | Editor \\
+Eng.        | England \\
+Equip.      | Equipment \\
+et al.      | Et alii \\
+F. Supp.    | Federal Supplement \\
+F. Supp. 2d | Federal Supplement, Second Series \\
+F.2d        | Federal Reporter, Second Series  \\
+F.3d        | Federal Reporter, Third Series \\
+Fed'n       | Federation \\
+FCPA        | Foreign Corrupt Practices Act \\
+Fin.        | Finland \\
+Ger.        | Germany \\
+GmbH        | Gesellschaft mit beschr\"{a}nkter Haftung \\
+Grp.        | Group \\
+H.L.        | House of Lords\\
+HO          | Hovioikeus \\
+i.e.        | Id est\\
+IBA         | International Bar Association \\
+ICC         | International Chamber of Commerce \\
+ICSID       | International Centre for Settlement of Investment Disputes \\
+Inc.        | Incorporated \\
+Indus.      | Industry \\
+Int'l Ct. Arb. | International Court of Arbitration \\
+Int'l J. Arab Arb. | International Journal of Arab Arbitration \\
+Interm.     | Intermediate \\
+ITL         | International Trade Law \\
+J. Bus. Ethics          | Journal of Business Ethics \\
+%\raggedright J. Business \newline \hbox{~~Ethics}          | Journal of Business Ethics \\
+J. Int'l L. | Journal of International Law \\
+KG          | Kommanditgesellschaft\\
+LLC         | Limited Liability Company \\
+Ltd.        | Limited \\
+M.D. Fla.   | United States District Court for the Middle District of Florida \\
+M/S         | Motor Ship\\
+Mfg.        | Manufacturing \\
+N.C.        | North Carolina \\
+N.C. Ct. App. | North Carolina Court of Appeals\\
+N.D. Ill.   | United States District Court for the Northern District of Illinois \\
+No.         | Number \\
+O.J.        | Official Journal of the European Union\\
+OECD        | Organisation for Economic Cooperation and Development \\
+P.2d        | Pacific Reporter, Second Series \\
+P.2d        | Pacific Reporter, Third Series \\
+Pa.         | Pennsylvania \\
+Pac.        | Pacific \\
+Pak.        | Pakistan \\
+PECL        | Principles of European Contract Law \\
+Proc. Order No. | Procedural Order Number \\
+Prof.       | Professor \\
+Rep.        | Report \\
+Resp. Ex. No. | Respondent's Exhibit Number \\
+Rev. Arb.   | Revue de l'Arbitrage \\
+Russ.       | Russia \\
+Ry.         | Railway \\
+S.D.N.Y.    | United States District Court for the Southern District of New York \\
+S.E.2d      | Southeastern Reporter, Second Series \\
+S.S.        | Steamship\\
+S.W.3d      | Southwestern Reporter, Third Series \\
+SCC         | Stockholm Chamber of Commerce \\
+Sec'y       | Secretary \\
+Sec.        | Secretariat \\
+Switz.     | Switzerland\\
+Tex. App.   | Texas Court of Appeals \\
+Transp.     | Transportation \\
+Trib. Int'l Arb. | Tribunal for International Arbitration \\
+U.K.        | United Kingdom \\
+U.N.        | United Nations \\
+U.N.T.S.    | United Nations Treaty Series\\    
+U.S.        | United States \\
+U.S.C.      | United States Code \\
+UKHL        | United Kingdom House of Lords \\
+ULIS        | Convention Relating to a Uniform Law on the International Sale of Goods \\
+UNCITRAL    | United Nations Commission on International Trade Law \\
+Univ.       | University \\
+USD         | United States Dollars  \\
+v.          | Versus \\
+Y.B. Comm. Arb. | Yearbook of Commercial Arbitration \\
+\end{longtable}
+
+\newpage
+
+\mainmatter
+
+\section{INTRODUCTION}
+
+This dispute arises out of a contract ("the Contract") for the sale, installation, and configuration by 12 November 2010 of a master control system on the M/S Vis, a luxury yacht, between the Claimant, Mediterraneo Elite Conferences Services, Ltd., (``Elite'') and the Respondent, Equatoriana Control Systems, Inc. (``Control Systems'') [\textit{Cl. Ex. No. 1}]. Due to Control Systems' failure to install and configure the master control system by the date prescribed in the Contract, Elite claims that it has suffered losses and damages. 
+
+\section{STATEMENT OF FACTS}
+ 
+The main component in the control system that Control Systems was to provide required three semi-configurable processing units manufactured by Oceania Specialty Devices (``Specialty Devices'') [\textit{Cl. App.} \P\P 8, 10]. These processing units were designed to use the D-28 ``super chip'' produced solely by Atlantis High Performance Chips (``High Performance'') [\textit{Cl. App.} \P 9]. The D-28's contained novel technology that offered significant improvements over rival chips [\textit{Cl. App.} \P 9]. 
+
+On 6 September 2010, a fire at High Performance's D-28 production facility caused production and delivery of the D-28's to cease until the damage was repaired [\textit{Cl. App.} \P 12; \textit{Cl. Ex. No. 2}; \textit{Cl. Ex. No. 3}]. High Performance had a limited supply of D-28's available after the fire that were not designated for any specific customer [\textit{Cl. App.} \P 13; \textit{Cl. Ex. No. 3}], but it stated its intentions to use these chips to supply its regular customers---of which Specialty Devices was not one---to the fullest extent possible rather than pro-rate these chips between all of its existing customers [\textit{Cl. App.} \P 14; \textit{Cl. Ex. No. 3}]. It later transpired that High Performance had allocated all the D-28 chips that it had to Atlantis Technical Solutions, because of the friendship of the CEOs of the two firms [\textit{Cl. Ex. No. 7}].
+
+
+Elite was informed about the potential delays and the new expected delivery date of the master control system on 13 September 2010 [\textit{Cl. Ex. No. 2}]. Once the D-28 chips became available to Specialty Devices on 2 November 2010, it completed the processing units and shipped them to Control Systems [\textit{Cl. App.} \P 16]. Control Systems delivered the control system to the M/S Vis on 14 January 2011, and installation, configuration and verification were completed on 11 March 2011 [\textit{Cl. App.} \P 16]. Elite made payment of the full contractual price of USD 699,950 to Control Systems via the Mediterraneo National Bank on 21 March 2011 [\textit{Cl. App.} \P 16].
+
+Elite now claims from Control Systems USD 448,000 that it paid under a charter-party for the use of the M/S Pacifica Star, a substitute vessel for the M/S Vis, to provide conference services for the annual conference held by Worldwide Corporate Executives Association (``Corporate Executives'') in February 2011; USD 60,600 for the yacht broker commission of 15\% of the rental cost; USD 50,000 for the yacht broker's success fee; and USD 112,000  representing the amount paid to Corporate Executives to make a partial refund of the conference fee paid by its members [\textit{Cl. App.} \P 4]. Control Systems submits that this Tribunal has no authority to consider the charter-party and its consequences, that Dr Mercado should not be allowed to represent Elite, and that Elite's claims should be dismissed.
+
+\clearpage
+\section{ARGUMENT ON PROCEDURE}
+
+\subsection{THE TRIBUNAL HAS NO AUTHORITY TO CONSIDER CLAIMS RELATING TO THE CHARTER-PARTY}
+
+Elite paid its yacht broker a USD 50,000 ``success fee''---euphemism for a bribe---in order to rent the M/S Pacifica Star, a yacht owned by Samuel Goldrich. Mr. Goldrich's personal assistant received part of this fee to effect an ``introduction'' to Mr. Goldrich [\textit{Resp. Ex. No. 1}]. Pacifica authorities subsequently arrested and convicted this personal assistant for accepting bribes to influence Mr. Goldrich in his various financial affairs. According to the Criminal Code of Pacifica, art. 1453, it is illegal for an employee to accept any money or other item of value to assist a third person to obtain or retain business with his or her employer [\textit{Resp. Ex. No. 2}]. While Elite's argument that the corruption does not affect the Contract may be accepted [\textit{see} \textit{Cl. Memo.} \P 20], its argument that the charter-party is not tainted by corruption must be rejected [\textit{see} \textit{Cl. Memo.} \P 19], as the agreement to a charter-party was facilitated by the bribe.
+
+Because corruption taints the charter-party, this Tribunal should rule that it has no authority to consider claims relating to the charter-party [\textit{Def. Stmt.} \P15]. In this regard, the presence of corruption renders the charter-party and any consequences arising out of the charter-party non-arbitrable (A). The unenforceability of any award based on the charter-party also creates a lack of arbitrability (B). Further, claims relating to the charter-party are inadmissible due to the presence of corruption (C). Finally, Control Systems' objection to the authority of this Tribunal is not out of conformity with CIETAC Rules (D).
+
+\subsubsection{The Presence of Corruption Results in a Lack of Arbitrability} 
+
+Because there was corruption while procuring the charter-party, this contract and any issues relating to it are not arbitrable [\textit{see} \cite{ICC Case No. 1110}]. In Judge Lagergren's view in that case, there exists a general principle of law that requires arbitrators to decline jurisdiction where credible allegations of bribery and corruption exist. Another court followed Judge Lagergren's view, holding that prima facie evidence of corruption raised matters of public policy, thus rendering a dispute non-arbitrable [\textit{see} \cite{HUBCO v. WAPDA}; \textit{see also} \cite{Lew et al.} 9--78]. Moreover, at least one commentator has supported this view, observing that, among other things, an arbitration based on a contract secured through bribery is unsound [\textit{see} \cite{Sornarajah 2000} 184], and that the presence of corruption allegations should result in a lack of arbitrability until a court finds that the allegations cannot be established [\textit{see} \cite{Sornarajah 1990}, at 172--173].
+
+Judge Lagergren's decision has been described as having been rightly rejected by subsequent tribunals [\textit{see} \cite{Born 2009}, at 803--04; \textit{see also} \cite{Fouchard Gaillard Goldman} \P 586], with these tribunals ruling on the merits of the dispute and either rejecting allegations of corruption as being unsubstantiated [\seeeg \cite{ICC Case No. 4145}; \seeeg \cite{ICC Case No. 6286}] or not providing relief based on the contract in question, where the allegations of corruption were accepted [\seeeg \cite{ICC Case No. 6248}; \seeeg \cite{ICC Case No. 6497}]. In \cite{Fiona Trust-Holding Corp.}, which Elite cited [\textit{see} \textit{Cl. Memo.} \P 21], the English Court of Appeal stated that ``if arbitrators can decide that a contract is void for initial illegality, there is no reason why they should not decide whether a contract has been procured by bribery.'' These cases have little relevance to the present case, however: unlike those cases, corruption has already been established on the facts---and claims based on contracts which have been shown to have been obtained by corruption cannot be upheld [\cite{World Duty Free Case} \P 157; \textit{see also} \cite{Siag & Vecchi} 5]. In any event, this Tribunal is not bound by or required to follow these previous decisions, and should not do so. 
+
+\subsubsection{The Unenforceability of Any Award Based on the Charter-Party Creates a Lack of Arbitrability}
+
+Fundamentally, the notion of arbitrability requires that a dispute be capable of settlement by way of arbitration [\textit{see} \cite{Fouchard Gaillard Goldman} \P 532; \cite{Redfern & Hunter} \P 2.26]. One characteristic of such a dispute would be the ability of the tribunal to render an enforceable award [\textit{see} \cite{Fouchard Gaillard Goldman} \P 559, which indicates that enforceability should be considered when dealing with arbitrability].  It follows, then, that if any award based on the charter-party is unlikely to be enforceable, this tribunal should decline to exercise jurisdiction over the charter-party and its consequences for lack of arbitrability.
+
+In turn, an important requirement for enforceability would be that there is no conflict with public policy [\textit{see} \cite{Lamm et al.} 708].  Domestic courts may set aside or refuse the enforcement of awards that are considered contrary to public policy [\textit{see} \cite{New York Convention} art. V(2)(b); \textit{see} \cite{UNCITRAL Model Law} arts. 34(2)(b)(ii) & 36(1)(b)(ii)]. It is well established that for the purposes of both the New York Convention and the UNCITRAL Model Law, the term ``public policy'' means a higher ``international'' form of public policy [\textit{see} \cite{Fouchard Gaillard Goldman} \P 1711; \textit{see} \cite{Merkin Hjalmarsson} 75; \textit{see} \cite{Holtzmann Neuhaus} 914].
+
+There is an international consensus that corruption is contrary to international public policy [\cite{Redfern & Hunter} \P 2.133; \textit{see also} \cite {Wilske Fox} 490]. Any awards rendered in spite of the presence of corruption would therefore carry a significant risk of unenforceability. This risk is the same in the case of private-to-private corruption, as with private-to-public corruption---both forms of corruption are equally widespread, harmful, and worth combating [\cite{Argandona} 254 & 263]. Nearly all countries have laws that cover private-to-private corruption [\cite{Argandona} 258]. Additionally, many international organizations have also already recognized the harm of private-to-private corruption and have incorporated its prohibition in their international instruments [\cite{ICC Memorandum to the OECD} \P 4]. For example, the \cite{United Nations Convention on Corruption} enjoins member states to take steps to prevent private-to-private corruption [\cite{United Nations Convention on Corruption} art. 12]--and has a total of 140 signatory states. 
+
+If this Tribunal renders an award based on the charter-party despite its being tainted by corruption, it is more than plausible that any resulting award would be invalidated at the enforcement stage, on public policy grounds, in any forum in which enforcement is sought. This tribunal should therefore decline to exercise jurisdiction over the charter-party, and its consequences, because of the lack of arbitrability due to unenforceability.
+
+\subsubsection{The Claims Relating to the Charter-Party Are Inadmissible}
+
+In the alternative, it may be argued that this Tribunal has no authority to consider claims relating to the charter-party, as such claims are inadmissible due to the presence of corruption. The alternative interpretation of \textit{ICC Case No. 1110} is that it stands for the proposition that any claim based on a contract that has been shown to be tainted by corruption would be inadmissible on the merits, rather than not arbitrable, and cannot be presented before any court or tribunal [\textit{see} \cite{Mourre 2006}, at 97]. The idea that fraud renders any claim based on a contract tainted by corruption inadmissible is not one that is novel having regard to arbitral case law [\textit{see} \cite{Mourre 2006}, at 97]. In the \textit{World Duty Free Case}, the tribunal held that "claims based on contracts of corruption or on contracts obtained by corruption cannot be upheld by this arbitral tribunal" [\cite{World Duty Free Case} \P 157]. This was described as confirmation that the establishment of corruption results in inadmissibility [\textit{see} \cite{Mourre 2009} \P 11-11]. 
+
+\subsubsection{No Lack of Conformity with CIETAC Rules Is Present}
+
+Elite has argued that there has been no conformity with CIETAC Rules due to the lack of clarity and unambiguity of the objection to arbitration based on corruption. However, no specific rule was cited [\textit{see} \textit{Cl. Memo.} \P 17]. This argument lacks merit, as the CIETAC Rules do not specify the level of specificity or clarity that must be present  [\textit{see, e.g.}, \cite{CIETAC Rules} art. 6]. In any event, the objection and supporting facts that were set out in the Respondent's Statement of Defence are of sufficient clarity [\textit{see} \textit{Def. Stmt.} \P\P 14--15]. 
+
+\textit{\textbf{Conclusion:}} This Tribunal should hold that it has no authority to consider the charter-party or its consequences, as there is a lack of arbitrability due to either the presence of corruption or the unenforceability of any award based on the charter-party. In the alternative, this Tribunal should hold that it has no authority to consider the charter-party or its consequences due to the non-admissibility of claims relating to the charter-party. 
+
+\subsection{DR. MERCADO SHOULD BE DISQUALIFIED}
+
+This Tribunal should disqualify Dr. Mercado from participating in these proceedings because of her close personal relationship with Prof. Arbitrator. However, it would be inappropriate for Prof. Arbitrator to rule on the issue because of the inherent conflict of interest-- instead, the remaining two arbitrators (Ms. Arbitrator 1 and Dr. Arbitrator 2), or, in the alternative the CIETAC Chairman, should deal with the issue (A). That having been said, the power to disqualify counsel is inherent and implied to arbitration tribunals (B). It is clear that this power should be exercised, as Dr. Mercado's participation in these proceedings gives rise to justifiable doubts as to this Tribunal's impartiality (C).
+
+\subsubsection{Prof. Arbitrator Should Not Rule on the Disqualification of Dr. Mercado}
+
+Prof. Arbitrator should not rule on the issue of the disqualificaiton of Dr. Mercado. If Prof. Arbitrator participates, he would violate the fundamental principle \emph{nemo debet esse judex in propria causa} (``No one may be a judge in his own cause'') [\textit{see generally} \cite{Luttrell} 2]. Instead, Ms. Arbitrator 1 and Dr. Arbitrator 2, the two other arbitrators, should rule on the challenge.
+
+In the alternative, this Tribunal can refer the challenge to the CIETAC Chairman. Under the CIETAC Rules that govern these proceedings, decisions about the impartiality of arbitrators lie in the hands of the CIETAC Chairman [\textit{Cl. Ex. No. 1}; \cite{CIETAC Rules} {art. 30}]. The CIETAC Chairman would rule on a challenge against an arbitrator that concerns the arbitrator's relationship with counsel, and it follows that the CIETAC Chairman would be an appropriate decision-maker in a challenge against counsel involving that same relationship [\textit{see} \cite{Waincymer} {619--21}].
+
+\subsubsection{The Tribunal Has the Inherent Power to Disqualify Counsel}
+
+The power to disqualify counsel is implicit in the right to an independent and impartial tribunal guaranteed by the CIETAC Rules [\cite{CIETAC Rules} art. 22; \textit{see also} \cite{Waincymer}]. This Tribunal (i.e. Ms. Arbitrator 1 and Dr. Arbitrator 2) does have the power to disqualify Dr. Mercado from participating in these proceedings, despite Elite's claim to the contrary. [\textit{Cl. Memo.} \P\P 13--15]. 
+
+While the parties have a general right to their counsel of choice [\cite{CIETAC Rules} art. 20], this right must be reconciled with the right to an independent and impartial tribunal. Normally, parties will protect their right to an independent and impartial tribunal by making challenges to arbitrators. Because parties usually choose counsel before the selection of arbitrators begins [\cite{Waincymer} 597], challenging a potential arbitrator allows a party to keep its existing counsel while protecting its right to an independent and impartial tribunal.
+
+In these proceedings, however, Elite added Dr. Mercado to its legal team only \textit{after} this Tribunal was constituted. In such a situation, as Elite observed [\textit{Cl. Memo.} \P 13], the \romancite{CIETAC Rules} make no explicit provision for challenges to counsel. Yet this Tribunal nonetheless retains an inherent or implied power to disqualify counsel in order to safeguard its integrity [\cite{Hrvatska} \S 33; \cite{Brown}; \cite{Waincymer}]. Accordingly, while Elite ``was free to select its legal team as it saw fit prior to the constitution of the Tribunal, it was not entitled to subsequently amend the composition of its legal team in such a fashion as to imperial the Tribunal's status or legitimacy'' [\cite{Hrvatska} \S 26].
+
+This power is necessary, moreover, to prevent one party from being able to disrupt the proceeding. If challenges to arbitrators were the only means of raising doubts about a tribunal's impartiality, either party could impose lengthy delays simply by adding counsel who create potential conflicts of interest. Under such circumstances, a tribunal would have to rule on the question of arbitrator bias and possibly go through the complicated process of replacing one of its own members. Neither party should be given an avenue to cause such serious disruptions of a tribunal's functions.
+
+Finally, Elite cannot avoid the issue by arguing that Dr. Mercado is not one of its ``representative[s]'' [\textit{Cl. Memo.} \P 14]. As this Tribunal itself has recognized, Dr. Mercado is ``part of the team representing Elite'' [\textit{Proc. Order No. 2} \P 39]. She is Elite's counsel, and is thus subject to challenge.
+
+\subsubsection{There are Justifiable Doubts As to the Tribunal's \\ Impartiality}
+
+It is clear that this Tribunal's power to disqualify Dr. Mercado should be exercised. This would be because the relationship between her and Prof. Arbitrator raises justifiable doubts about this Tribunal's impartiality, a standard that is derived from \cite{CIETAC Rules} art. 30(2). While this standard expressly governs only challenges to arbitrators, it should also govern challenges to counsel, as what is at stake is essentially the relationship between counsel and arbitrator [\textit{see} \cite{Waincymer} {617}].
+
+In cases of challenges based on bias, it is not necessary to prove actual bias---apparent bias is sufficient [\cite{Born 2009}, at 1480–--81]. In this case, three facts are problematic: (1) Dr. Mercado and Prof. Arbitrator have frequent and sustained contacts at Danubia National University; (2) Dr. Mercado has appeared as counsel before Prof. Arbitrator in three previous arbitrations in which he ruled for her client; (3) Dr. Mercado is such a close friend of Prof. Arbitrator and his wife that she became the godmother of the couple's youngest child. The former two facts, by themselves, would arguably be insufficient as grounds for a disqualification [see \cite{Hunt}; \cite{Suez}]. But all three facts taken together are more than sufficient evidence of apparent bias.
+
+In relation to the last fact, a ``close personal friendship'' between arbitrator and counsel, is flagged in the IBA Guidelines' Orange List as a situation that ``may give rise to justifiable doubts.'' [\cite{IBA Guidelines} Orange List 3.3.6 & Part II \P3]. In an analogous case, a merely professional relationship between an arbitrator's wife with counsel led to disqualification [\textit{see} \cite{Centrozap}]. In Dr. Mercado's situation, the conflict of interest is even more manifest due to the inherently personal nature of her relationship with Prof. Arbitrator's wife and family. This friendship, in conjunction with the first two facts, evidences longstanding, direct, professional and personal contact between Dr. Mercado and Prof. Arbitrator and gives rise to objectively justifiable doubts as to this Tribunal's impartiality [\textit{cf.} Karlseng].
+
+It can be added that ruling in favor of disqualification obviates the risks of causing further delays and of issuing an unenforceable award. If this Tribunal does not disqualify Dr. Mercado and Control Systems' challenge against Prof. Arbitrator [\textit{Def. Stmt.} \P 16] is then considered, these proceedings will be considerably delayed. Contrary to Elite's claim [\textit{Cl. Memo.} \P\P 7--12], Control Systems has not waived its right to challenge this Tribunal's composition. In fact, Control Systems complied with the express terms of \cite{CIETAC Rules} art. 30(2) by declaring its intent to challenge this Tribunal's composition and by outlining its justifiable doubts about this Tribunal's integrity. It did not waive this right simply by requesting that this Tribunal resolve the challenge against Dr. Mercado first as an alternative to the significant delay that an arbitrator challenge would entail. If this Tribunal both fails to disqualify Dr. Mercado and denies Control Systems' right to challenge Prof. Arbitrator, this Tribunal's impartiality would be irretrievably compromised and any award may be unenforceable.
+
+\textit{\textbf{Conclusion:}} Only Ms. Arbitrator 1 and Dr. Arbitrator 2 should consider whether Dr. Mercado should be disqualified. There is an inherent power to disqualify counsel, and that power should be exercised to disqualify Dr. Mercado.
+
+\section{ARGUMENT ON THE MERITS}
+
+\subsection{THE D-28'S DELAY WAS AN INSURMOUNTABLE IMPEDIMENT THAT EXCUSES CONTROL SYSTEMS' UNTIMELY PERFORMANCE} 
+
+The delayed delivery of the D-28s to Specialty Devices was an insurmountable obstacle, beyond the control of either Specialty Devices or Control Systems. The delay made impossible Specialty Devices' timely delivery of processing units to Control Systems, which in turn made impossible Control Systems' timely installation of the M/S Vis's master control system. Substitute performance was impossible, as the D-28 was the \textit{only} chip that could have delivered the contractually-required performance -- and Elite was fully aware that the D-28 had no substitute when it concluded the Contract. Only the D-28 could meet the Contract's requirements, and only processing units containing the D-28 could have delivered the performance that Elite required for its clientele. Thus, the Contract was not simply for any master control system, but specifically for a control system containing the D-28. When the buyer specifies a contractual condition that becomes impossible, Article 79 of the CISG excuses performance by the seller.
+
+\subsubsection{Article 79 of the CISG Allows Excusal of a Seller's Failure to Perform}
+
+The provision of law governing liability here is Article 79 of the U.N. Convention Regarding the International Sale of Goods (CISG). The CISG is an international convention adopted under the auspices of the U.N. to govern the formation of contracts, and the resulting obligations, of the cross-border sale of goods [\cite{CISG} preamble, art. 4]. It ``applies to contracts of sale of goods between parties whose places of business are in different States,'' and each of those states are parties to the CISG [\cite{CISG} art. 1]. Both Equatoriana and Mediterraneo are party to the CISG [\textit{Cl. Memo.} \P20]. The parties do not question that the contract between Elite and Control Systems was for the sale of goods, within the scope of the CISG [\cite{CISG} art. 4(1)]. And although it additionally included an agreement for services (the installation), so long as those services are not ``the preponderant part of the obligations of the party who furnishes the goods,'' the CISG continues to apply [\cite{CISG} art. 4(2)]. Thus, this tribunal should use the CISG as controlling law in this case.
+
+Elite now invokes Article 45, which provides to the buyer, ``if the seller fails to perform any of his obligations under the contract'' [\cite{CISG} art. 45(1)(b)], the right to claim damages. Relevant to this case, the CISG defines damages as ``a sum equal to the loss, including loss of profit, suffered by the other party as a consequence of the breach.'' [\cite{CISG} art. 74]. However, in the subsequent section titled ``Exemptions,'' Article 79 provides that in a limited set of cases, a party will be excused from damages. Article 79 remediates the CISG's otherwise harsh strict-liability regime [\cite{Huber Mullis} 258].  As we will show, the present case is within that set.
+
+Specifically, Paragraph 1 of Article 79 provides that ``a party is not liable for a failure to perform any of his obligations if he proves [1] that the failure was due to an impediment beyond his control and [2] that he could not reasonably be expected to have taken the impediment into account at the time of conclusion of the contract [or] [3] to have avoided it or its consequences'' [\cite{CISG} art. 79(1)]. Paragraph 1 thus sets out a three-part test for exemption [\cite{Atamer} \P43]. 
+
+Additionally, in ``response to the increasing development of sub-contracting'' [\cite{Tallon} \P2.7], drafters included an expansion of liability when the failure of the contracting party is due to the failure of ``a third person whom he has engaged to perform'' the contract, or any part thereof [\cite{CISG} art. 79(2)].  This Paragraph~2 ``where it applies, makes it more difficult to succeed in claiming an excuse'' [\cite{CISG-AC Op. No. 7} \P16; \textit{see also} \cite{Schwenzer} art. 79 \P39]. The drafter's intent in Paragraph 2 was to prevent a seller from avoiding liability by delegating contractual duties to a third-party [\cite{Schlechtriem} 103; \cite{Atamer} \P60], by broadening the sphere of control to include that of a seller's subcontractor [\cite{Atamer} \P3]. 
+
+Thus in such cases, the contracting party must prove (using the definition of exemption in Paragraph 1) \textit{both} that it is exempt, 79(2)(a) \textit{and} that ``the person whom he has so engaged'' would be exempt, 79(2)(b) [\cite{Atamer} \P3].  However, the CISG leaves unanswered the question of who exactly is a ``person so engaged'' [\cite{Atamer} \P62]. 
+
+In response to common ``misunderstandings'' of Paragraph 2, the Advisory Committee of the CISG issued an opinion, which concluded that both the text and its legislative history suggest that the phrase in question ``should be given a narrow scope, covering cases such as those in which the seller turns over to a third person the seller's obligation to manufacture the goods according to specifications given by the buyer, or whenever the seller delegates to a third person the seller's obligation to procure the goods and deliver them to the buyer.'' [\cite{CISG-AC Op. No. 7} \P22].  Professor Tallon suggests Paragraph 2 requires an ``organic link'' between the subcontract and the main contract, where the supplier ``should know that his action is a means of performing the main contract'' and ``must relate only'' to that performance. [\cite{Tallon} \P2.7.1]. Therefore, ``engagement . . . for the purposes of Article 79(2) presupposes that the thord person was called in \textit{after} the conclusion of the contract.'' [\cite{Schwenzer} art. 79 \P34 (emphasis added)].
+
+Professor Honnold agrees with the ``organic link'' concept, explains that the ``legislative history indicates that narrow scope should be given to the phrase'' [\cite{Honnold} \S434(1); \textit{see also} \cite{CISG-AC Op. No. 7} \P22]. The UNCITRAL Working Group 1975 draft was  ``was substantially the same as CISG 79(2) except for language that described the third person as a `subcontractor,'\,'' [\cite{Honnold} \S434(1); \cite{Atamer} \P62]. The UNCITRAL Committee of the Whole revised this language to its present form, because the term ``subcontractor'' was unknown in many legal systems, but explained that ``it would be clear that a seller would not be exempt from liability . . . because of the failure of one of his suppliers to perform since a supplier of the seller could not be considered to be a person the seller had engaged to perform any portion of the seller's contract'' [\cite{Honnold} \S434(1); \cite{Atamer} \P62].
+
+This link is necessary because Paragraph 2 essentially makes the seller liable for any fault, by either party, for \textit{both} a failure to avoid the problem, as well as to mitigate. That is, it is insufficient for the seller to prove that it could not have anticipated nor overcome the impediment, but that its subcontractor could not have done so either [\cite{Huber Mullis} 263; \cite{Tallon} \P2.7.3]. It follows that only when the seller and the supplier are tightly bound, should one be liable for the other's failings as well as its own. 
+
+Using this rationale, commentators have concluded that, generally, a buyer's default based on the failure of a supplier to perform are not based on Paragraph~2 [\cite{Schwenzer} art. 79 \P37]. Rather, most suppliers sell products to a wide range of clients for various purposes, rather than to fulfill a specific contract [\cite{Tallon} \P2.7.1]. Therefore, the default is analyzed only under the requirements of Paragraph 1 [\cite{Honnold} \S434(1); \cite{Huber Mullis} 264; \cite{Tallon} \P2.7.1]. Yet note that, in the particular case of a supplier failure, the inapplicability of Paragraph 2 could make it \textit{harder} for a seller to claim exemption. Were Paragraph 2 operative, a seller could invoke excuse when a war or natural disaster rendered impossible the performance of its supplier (as well as the performance of the seller itself) [\cite{CISG-AC Op. No. 7} \P20] Because only Paragraph 1 is operative, such an event of \textit{force majeure} affecting the supplier would be insufficient---the \textit{non-delivery itself} is the relevant ``impediment'' subject to analysis under Paragraph 1 [\textit{see} \cite{Metallic Sodium Case} \P5].
+
+Indeed, when presented by sellers claiming excuse because of their supplier, courts have predominantly ruled against the sellers, citing Paragraph 1 [\seeeg \cite{Vine Wax Case}; \cite{Chemical Fertilizer Case}; \cite{Metallic Sodium Case}; \cite{Chinese Goods Case}].  For example, the German Bundesgerichtshof found that a seller was not excused from liability for a defective product, even though the defect was entirely the fault of the supplier, and of which the seller was unaware. Instead, the court held that because the seller made the choice of that particular supplier, the risk that this particular supplier would fail to conform was within its sphere of control [\cite{Vine Wax Case}]. More generally, the rationale is that the seller is in a better position to exert scrutiny and control over its suppliers, as opposed to the buyer that is not in privity with, and may not even be aware of, the particular supplier [\cite{CISG-AC Op. No. 7} \P25]. 
+
+Yet in a certain limited set of cases, commentators consistently hold that sellers are to be excused for a supplier's failure. These are limited to those cases were the buyer mandates a \textit{specific} batch of goods [\cite{Schwenzer} art. 79 \P27], such as those from a specific supplier [\cite{Honnold} \S434; \cite{Huber Mullis} 260]. A similar case is where the supplier has a monopoly, in which case the choice of a specific monopoly good implicitly specifies the supplier [\cite{Atamer} \P67, \cite{Schwenzer} art. 79 \P37, \cite{CISG-AC Op. No. 7} \P20]. In these cases, the choice of supplier is no longer within the seller's sphere of control, but rather the buyer has exercised such control, and should suffer the loss if its chosen supplier defaults. This is exactly the case here. 
+
+As previously presented, this the supply chain in this case involves two supplier-customer relationships in default: that between Atlantis High Performance and Specialty Devices, and that between Specialty Devices and Equatoriana Control Systems.  We will show that the former relationship is only subject to Paragraph 1, because Elite required High Performance as a supplier. That is, neither Specialty Devices nor Control Systems engaged High Performance to perform the Contract on their behalf. We will also show that the latter relationship is additionally subject to Paragraph 2, because Control Systems engaged Specialty Devices to perform a key component of the Contract.  
+
+\subsubsection{Lack of Engagement to Perform Makes High Performance's Failure To Mitigate Immaterial}
+
+It cannot be said that High Performance was engaged to perform the Contract by Specialty Devices. The relationship between Specialty Devices and High Performance did not resemble that of a contractor and subcontractor, whose privity forms an ``organic link'' that binds one for the faults of the other [\textit{cf.} \cite{Tallon} \P2.7.1]. High Performance did not have the knowledge expected for the application of Article 79(2), that it was acting primarily to perform Specialty Devices' obligations under a contract. Rather High Performance sold goods to many customers---of which Specialty Devices was not even a ``regular customer'' [\textit{Cl. Ex. No. 3}].  Paragraph 2 therefore does not apply to this relationship, which should be analyzed only under Paragraph 1 for exemption purposes. 
+
+And in fact, Elite concedes this fact, stating explicitly that ``High Performance was not engaged to perform neither a contract nor a part of a contract'' [\textit{Cl. Memo.} \P95]. They base this conclusion on the fact that ``the Contract does not contain any provisions that would engage the [sic] High Performance to carry out any portion of supply, installation or configuration. Furthermore, the Contract lacks any provision that would provide for the production of the chips at all'' [\textit{Cl. Memo.} \P93]. ``Consequently, the production of the chips cannot be reasonably seen as a performance of the Contract'' [\textit{Cl. Memo.} \P94]. 
+
+We agree with Elite; Control Systems' and Specialty Devices' liability cannot be subject to the additional restrictions of Paragraph 2, with respect to High Performance's actions.  Therefore, for the purposes of Specialty Devices' or Control Systems' liability, it is not relevant whether High Performance could have overcome the consequences of the fire.  Because High Performance was not ``engaged to perform'' by either Control Systems or Specialty Devices, as Elite concedes, Specialty Devices would not need to meet the requirement of Article 79(2)(b) that their third-party (High Performance) be exempt from liability. The exemption analysis for Specialty Devices depends on whether it alone would have satisfied Paragraph~1. 
+
+Elite's Application for Arbitration emphasizes a rumor posted in a trade publication: that High Performance gave the entire pre-fire D-28 stock to Atlantis Technical Solutions because of the personal relationship between the CEOs [\textit{Cl. App.} \P 15; \textit{Cl. Ex. No. 7}; \textit{Cl. Memo.} \P75]. While it is correct (according to present knowledge) that Technical Solutions did receive the entire stock; neither Specialty Devices nor Control Systems is able to confirm or deny the reason why. Nor can Elite---which is why they rely on unverified speculation. 
+
+But verified or not, their speculation is immaterial. Neither Specialty Devices nor Control Systems is required to show that High Performance could have overcome the obstacle of the fire. Article 79 requires only that Specialty Devices and Control Systems could not have overcome the consequent obstacle of the non-delivery. We next show that they could not have. 
+ 
+
+
+
+\subsubsection{Elite Must Bear the Default Risk of the Supplier Its Specifications Required} 
+
+The non-delivery of the D-28 to Specialty Devices was \textit{itself} the impediment excusing performance here. While the fire was the underlying cause of Control Systems' failure, it is only relevant indirectly, as it led to the non-delivery of D-28s that directly caused the failure. This is because the D-28 was required by the Contract, albeit implicitly, by virtue of the Contract's technical requirements.  The D-28 has no substitute. That is, any control system \textit{without} the D-28 could not have delivered the level of performance that Elite Conference Services promised to their client. Without the D-28, they could not have performed---thus their damages would be the same. They were aware of this at the time of the Contract---and they concede this now, as we will discuss. Control System is not an insurer of its client's promises. Therefore, when Elite specified the use of a particular supplier, they accepted the risk that an insurmountable obstacle to High Performance's production of the D-28 would render performance impossible.  
+
+First, Elite notes that the ``core element in the overall control system is a series of semi-configurable processing units'' manufactured by Specialty Devices [\textit{Cl. App.} \P 8]. Of course, neither Elite nor Control Systems contends that Specialty Devices itself produced the technology necessary to fulfill Elite's performance requirements. Rather, they admit that the capabilities of the processing units resulted from their use of the D-28, which  ``contained novel technology that offered significant improvements over rival chips.'' Moreover, they knew that only High Performance could deliver the expected level of performance, as ``[i]t \textit{was expected} that it would be another six months, i.e. February 2011, before \textit{any} rival chip with comparable qualities would be available.'' [\textit{Cl. App.} \P 8 (emphases added)]. Such statement precludes their claim that they were not responsible for the decision to use the D-28 [\textit{Cl. Memo.} \P79].  And they recognized that ``[t]he facilities on the M/S Vis would need a total of three of the processing units [from Specialty Devices,] . . . [and] [a]ll of the units would \textit{need} the D-28 chips in various numbers'' [\textit{Cl. App.} \P 10 (emphasis added)].  This need did not arise after the conclusion of the Contract. Rather, the Technical Annex made strict requirements on the performance of the install control system [\textit{contra} \textit{Cl. Memo.} \P79]. As they have now admitted, the control system needed the D-28, whether or not it explicitly specified it.
+
+Moreover, Elite also knew that at the time of the Contract ``the chip was not yet in production'' [\textit{Cl. App.} \P9]. Rather, they knew that it ``was scheduled to begin in the middle of August 2010'' which Elite believed would be ``good time'' for the refurbishment [\textit{Cl. App.} \P9]. And Elite knew that by relying on the D-28, they would fail to deliver the promised services, scheduled for 12 February 2011 [\textit{Cl. App.} \P 11], as it would be ``February 2011 [] before any rival chip with comparable qualities would be available'' [\textit{Cl. App.} \P9]. For Elite, it was the D-28 or nothing.  Given this timeline and these performance requirements, neither Control Systems nor Specialty Devices had any discretion in their reliance upon High Performance. 
+
+Finally, Specialty Devices approached High Performance in an attempt to overcome the delay by offering to pay a premium over the contractually agreed price [\textit{Proc. Order No. 2} \P11]. High Performance refused. And because (as is now well-established) High Performance was the sole provider of the D-28, Specialty Devices could not have acquired it from another source [\textit{Proc. Order No. 2} \P12]. Moreover, because no copies of the D-28 had ever been sold to anyone other than Atlantis Technical Solutions, given that the chip was new, no secondary market existed for Specialty Devices to acquire the D-28. Moreover, a redesign was impossible within the timeframe [\textit{Proc. Order No. 2} \P12]. Therefore, regardless of any remedial actions, Specialty Devices could not have overcome High Performance's failure to deliver the D-28. 
+
+\subsubsection{The Delay Was Also Insurmountable for Control Systems} 
+
+In contrast to the relationship between High Performance and Specialty Devices, Control Systems had in fact engaged Specialty Devices to perform a part of the Contract. Unlike a general-purpose chip such as the D-28, the processing units produced by Specialty Devices were only semi-configurable, and specifically commissioned by Control Systems for the purpose of their use in the control system on the M/S Vis. Specialty Devices was aware that it was fulfilling part of Control Systems' contractual obligations, in order to prepare the M/S Vis by the time of the conference [\textit{Proc. Order No. 2} \P14]. Elite concedes that the processing units were the ``core component'' of the system, and that Specialty Devices was one of the ``specialist suppliers'' which Control Systems was to manage during the manufacturing and installation process [\textit{Cl. App.} \P8]. That is, Elite recognized that Specialty Devices was subject to the direction and control of Control Systems---the precise sort of ``organic link,'' necessary to justify the shared responsibility imposed by Article 79(2) [\textit{cf.} \cite{Tallon} \P2.7.1]. Therefore the impediment that governs Control Systems' exemption from liability is the same as that which applies to Specialty Devices: the non-delivery of the D-28. 
+
+Control Systems was in no better position than Specialty Devices to acquire the D-28; for all the same reasons, it was impossible for Control Systems to overcome the impediment. It could not have purchased the D-28 from another source, nor could it have performed without the D-28. In conclusion, because of an event rendering performance impossible (the non-delivery) outside of the control of any party but High Performance, which Control Systems could not have avoided (because Elite made the D-28 mandatory), and which Control Systems could not have overcome, Control Systems is exempt from liability. 
+
+\textit{\textbf{Conclusion:}} In conclusion, because of an event rendering performance impossible (the non-delivery), which was outside of the control of any party but High Performance, and which Control Systems could not have avoided (because Elite made the D-28 mandatory) overcome, Control Systems is exempt from liability. 
+
+\subsection{CONTROL SYSTEMS DELIVERED TIMELY NOTIFICATION OF THE IMPEDIMENT AND ITS EFFECT ON ITS ABILITY TO PERFORM}
+ 
+Control Systems is not liable under Article 79(4) for failure to give adequate notice of the impediment because they informed Elite of the impediment and its anticipated effects within a reasonable period. Article 79(4) specifies the following criteria for notification: 
+
+\begingroup
+\begin{quote}
+The party who fails to perform must give notice to the other party of the impediment and its effect on his ability to perform. If the notice is not received by the other party within a reasonable time after the party who fails to perform knew or ought to have known of the impediment, he is liable for damages resulting from such non-receipt [\cite{CISG} art. 79(4)]. 
+\end{quote}
+\endgroup
+First, Control Systems adequately notified Elite of the impediment (i.e. the fire at High Performance) as well as the effect of the impediment on its contract obligations. It did so by offering an approximate timeline that took the delay into account as detailed in a letter to Elite dated 13 September [\textit{Cl. Ex. No. 2}]. Moreover, it did so in a timely manner after first learning of the impediment on 10 September [\textit{Cl. Ex. No. 3}].
+
+In Control System's letter to Elite on 13 September, Control Systems describes the fire on 6 September and the implications of the fire's interference with D-28 chip production. Control System clearly states that ``Delivery of the control systems and the beginning of installation on the M/S Vis cannot be expected before the middle of January 2011'' [\textit{Cl. Ex. No. 2}]. Indeed, the actual delivery of the control system occurred on 14 January 2011 [\textit{Cl. App.} \P 16]. Control Systems' estimate of the delay was not only adequate but accurate. They provided an approximate timeframe given the best available information under the circumstances, especially given that ultimate completion of the contract was contingent on a number of intermediate steps whose timelines could shift.
+
+While Control Systems did not provide a revised completion date for installation, configuration, and testing, it did provide sufficient information for Elite to estimate with reasonable certainty that the delay would prevent the M/S Vis from hosting the conference. As written into the original contract, Elite itself had scheduled a period of ten weeks after delivery for complete configuration and testing [\textit{Cl. App.} \P 6; \textit{Cl. Ex. No. 4}]. This period would involve installing technology designed by other firms besides Control Systems [\textit{Cl. App.} \P 6]. Because the master control system critical was to operating the venue as a whole, it would be difficult to expedite the installation of all on-board technology without the master control system first in place.  
+
+Based on the information directly provided in the letter, Elite should have known that three or four weeks existed between Control System's estimate of delivery in mid-January and the scheduled conference on 12 February [\textit{Cl. Ex. No. 2}; \textit{Cl. App.} \P 11]. It would be unreasonable for Elite to expect complete configuration and testing during this short time frame, which was only about one-third of the original ten weeks estimated in the contract. As a result, it was Elite's responsibility to procure a replacement as soon as possible and mitigate damages, as specified by Article 44. 
+
+That the delay would require a change in Corporate Executives' convention venue was also apparent to the business community. In an article appearing in \textit{Convention Business News} on 25 July, the delay in the refurbishing of the M/S Vis was publicly reported on 28 September [\textit{Resp. Ex. No. 1}]. This news had caused widespread dismay because it meant that a substitute location for the conference was necessary [\textit{Resp. Ex. No. 1}].
+
+Furthermore, if Elite had assumed that the contract would be completed in time for the conference, Elite had little basis for revising its assumptions. Communications between technical personnel about the installation never mentioned the rescheduling of the conference [\textit{Proc. Order No. 2} \P 15]. As no further written communications occurred between the corporate officials of Elite and Control Systems since the 13 September letter [\textit{Proc. Order No. 2} \P 15], Elite's official silence appears to reflect the implicit understanding that the M/S Vis's refurbishment would not be completed by 12 February. 
+
+Moreover, had there been any doubt as to whether the completion of the contract would occur before 12 February, Elite had adequate time and ability to press for further clarification and updates should estimated performance times be revised. Yet Elite never pressed Control Systems for clarification or details, despite the fact that Elite was ultimately required to reschedule the conference. Such behavior is unreasonable, unless Elite knew from the start that it was highly unlikely for the yacht to be refurbished before the conference given the estimated delay. 
+
+In defense, Elite argues that their silence upon receiving the notification letter cannot be interpreted as implicit acceptance. [\textit{Cl. Memo.} \P 58]. In support, they cite a case in which silence was not inferred as acceptance because the notification was ambiguous [\cite{Summer Cloth Case}]. This is not the case here. The substance of Control System's notification letter indicates that it would be extremely difficult for Elite to believe the contract could be completed on time. In addition, Tallon notes that a duty to notify exists only when the impediment is certain and may not be avoided [\cite{Tallon} \P 2.8]. This comment implies that notification generally occurs once an unavoidable delay affecting performance is in fact anticipated. 
+
+Elite also argues that the letter was not adequate notice because it did not specify an exact date for completion [\textit{Cl. Memo.} \P 105]. This contention is false. First, the CISG does not state that only an exact date will constitute adequate notice. It only specifies that the party notify about the ``effect [of the impediment] on his ability to perform.'' [\cite{CISG} art. 79(4)]. Moreover, the correlate Article 8:108 in the Principles of European Common Law seems to require only ``the time it will take to replace [the goods] and the probable date for resumption of deliveries.'' [\cite{PECL} cmt. f]. Notification of the exact date would appear too stringent a requirement and only relevant when knowledge of a specific date would impact a business decision affecting damages. 
+
+After learning of the original impediment, Control Systems immediately notified Elite and outlined the anticipated delay in their own contract performance. This delay made it highly probably to a reasonable person that complete performance would occur after 12 February.  It is irrelevant that Control did not explicitly state that performance would require Elite to find a different venue, particularly because mention of the conference was absent from the contract, which only called for the delivery, installation, and configuration of the control system [\textit{Cl. Ex. No. 1}]. Since Elite would have known of the delay and did not act immediately to mitigate damages, Elite rather than Control System is responsible for any additional losses incurred.
+
+\textit{\textbf{Conclusion:}} Control Systems fulfilled the terms of Article 79(4) by providing adequate and timely notice of the impediment to Elite. While this notice did not specify the exact completion date, it was evident to a reasonable person that the M/S Vis would not be available in time for the conference. Therefore, Elite rather than Control Systems is liable for any damages that might have resulted from Elite's failure to respond to the notice received.  
+
+\endparano{}
+\subsection{ELITE CANNOT RECOVER THE EX GRATIA PAYMENT OR SUCCESS FEE}
+\parano{}
+
+Elite cannot recover damages for the USD 112,000 partial refund of the event price (``ex gratia payment'') that it issued to Corporate Executives or for the USD 50,000 ``success fee'' that it paid to its yacht broker [\textit{Cl. App.} \P 18; \textit{Proc. Order No. 2} \P 22]. The ex gratia payment was not a reasonable measure to mitigate loss that would qualify for recovery under CISG art. 74 (A). The success fee is unrecoverable under applicable foreign law and international public policy because of the yacht broker's corruption (B).
+
+\subsubsection{The Ex Gratia Payment Was Not a Reasonable Measure to Mitigate Loss}
+
+Elite's ex gratia payment to Corporate Executives was not a reasonable cost of mitigating its losses and is thus unrecoverable. CISG art. 74 permits an aggrieved party to recover the cost of taking reasonable steps to mitigate losses that arise out of a breach of contract [\textit{see} \cite{CISG-AC Op. No. 6} cmt. 4]. These losses may include loss of goodwill or reputation [\cite{CISG-AC Op. No. 6} cmt. 7]. But the aggrieved party has the burden of proving that any loss of goodwill is a foreseeable consequence of breach [\cite{CISG} art. 74; \cite{CISG-AC Op. No. 6} cmt. 2]. It must also prove the extent of actual pecuniary loss, albeit not ``with mathematical precision'' [\cite{CISG-AC Op. No. 6} cmt. 2.9]. Elite's purported loss meets neither of these requirements.
+
+\paragraph{Elite Has Failed to Prove the Cause and Extent of Loss of Goodwill}
+
+Elite has failed to prove that Control Systems' breach caused a loss of goodwill or other costs. Proof of causation requires at minimum that the breaching party be the ``but for'' cause of the claimed loss [\cite{Monarch S.S. Co. Ltd.}]. Causation exists only where the breach makes it necessary for the aggrieved party to incur added costs [\cite{China Yituo}; \cite{Stone Products Case}].
+
+In this case, Elite has not met its burden of showing that the ex gratia payment was a necessary cost. By describing the ``demanding'' nature of its clients, Elite has presented evidence that a loss of goodwill was arguably foreseeable [\textit{Cl. App.} \P 5; \textit{cf.} \cite{Cheese Case}]. But Elite has failed to show that Corporate Executives was sufficiently upset as to require a partial refund. Indeed, Corporate Executives made no such request [\textit{Proc. Order No. 2} \P 20].
+
+Elite has also failed to demonstrate the extent of its loss. Because goodwill is especially difficult to define, loss of goodwill does not need to be proved exactly [\cite{CISG-AC Op. No. 6} cmt. 7.3]. But the aggrieved party must still adduce specific factual support to show the extent of the loss using the best evidence available [\cite{Stallworth Timber Co.}; \cite{Master Records, Inc.}] Acceptable evidence may include an estimate of the market value of any goodwill [\cite{Cmty. Dev. Comm'n} 1304--05].
+
+Here, Elite has proven only the amount of its ex gratia payment [\textit{Cl. App.} \P 18]. It has presented no evidence to suggest that the amount of the payment bore a reasonable relation to any loss of goodwill. Nor has it indicated how loss of goodwill might be measured in this case.
+
+\paragraph{Elite Has Not Demonstrated the Extent of Any Loss of Value of the Conference}
+
+Moreover, even if Elite characterized the ex gratia payment as a price reduction to account for the reduced value of a defective product, it still has failed to prove the extent of loss. An aggrieved party may recover the cost of a sales price rebate that accounts for a reduction in product value caused by the other party's breach [\cite{Zeller}]. The burden of proof to show that the price reduction was a reasonable estimate of the extent of loss remains on the aggrieved party [\textit{see} \cite{CISG-AC Op. No. 6} cmt. 2].
+
+In this case, Elite implies that the ex gratia payment represents the reduced value of its event on board the M/S Pacifica Star [\textit{Cl. Memo.} \P 137]. Yet Elite has produced no evidence to suggest that the payment was a reasonable estimate of the actual loss in value. The conclusory statement that the payment was ``not unreasonable'' provides no information that would enable Elite to satisfy its burden of proof [\textit{Cl. Memo.} \P 137].
+
+In short, Elite has not shown that it suffered or would have suffered a loss of goodwill because of Control Systems' breach. It has also failed to prove the extent of its claimed goodwill loss or the extent of any other loss in value that would justify its ex gratia payment. Hence Elite cannot recover the value of the payment as a reasonable cost of mitigating its loss because it has failed to prove the loss's causation and extent.
+
+\subsubsection{The Broker's Corruption Prevents Elite from Recovering the Success Fee}
+
+Control Systems is also not liable in damages for the ``success fee" that Elite paid to its yacht broker and the broker used to bribe the yacht owner's assistant [Resp. Ex. No. 1 \P 13]. Bribery of private parties is illegal under the law of Pacifica, the country where the crime occurred and where the M/S Pacifica Star is registered [Proc. Order No. 2 \P\P 26--27].  
+
+Pacifica's anti-corruption statute constitutes a foreign mandatory law provision that bars Elite from recovering the success fee under existing international standards for principal liability for agent corruption.  Alternatively, even if this Tribunal refuses to apply Pacifica mandatory law in this case, international public policy still prevents Elite from recovering.
+
+\paragraph{Pacifica Anti-Bribery Law Is Mandatory}
+
+The arbitration agreement that governs these proceedings contained a choice-of-law provision applying Mediterraneo law [Cl. App. \P 20].  Mediterraneo's anti-corruption laws prohibit only bribery of public officials, not private-sector corruption [Proc. Order No. 2 \P 27].
+
+Regardless of the parties' choice of law, an arbitral tribunal may nevertheless apply the mandatory law or public policy of another state under certain circumstances [\cite{Born 2009}, at 2183].  While the concept of ``mandatory law'' has no universally accepted definition, it has been taken to include criminal anti-corruption statutes [\seeeg \cite{Sayed} 232--33].
+
+Likewise, although there is no agreement in the literature on when exactly a third country's mandatory-law rule should apply [\cite{Bermann} 8], the situation in this case meets four major requirements raised in the authorities.  First, the bribery incident has a close connection to Pacifica [\cite{Rome Convention} art. 7(1); \textit{see also} \cite{Restatement (2d) of Conflict of Laws} \S 187(2); \cite{Barraclough & Waincymer} 238; \cite{Blessing} 31], given that the M/S Pacifica Star is registered in Pacifica and the ship's owner is a Pacifica resident [\textit{Proc. Order No. 2} \P 25].  The relationship of the corruption to Pacifica's territory and residents is hence closer than its connection to any other country.
+
+The facts of the bribery also easily satisfy the second and third requirements that the relevant law be of high importance to the third country and that the legal principle have wide international acceptance [\cite{Barraclough & Waincymer} 238; \textit{see also} \cite{Blessing} 31].  For one thing, the economic dangers of all forms of corruption place anti-bribery laws among a country's most important criminal statutes [\seeeg \cite{Mauro}].  And private commercial bribery in particular has been the target of international conventions [\seeeg \cite{CoE Corruption Convention} art. 8].  This indicates, at a minimum, wide international acceptance of a principle against private-party bribery.
+
+Finally, application of Pacifica anti-corruption law meets the requirement that an award applying foreign law be enforceable [\cite{Barraclough & Waincymer} 238].  None of the \romancite{New York Convention}'s grounds for refusing enforcement would be implicated in such a ruling.  In particular, the arbitral tribunal's authority to apply third-country mandatory law regardless of the parties' choice of law prevents either party from seeking to set aside an award based on art. V, section 1(d) of the Convention.  Nor is there any authority for the proposition that applying third-country mandatory law runs contrary to public policy; an award is therefore immune from attack on grounds of art. V, section 2(b) as well.
+
+\paragraph{International Public Policy Prohibits Private Corruption}
+
+Even if this Tribunal refuses to apply Pacifica law as a third-country mandatory-law provision, the prohibition against bribery of private parties is so strong and widespread that it should be considered a fundamental principle of international public policy that prohibits recovery in this case.
+
+Prohibition against bribery of public officials is already a principle par excellence of international public policy [\cite{Born 2009}, at 2194].  But there is now a near-international consensus against private-party bribery as well.  Private commercial corruption has been the object of both international conventions and attempts at prosecution even in countries where no explicit national legislation against private bribery exists [\seeeg \cite{CoE Corruption Convention}; \textit{see also}, \textit{e.g.}, \cite{Ansley et al.}].  Moreover, a prohibition against bribery of private parties has now received recognition in domestic judicial decisions and at least one international arbitration award as a principle of public policy [\seeeg \cite{Corner House Research}; \cite{World Duty Free Case} \P 157].  The trend is sufficiently strong as to require that international public policy incorporate the same fundamental principle.
+
+\paragraph{Elite Is Liable for the Broker's Misconduct}
+
+Whichever of these two theories this Tribunal chooses to apply, prevailing international anti-corruption standards hold Elite liable for its broker's misconduct.  These standards prevent Elite from recovering damages for its success fee.
+
+There is strong authority in arbitration case law and domestic statute law for refusing to allow a principal to recover damages when its agent has committed bribery; this principle applies even in the absence of direct evidence that the principal knew what its agent was doing [\seeeg \cite{Bribery Act}; \cite{ICC Case No. 1110}; \cite{ICC Case No. 6248}].  While some tribunals have adopted the higher standard of requiring proof that both principal and agent had a common corrupt intention [\seeeg \cite{Westacre Case}], such a standard would set the bar for enforcement so high as to risk rendering the anti-corruption principle ineffective [\textit{see} \cite{Sayed} 111].
+
+The conviction of the yacht owner's assistant for accepting a bribe provides prima facie evidence that the yacht broker, acting as Elite's agent in negotiations for the M/S Pacifica Star, committed private-party bribery.  Even if Elite was not aware of the corrupt act itself, it had a duty under existing international standards to put adequate measures in place to prevent its agents from acting corruptly [\seeeg \cite{Bribery Act} 7(2)].  In the event, Elite had no procedures in place against the potential of private commercial bribery at all, even though it worked with numerous subcontractors on its yacht project.  Given this poor standard of conduct, Elite is thus liable for its agent's activity and cannot recover damages for the value of the success fee.
+
+\textbf{\textit{Conclusion:}} Elite cannot recover damages for the ex gratia payment and success fee. The ex gratia payment is unrecoverable because Elite has failed to show the necessary causation and extent of loss that would make the payment a reasonable cost of mitigation. The success fee is unrecoverable because Elite is liable under foreign mandatory law and international policy for the yacht broker's corruption.
+
+\section{CONCLUSION}
+
+Control Systems respectfully requests this Tribunal to: (a) find that there is no jurisdiction to consider the charter-party and its consequences; (b) hold that Dr. Mercado should not be allowed to represent Elite; (c) and dismiss Elite's claims on the merits. If this Tribunal accepts Elite's claims on the merits, Control System asks that Elite's damages be limited to exclude its ex gratia payment and success fee.
+
+\end{document}

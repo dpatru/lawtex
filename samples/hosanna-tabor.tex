@@ -1,0 +1,237 @@
+\providecommand{\documentclassflag}{}
+\documentclass[12pt,\documentclassflag]{lawbrief} 
+
+\usepackage[margin=1in]{geometry}
+\usepackage{newcent,microtype}
+\usepackage{setspace,xcolor}
+\usepackage[hyperindex=false,linkbordercolor=white,pdfborder={0 0 0}]{hyperref}
+
+%%Citations
+
+%The command \makeandletter turns the ampersand into a printable character, rather than a special alignment tab
+\makeandletter
+
+%We use \newcase because the \emph will throw off parsing in \citecase
+\newcase{Hosanna-Tabor I}{E.E.O.C. v. Hosanna-Tabor Evangelical Lutheran Church and School \emph{(Hosanna-Tabor I)}}
+	{582 F. Supp. 2d}{881}{(E.D. Mich. 2008)}
+\newcase{Hosanna-Tabor II}{E.E.O.C. v. Hosanna-Tabor Evangelical Lutheran Church and School \emph{(Hosanna-Tabor II)}}
+	{597 F.3d}{769}{(6th Cir. 2010)}
+
+%Saves me from writing out the full cite command for the district and circuit court opinions
+\def\HTDist#1{\pincite{Hosanna-Tabor I}{#1}}
+\def\HTApp#1{\pincite{Hosanna-Tabor II}{#1}}
+
+\citecase{Rweyemamu v. Cote, 520 F.3d 198 (2d Cir. 2008)}
+\citecase{McClure v. Salvation Army, 460 F.2d 553 (5th Cir. 1972)}
+\citecase{Petruska v. Gannon Univ., 462 F.3d 294 (3d Cir. 2006)}
+\citecase{Elvig v. Calvin Presbyterian Church, 375 F. 3d 951 (9th Cir. 2004)}
+\citecase{Natal v. Christian and Missionary Alliance, 878 F.2d 1575 (1st Cir. 1989)}
+\citecase{Lewis v. Seventh Day Adventists Lake Region Conf., 978 F.2d 940 (6th Cir. 1992)}
+\citecase[Catholic Univ.]{E.E.O.C. v. Catholic Univ. of America, 83 F.3d 455 (D.C. Cir. 1996)}
+\citecase{Presbyterian Church v. Hull Church, 393 U.S. 440 (1969)} 
+\citecase[Milivojevich]{Serbian Eastern Orthodox Diocese for the USA and Canada v. Milivojevich, 426 U.S. 696 (1976)}
+\citecase{Kedroff v. St. Nicholas Cathedral of the Russian Orthodox Church in North America, 344 U.S. 94 (1952)}
+\citecase{Larson v. Valente, 456 U.S. 228 (1982)}
+\citecase{Watson v. Jones, 80 U.S. 679 (1872)}
+\citecase{Thomas v. Review Bd., 450 U.S. 707 (1981)} 
+\citecase{Walz v. Tax Comm'n of City of New York, 397 U.S. 664 (1970)}
+\citecase{Everson v. Bd. of Ed. of Ewing, 330 U.S. 1 (1947)}
+\citecase{Arbaugh v. Y&H Corp., 546 U.S. 500 (2006)}
+
+\newbook{Prosser and Keaton}{William Lloyd Prosser & W. Page Keaton}{The Law of Torts}{(2nd ed. 1953)} 
+
+
+\newarticle{Note, \emph{The Ministerial Exception}}{Note}{The Ministerial Exception To Title VII: The Case for a Deferential Primary Duties Test}{121 Harv. L. Rev.}{1776}{(2009)}{}
+
+\newstatute{Fed. R. Civ. P.}{}
+\SetIndexName{Fed. R. Civ. P.}{Federal Rules of Civil Procedure !Rule }
+
+\newmisc{J.A.}{J.A. \pin{}{}}
+\SetIndexType{J.A.}{}
+
+%The following line add ``U.S. Const. Amend. I'' to the Statutes index section, 
+% uses the aa@ prefix to order it first in the list, and marks it passim
+\index{Statute}{aa@\textsc{U.S. Const.} amend. I|idxpassim}
+
+%Set the information for the title page (later produced by \makefrontmatter)
+\docket{No. 10-553} 
+\petitioner{Hosanna-Tabor Evangelical Lutheran Church and School}
+\respondents{Equal Employment Opportunity Commission, \emph{et al.}}
+\circuit{Sixth}
+\brieffor{Petitioner}
+\author{Anonymous \# 939\\{\em Counsel for Petitioner}}
+\address{127 Wall Street \\ New Haven, CT 06510\\ (203) 555-1234}
+
+\questionpresented{{ Out of deference to the separation of church and state, courts refuse to question churches' decisions to hire or fire ministers. Is a commissioned minister excluded from this ``ministerial exception'' on the grounds that her ministry included teaching secular subjects in the church's school? \doublespacing\par }}
+
+\begin{document}
+%This commands creates the title page, table of contents, and table of authorities
+\makefrontmatter
+
+%Sets the formatting for the entire document after the front matter
+\parindent=2.5em 
+\setlength{\parskip}{1.25ex plus 2ex minus .5ex} 
+\setstretch{1.45}  
+
+\section{List of All Parties}
+
+Petitioner Hosanna-Tabor Evangelical Lutheran Church and School is a Michigan Ecclesiastical Corporation.  \vspace{12pt} 
+
+\noindent{}Respondent Equal Employment Opportunity Commission (EEOC) is a federal agency charged with the enforcement of Title I of the Americans with Disabilities Act and is expressly authorized to bring such actions. \citetext{\See 42 U.S.C. \S\S 12117(a) and 12203(c).} \index{Statute}{bb@Title 42, United States Code !\S 12117} \index{Statute}{bb@Title 42, United States Code !\S 12203}\vspace{12pt} 
+
+\noindent{}Respondent Cheryl Perich is a resident of the State of Michigan.  
+
+\section{Opinions Below} 
+\begin{flushleft}
+The District Court for the Eastern District of Michigan (Duggan, J.) dismissed the action upon the Defendant Hosanna-Tabor's motion. \citetext{\See 582 F. Supp. 2d 881.} Subsequently, the district court denied a motion for rehearing. \citetext{\See 2008 WL 5111861.} The Court of Appeals for the Sixth Circuit reversed. \citetext{\See 597 F.3d 769.}
+\end{flushleft}
+
+\section{Jurisdiction} 
+The judgment of the Court of Appeals was entered on March 29, 2010. The petition for writ of certiorari was filed on October 22, 2010, and was granted on March 28, 2011. This Court has jurisdiction under \index{Statute}{bb@Title 28, United States Code !\S1254}28 U.S.C. \S 1254(1).
+
+\section{Constitutional Provisions Involved} 
+This case implicates the Establishment and Free Exercise Clauses of the First Amendment of the U.S. Constitution: ``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof\ldotss''
+
+\section{Background} 
+
+Petitioner Hosanna-Tabor Evangelical Lutheran Church and School (``The Church'') is a Lutheran church community centered on living out the Word of God as expressed through the Gospels. The Church is a member of the Lutheran Church---Missouri Synod (LCMS), the oldest Lutheran denomination in the United States.  As part of its ministry, Hosanna-Tabor provides a Christ-centered elementary school, which helps parents reinforce biblical principles and standards. \See \HTDist{884}.  As the district court noted, ``Hosanna-Tabor also characterizes its staff members as ``fine Christian role models who integrate their faith into all subjects.'\,'' \HTDist{884}. 
+
+\subsection{Duties and Expectations of Teachers at Hosanna-Tabor}
+
+Respondent Cheryl Perich taught third and fourth grades at the school from July 1999 until April 11, 2005. \See \HTApp{772}. As a commissioned minister in the Evangelical Lutheran Church, Perich was a ``called'' teacher, as opposed to a ``lay'' or ``contract'' teacher. \See \HTApp{772}. Lutheran schools, such as Hosanna-Tabor, utilize two types of teachers in their educational mission. \See \HTApp{772}. Lay teachers are ordinary employees hired for a contract term of one school year. \citetext{\See \HTApp{772}.} While they may teach religious subjects, and must live and act as Christian role models, there is no other religious requirement. \See \HTApp{773}.
+
+In contrast, called teachers are selected by the voting members of the Church as a whole, on the recommendation of the Church's Board of Elders, Board of Education, and Board of Directors. \See \HTDist{883}. To be eligible for a call, a candidate must take a series of classes (a ``colloquy'') on diverse aspects of the Christian faith. \See \HTDist{883}. After successful completion, the Michigan District of the LCMS certifies the teacher to the teaching ministry, and assists the teacher in finding employment in district schools. \See \HTDist{883}. Once a congregation has selected a teacher, that teacher is formally designated with the title ``commissioned minister.'' \HTDist{883}. 
+
+Commissioned ministers, as an integral part of the church community, hold a permanent position. \See \HTDist{883}. This position cannot be revoked without the vote of the Congregation as a whole, which commissioned the minister to begin with. \citetext{\See Hoeft Deposition, \pincite{J.A.}{120} (``the voting members of the congregation have to vote on [termination]. The school board does not have the power.'').} Thus their teaching ministry's duration is open-ended, as opposed to that of lay teachers. Additionally, called teachers that are conducting activities ``in the exercise of ministry'' may claim a special housing allowance on their income taxes, as Ms. Perich did. \pincite[s]{Hosanna-Tabor I}{883}.
+
+Ministers and other members of the church are directed by the LCMS ``to settle their differences by laying them before the `members of the brotherhood.'\,'' \citetext{Handbook of The Lutheran Church Missouri Synod \S 1.10.1.1 (2004) (Petitioner's App'x 77).}  To that end, the LCMS provides a dispute resolution procedure that covers nearly 30 pages in the LCMS Handbook. \citetext{\See Petitioner's App'x 77--104.} 
+
+Indeed, the LCMS Handbook urges church members ``to reject [the] `win--lose' attitude that typifies secular conflict.''\Id[\S 1.10.1.]. All parties are instead ``to rely exclusively and fully on the Synod's system of reconciliation and conflict resolution, \ldots [which] shall be the exclusive and final remedy.'' \Id. 
+
+\subsection{Perich's Call to the Teaching Ministry}
+
+Respondent Cheryl Perich was hired in July 1999 as a contract kindergarten teacher for the 1999--2000 school year. \See \pincite[s]{Hosanna-Tabor I}{883}. She had already been taking classes towards earning her ministerial certification. \See \HTDist{883}. She completed her colloquy courses in February 2000, and her candidacy was presented to the Congregation of Hosanna-Tabor, which commissioned her as a teaching minister. \See \HTDist{883}.
+
+On March 29, 2000 the Church sent Ms. Perich an ``official certificate of admission into the teaching ministry of the Lutheran Church---Missouri Synod by colloquy.'' \pincite{J.A.}{41}. However, the Church did not originate this admission to ministry; in their view, it came originally from God. \citetext{\See \pincite{J.A.}{41}. (``We pray God, the Father of our Lord Jesus Christ, \emph{who has moved us} to extend our call to you, to convince you by His Holy Spirit that \emph{it comes from Him}'') (emphases added).} Many of Ms. Perich's day-to-day duties would remained the same after her call. \HTDist{883}.  Along with secular subjects, she taught religion four days per week, took her class to weekly chapel services, and led her classes in prayer three times a day. \See \HTDist{883--84}. In total, the length of Perich's time that was \emph{exclusively} dedicated to religious worship was about 45 minutes. \See \HTDist{884}. But while her basic duties did not change, the Church viewed the elevation to ministry as transition from a mere employment relationship, to one of ministry. \citetext{\Compare Certificate of Admission, \pincite{J.A.}{41} (``bless your \emph{ministrations} to the glory of His holy name''), \emph{with} Perich's Teacher's Contract, \pincite[s]{J.A.}{46--47} (July 19, 1999) (``bless the teacher's \emph{service} in our church and school to the glory of God's holy name'') (emphases added).}
+
+An official supplement, attached to her certificate of admission, lists the duties to which the Church, ``[i]n the name of the Triune God and by his Authority'' authorized and obligated Ms. Perich. \pincite{J.A.}{48}. First and primary among her duties: ``To teach faithfully the Word of God, the Sacred Scriptures, in its truth and purity and as set forth in all the symbolical books of the Evangelical Lutheran Church.'' \pincite{J.A.}{48}. Second, ``To exemplify the Christian faith and life, to function in an atmosphere of love and order characteristic of the Body of Christ at work, and to lead others toward Christian maturity.'' \pincite{J.A.}{48}. Only third does the Supplement place her teaching responsibilities, and characterizes her ``efforts in Christian education'' as a ``phase[] of ministry.'' \pincite{J.A.}{48}. Finally, the Supplement called Ms. Perich ``to live in Christian unity with \ldots co-workers.'' \pincite{J.A.}{48}. 
+
+In return for Ms. Perich accepting these obligations, the Church pledged, among other things, ``to review [her] skills of ministry \ldots [in order to] rearticulate [her] ministerial responsibilities\ldotss'' \pincite{J.A.}{49}. And the Church promise to provide for her ``continuing education as a professional person in the ministry of the Gospel.'' \pincite{J.A.}{49}. Perich did not challenge this categorization of her as a minister.
+
+\subsection{Perich's Illness and Her Dispute with the Church}
+
+During the Summer of 2004, Perich became ill, and her doctors were unable to diagnose or treat her condition. \See \HTDist{884}. Consequently, both Perich and school principal Stacy Hoeft agreed that the best course of action was for Perich to go on disability leave for the 2004--2005 school year. \See \HTDist{884}. In order to make up for the fact that they were suddenly shorthanded, the Church asked another teacher to teach three grade levels at once. \See \HTDist{884}. But this arrangement could not be continued long-term. 
+
+On January 10, 2005, Hoeft called Ms. Perich to inform her that the Church was considering hiring a substitute teacher for the remainder of the school year. \See \HTDist{884}. At that time, Ms. Perich had not given a firm indication that she would soon return to work.  \citetext{\See Perich Deposition, J.A. 274 (``We weren't able to make that prediction at that time. As I said earlier, in December I told her it would be two to three months.'').}  Nor did Perich object to the school hiring a substitute. \citetext{\See Hoeft Deposition, J.A. 138 (``she had had an opportunity to object \ldots but she never did\ldotss [I]n fact, it was quite the opposite. She was helpful, and \ldots she had offered up \ldots help and advice for this new person.'').} 
+
+Hoeft later asked Perich, on January 21, if she would accept a release from her call. \See \HTDist{884}. Such a release would not have prevented Perich from again pursuing another call after her recovery.  \See \HTDist{884}. Perich refused. \See \HTDist{884}. The Church continued, over the course of the next month and a half, to find a mutually agreeable solution. \See \HTDist{884--85}. Hoeft stated that the Church was not asking Perich to resign on the grounds of her disability, but only because, after hiring a substitute, ``there was no position to return to for the remainder of that year.'' \citetext{Hoeft Deposition, J.A. 138.} 
+
+On the morning of February 22, 2005, Perich arrived at the Church school and announced that she was reporting for work. \See \HTDist{885}. This was despite the fact that Hoeft previously informed her that her position had already been filled. \See \HTDist{885}. Nonetheless, she initially refused to leave, and did not do so until extracting a signed note from Hoeft, stating that no such position was available. \See \HTDist{885}. Perich then left for the day, while insisting that she would return. \See \HTDist{885}.
+
+The leadership of the Church was taken aback by what they perceived as the insubordinate and aggression of one of their ministers. Hoeft informed Perich that evening that Perich had irreparably damaged her relationship with the Church. \See \HTDist{885}. Hoeft further stated that she would recommend to the Church leadership that Perich's call be revoked, unless Perich voluntarily resigned. \See \HTDist{885}. Perich still refused. 
+
+And then she escalated.  Rather than attempt reconciliation, she threatened Hoeft with a lawsuit. \citetext{\See Defendant's Answer to Perich \P 17, J.A. 33. (``Perich never said anything about `asserting her legal rights against discrimination' \ldots [but] simply indicated at some point in time \ldots that `she would sue' without stating for what or on what basis.'').}
+
+Given both Perich's insubordination and her threats, Church leaders were confirmed in their view that Perich's call had to be revoked. \citetext{\See Letter from Bd. of Educ. Chairman Salo to Perich (March 19, 2005), J.A. 55 (``We are taking this action \ldots due to insubordination and disruptive behavior on Tuesday, February 22, 2005 \ldots [and] because we feel that you have damaged, beyond repair, the working relationship you had with the Administration and School Board by threatening to take legal action\ldotss'').} Yet even then, the Church leadership continued to offer Perich a graceful exit. \citetext{\See \id., J.A. 56 (``If we should receive your request for a peaceful release \ldots we would be willing to consider reinstatement of our previous offer to cover your medical insurance \ldots [and we] will continue to promote your name in hopes to transition you to a new job'').}
+
+In the Church's view, such threats are incompatible with the behavior expected of a Christian minister, as expressed in the LCMS Handbook. \citetext{\See Hoeft Deposition, J.A. 152 (``Because of the Christian nature of our work, we don't file lawsuits against each other'').} And despite the position of the church that their dispute resolution procedures were the ``exclusive remedy,'' she never attempted to resolve her grievance through the Church's dispute resolution system. \citetext{\See \id., J.A. 152 (``[F]or her to jump over the conflict resolution policy \ldots is very, very much against what is expected of us \ldots when we sign on with our call.'').} Therefore, the Church leadership felt compelled to recommend that the Congregation vote to terminate Perich's ministerial commission.  This was a drastic step, according to the Congregation President---the only time, to his knowledge, that a call was rescinded. \citetext{\See Pranschke Deposition, J.A. 94 (June 4, 2008).}  The Congregation, given the evidence, revoked Perich's ministerial commission on April 10, 2005. \HTApp{775}. This lawsuit followed. 
+
+\subsection{Procedural History}%
+
+In response to her termination, on May 17, 2005 Perich filed a complaint against the Church with the Equal Employment Opportunities Commission (EEOC, also a Respondent in this case). \See \HTApp{775}. On September 20, 2007, the EEOC filed a complaint against the Church in the Eastern District of Michigan; Perich was granted leave to intervene. \See \HTApp{775}. She alleged that her call was revoked because she ``assert[ed] her legal rights against discrimination,'' and that this was actionable under the ADA. \HTApp{775}.  After a period of discovery, Perich and the Church filed cross-motions for summary judgment on October 23, 2008. \See \HTApp{775}. 
+
+The Church's defense (and the subject of this appeal) is that as Perich was a commissioned minister, her employment was subject to the ``ministerial exception'' to laws of otherwise general applicability. This ministerial exception is a doctrine crafted by the lower courts out of deference to the First Amendment's guarantees of separation of church and state, as well as of free exercise of religion. Generally stated, the ministerial exception prevents secular courts from intervening in the hiring and personnel decisions of religious organizations with respect to their ministers. (We discuss the ministerial exception in detail in Argument--Section~\ref{sec:ministerial-exception}, \emph{infra} p. \pageref{sec:ministerial-exception}.)
+
+Despite its name, the ministerial exception does not apply solely to formally-ordained clergy members, nor only to positions or employers entirely dedicated to religious worship. \HTApp{778}. Thus, to apply the ministerial exception, courts must consider both whether the employer is a religious organization, and whether the employee is a ``minister.'' \HTApp{778}. Here, neither party disputes the classification of the Church as a religious organization. \HTApp{778}. The parties only dispute whether Perich, as a commissioned minister, is a ``minister'' for the purposes of the exception. \HTApp{778}. If she were such a minister, the Church's decision to maintain or dismiss its clergy could not constitutionally be re-examined by secular courts. 
+
+Perich was a minister, according to the district court. \HTDist{891}. While the circuits differ in their approach to the issue, the Sixth Circuit has instructed its courts to consider the ``primary duties'' of the employee. The district court did find, that from a numerical perspective, Perich spent only about 45 minutes of her day on purely religious subjects. \HTDist{884}. But the district court determined that when viewed in its entirety, her position at the Church was ultimately a religious one. This fact is reinforced by the distinction that the Church itself places on the title. Therefore, the district court found that Ms. Perich was a minister, and dismissed the case.
+
+The Court of Appeals for the Sixth Circuit disagreed. \See \HTApp{782}. They relied heavily on the district court's findings that Perich spent only 45 minutes per school day on exclusively religious matters, and that her responsibilities continued largely unchanged after her call. \HTApp{780}. They therefore, held that Perich's primary duty was not ``religious,'' thus she was not a minister. \HTApp{780}. The Court of Appeals reversed and remanded to the district court. \HTApp{782}. The Church then filed for certiorari. 
+
+\section{Summary of Argument}
+
+The First Amendment provides that ``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof.'' The Establishment and Free Exercise Clauses are rooted in the Founders' understanding that ``the best interest of a society require[s] that the minds of men always be wholly free.'' \pincite{Everson}{12}. Therefore, these Religion Clauses prohibit the ``excessive entanglement'' of church and state.  \See \pincite{Walz}{670}. In particular, ``there is substantial danger that the State will become entangled in essentially religious controversies or intervene on behalf of groups espousing particular doctrinal beliefs'' when hearing internal church disputes. \pincite{Milivojevich}{709}. Therefore, lower courts have developed the ``ministerial exception,'' by which the courts will not examine a church's decision to hire or fire its ministers.  
+
+This case turns on whether the Respondent, Cheryl Perich, was a minister of Hosanna-Tabor Church and School. She was. However, the Court of Appeals relied on a ``primary duties'' to reach the opposite conclusion. This conclusion was contrary to the facts. They should have recognized that their numerical balancing test on the ``primary duties'' was based on the improper determination that certain activities are ``non-religious'' (improper because it was outside of the subject-matter jurisdiction of the courts). The Court should take a more formalistic, bright-line rule. 
+
+The Petitioner maintains that when a church has held out to the public that a person is their minister, and that person accepts that designation, the person is a minister for the purpose of the exception. Unlike religious matters, courts are well-suited to determine whether the parties agreed to assume a binding relationship between one another.	
+
+In this case, the Church repeatedly designated Ms. Perich as a ``minister.'' She was sent diplomas, letters, and other forms attesting to this status. And she also accepted the offer, without coercion, and took advantage of the benefits. For example, she relied on a loan guarantee that is only available to those engaged in ministry. Therefore, she should be bound by her bargain, and viewed by this Court as the minister that she once claimed to be.
+
+\section{Argument}
+
+\subsection{Standard of Review}
+
+The parties contest the appropriate standard of review regarding the ministerial exception. Petitioner Hosanna-Tabor requests this Court to consider the claim as a challenge to subject-matter jurisdiction \citeclause{\cf \pincite{Fed. R. Civ. P.}{12(b)(1)}} as did both the district court and the Court of Appeals. Thus the legal conclusions of the lower courts are reviewed \emph{de novo}, and factual findings are affirmed unless clearly erroneous. \See \pincite[s]{Hosanna-Tabor II}{776}.
+
+The district court's judgment was not specifically in response to a 12(b)(1) motion. Instead, the court issued its judgment in response to a Rule 56 motion for summary judgment. Typically, an entry of summary judgment is appropriate when ``there is no genuine dispute as to any material fact and the movant is entitled to judgment as a matter of law.'' \pincite{Fed. R. Civ. P.}{56}.
+
+However, Sixth Circuit precedent views the ministerial exception as jurisdictional. \See \pincite[s]{Hosanna-Tabor II}{775}. A challenge to subject-matter jurisdiction cannot be waived, and may be considered by the court \emph{sua sponte} at any point during the litigation. \See \pincite{Arbaugh}{514}. In contrast to a motion for summary judgment or a 12(b)(6) motion to dismiss, on a 12(b)(1) motion a court must make such findings of fact as are necessary to establish jurisdiction. \See \pincite{Arbaugh}{514}.
+
+The Sixth Circuit was correct to view the ministerial exception as a jurisdictional challenge. The ministerial exception is a recognition by secular courts of their incompetence to judge the qualifications of religious ministers.  The Constitution accordingly placed such matters outside of those courts' subject-matter jurisdiction. \citetext{\Cf \pincite{Milivojevich}{713} (``religious controversies are not the proper subject of civil court inquiry'').} Therefore, once a party has asserted the ministerial defense, a court must determine such facts as are necessary to determine if it has jurisdiction over the matter, and must recuse itself if it does not.  
+
+\subsection{The Ministerial Exception}
+\label{sec:ministerial-exception}
+
+``The relationship between an organized church and its ministers is its lifeblood,'' as the Fifth Circuit recognized 40 years ago in one of the initial cases on the ministerial exception. \pincite{McClure}{560}. ``The minister is the chief instrument by which the church seeks to fulfill its purpose.'' \pincite{McClure}{561}.  Moreover, ``[a] minister is not merely an employee of the church; she is the embodiment of its message.'' \pincite{Petruska}{306}. ``A minister serves as the church's public representative, its ambassador, and its voice to the faithful.'' \pincite{Petruska}{306}. 
+
+Since \emph{McClure}, all of the circuits have followed the Fifth Circuit to hold that, given the special nature of the church--minister relationship, they will not examine a church's decisions to hire or fire its ministers, even if the church may have violated employment laws.  \citetext{\Seeeg \cite{Rweyemamu}; \cite[s]{Petruska}; \cite{Elvig}; \cite{Catholic Univ.};  \cite{Lewis}; \cite{Natal}.}  
+
+\subsubsection{The Ministerial Exception is a necessary consequence of the First Amendment's guarantee of Freedom of Religion}
+
+This ministerial exception, however, is not merely a prudential doctrine of judicial restraint, but a necessary consequence of the Constitution's commitment to religious freedom. \citetext{\Cf \textsc{U.S. Const.\@} amend.\@ I (``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof\ldots'').} While this Court has not spoken directly to the ministerial exception, the doctrine follows directly from this Court's interpretation of the Establishment and Free Exercise Clauses.  
+
+As this Court has observed, the Religion Clauses derive from the Framers' recognition ``that the best interest of a society require[s] that the minds of men always be wholly free; and that cruel persecutions were the inevitable result of government-established religions.'' \pincite{Everson}{12}. But this Court has also recognized that churches can and should play a vital and vigorous role in American society, such that the Constitution's aim is not to sever Church and State completely, but merely to attempt to preserve their exclusive spheres.  \citetext{\See \pincite{Walz}{670} (``No perfect or absolute separation is really possible; the very existence of the Religion Clauses \ldots seeks to mark boundaries to avoid excessive entanglement.'').}
+
+Particularly when adjudicating internal church disputes, ``there is substantial danger that the State will become entangled in essentially religious controversies or intervene on behalf of groups espousing particular doctrinal beliefs.'' \pincite{Milivojevich}{709}. Because of this danger, ``the First Amendment severely circumscribes the role that civil courts may play'' in such matters. \pincite{Presbyterian Church}{449}. Neither the civil courts---nor any other arm of government---may interfere with a church's right to choose ministers as they see fit.  \citetext{\See \pincite{Kedroff}{154--55} (``Freedom to select the clergy \ldots must now be said to have federal constitutional protection as a part of the free exercise of religion'').} 
+
+Thus, when disputes have arisen between church officials, this Court has refused to wade into the conflict, and has rebuked the lower courts for doing so. For example, when a Serbian Orthodox bishop challenged his removal by his Yugoslavia-based Mother Church as arbitrary, this Court chided the lower court for ``an impermissible rejection of the decisions of the highest ecclesiastical tribunals \ldots and impermissibly substituting its own inquiry into church polity.'' \pincite{Milivojevich}{708}. To permit such civil courts to probe into church law ``would violate the First Amendment in much the same manner as civil determination of religious doctrine.'' \pincite{Milivojevich}{709}.
+
+In fact, it had long been established that ``whenever the questions of discipline \ldots or law have been decided by the highest of these church judicatories to which the matter has been carried, the legal tribunals must accept such decisions as final.'' \pincite{Watson}{727}. The \emph{Milivojevich} Court then explicitly went on to repudiate any exception for ``arbitrariness,'' or upon a claim that the church had failed to follow its own procedures. \citetext{\pincite[n]{Milivojevich}{713} (``recognition of such an exception would undermine the general rule that \ldots a civil court must accept the ecclesiastical decisions of church tribunals as it finds them'').}
+
+The ministerial exception, therefore, derives from this general deference to the internal workings of church procedures. Were the courts to inquire into the reasons for why a minister was fired---whether for doctrinal reasons or behavior prohibited under the ADA---they would subvert a religion's right to their own internal self-government. \citetext{\Cf \pincite{Milivojevich}{724--25} (``the First [ ] Amendment permit[s] hierarchical religious organizations to establish their own rules and regulations for internal discipline \ldots and to create tribunals for adjudicating disputes over these matters'').} 
+
+\subsubsection{Courts violate the First Amendment when they attempt to determine the proper activities or necessary qualifications of ministers} 
+
+All parties here agree that Hosanna-Tabor Church and School is a religious organization, as required by the ministerial exception. \See \HTApp{778}. Their dispute is strictly over whether Ms. Perich was a ``minister'' for the purpose of the exception. \See \HTApp{778}. However, any test that attempts to form classifications based on their interpretation of religious doctrine will inevitably lead courts to impermissibly entangle themselves in religion. 
+
+The Court of Appeals decided that Perich was not a minister using their ``primary duties test.'' They relied on the finding of the district court that Ms. Perich only spent roughly 45 minutes of a seven-hour school day on strictly ``religious'' activities. \HTApp{779}. But this Court has noted that ``[t]he determination of what is a `religious' [ ] practice is more often than not a difficult and delicate task.'' \pincite{Thomas}{714}. In fact, the role of a teaching minister in a Christian school is to imbue the Word of God into her entire educational mission. Thus the Court of Appeals erred in attempting to divide Perich's day into ``religious'' and ``non-religious'' activities. As Justice Jackson noted, the parochial school experience as a \emph{whole}---not merely the ``religious'' parts---can be foundational for a child's religious upbringing. \citetext{\See \pincite{Everson}{24} (Jackson, J., dissenting) (``I should be surprised if any Catholic would deny that the parochial school is a vital, if not the most vital, part of the Roman Catholic Church. Catholic education is the rock on which the whole structure rests.'').} 
+
+When the Court of Appeals classified Ms. Perich's service as non-religious, and asserted that no meaningful distinction exists between called and lay teachers, they issued their own judgment on a matter of Lutheran doctrine. As the district court noted, the Church ``does not give the title to just any teacher.'' \HTDist{891}. ``That Hosanna-Tabor distinguishes between `lay' and `called' teachers by awarding the commissioned minister title suggests that the school values the latter employees as ministerial, even if some courts would not.'' \HTDist{891}. The Court of Appeals is not qualified to substitute its judgment for that of Church authorities regarding the religious significance of Ms. Perich's call. 
+
+It would also be error, as Respondents have previously suggested, to limit the exception to ordained ministers, as opposed to commissioned ministers such as Ms. Perich.  Such a rule would be tantamount to a claim that ``ordination,'' as such, is a requirement for ministry. Not only is such claim itself an encroachment on the freedom of the church to define its own doctrine, but would require judicial examination of the validity of the ordination of the individual member in question. Such decisions are outside of the competence of the secular courts, and therefore out of their jurisdiction. 
+
+Moreover,  some religions ordain all members (such as Jehovah's Witnesses, who consider all members ordained by baptism) and some religions do not formally ordain at all (such as the Quakers). \See \pincite{Note, The Ministerial Exception}{1797}. Accordingly, an ordination test would impermissibly prefer certain denominations based upon their creed.  \citetext{\Cf \pincite{Larson}{246--47} (``when we are presented with a [ ] law granting a denominational preference, our precedents demand that we treat the law as suspect and that we apply strict scrutiny'').} 
+
+\subsubsection{``Ministers'' are those persons held out by churches as such}
+
+Courts should not attempt to assess the religious importance or significance of a minister's duties, in order to answer the question of whether one is, or is not, a minister.  They should instead limit their inquiry to the reasonable, pre-dispute understandings of the parties as to that question.  For the purpose of the exception, it should be sufficient to make a finding that a person is a minister if: (1) the church reasonably holds her out to the public as a minister and (2) she accepts the church's designation. Such a test is manageable, and consistent with precedent.
+
+By refusing to question the correctness of the decisions of church tribunals in church governance, this Court has recognized that individuals may voluntarily bind themselves to the authority of these tribunals. \citetext{\See \pincite{Milivojevich}{711} (``all who unite themselves to a [religious] body do so with an implied consent to [its] government, and are bound to submit to it'').} So long as the church clearly and publicly designates someone as a minister, the acceptance of that title---either formally, or by taking advantage of the benefits that the title offers---implies consent to be bound by its government. So long as they have made a choice to accept the offer, they must take the bad with the good. 
+
+This test offers the advantage of a bright-line rule. As the Circuit Courts have noted, whatever her religious duties, a minister is a voice of her church---that is, hers is a public position. The Courts may consider, then, whether an outsider---such as the court itself---would have reasonably perceived that person to have been held out by the church as acting and speaking on its behalf. \Seeeg \pincite{Petruska}{306}. Such consideration is well within the competence of civil courts, and courts would be capable of recognizing the circumstance where a sham claim of ``ministry'' is assigned after-the-fact to avoid liability.  
+
+But we stress that it is not necessary, in order for the Court to resolve this case, to set out a test to deal with such deception. It is unquestioned, as the district court noted, that both parties used the title of ``minister'' long before the commencement of litigation. \See \HTDist{891}.  It is further unquestioned that Perich accepted that title, and enjoyed its benefits---not least of which was the tenure right that she now claims was violated. 
+
+\subsection{Ms. Perich was titled a minister of the Hosanna-Tabor Church, accepted her ministry, and thus was a minister for the purpose of the exception}
+ 
+The district court was correct to find that Ms. Perich was a minister, and subject to the ministerial exception. This Court thus should reverse the erroneous ruling of the Court of Appeals. Before this lawsuit, Ms. Perich embraced her role as a minister, rather than disclaiming it. She attended the series of colloquy classes as training for the ministry. She applied for, and received, a call to ministry from the Hosanna-Tabor congregation. She took advantage of the housing allowance offered only to those in the practice of ministry.
+
+Moreover, neither she, nor a reasonable member of the public, could have perceived the Church's manifestations regarding Ms. Perich as anything other than bestowing the title of minister. The entire Congregation voted to commission her as minister. Her name was placed in the district-wide publication of commissioned teaching ministers. She received an ``official certificate of admission into the teaching ministry.'' And she did not reject these titles.
+
+Moreover, the certification of admission was clear on the responsibilities Perich was being bound to. She was to commit herself to spreading the Gospel, live as a Christian role model, provide her students with a Christian education, and to live in Christian unity with co-workers. The certificate made clear to Perich that she was being called to occupation in which Christianity would play a major role. By accepting, she reasonably submitted herself to the church's own (and well-known) adjudicative procedures.
+
+Yet when she was insubordinate and aggressive with her co-workers, she violated her responsibilities as a Christian minister. And when she threatened to sue without first proceeding through the dispute resolution system, she was attempting to avoid her submission to the judgment of the ecclesiastical tribunals to which she was bound. Given that this Court has taken such a firm stance on the deference civil courts must rant to ecclesiastical courts, this end-run around ecclesiastical courts should not be allowed. 
+
+Finally, as the district court found, there was no subterfuge in this case on the part of the Church.  Any reasonable observer would have seen Ms. Perich as a minister, and would have expected that she would have been bound to rules and regulations of that particular religion.  \citetext{\See \pincite[s]{Hosanna-Tabor I}{891} (``This is not a case where the defendant seeks to prove ministerial status after the fact merely to avoid liability.  Hosanna-Tabor treated Perich like a minister and held her out to the world as such long before this litigation began.'').} Therefore,  the Church prays this Court to confirm  that Ms. Perich was a minister.
+
+\section{Conclusion}
+
+The judgment of the Court of Appeals should be reversed.
+\vspace{.3in}
+
+\makeatletter
+\mbox{\hspace{3.5in} \vbox{\raggedright Respectfully Submitted, \\ \@author \\ October 12, 2011}}
+\makeatother
+
+\end{document}
