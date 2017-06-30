@@ -9,6 +9,7 @@
 Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-api-for-latex.
 **** DONE create test directory and macros
 **** TODO write tests
+***** DONE test the testing framework
 ***** DONE test duplicate case names
 Use a bash script, because the latex build fails when the test passes.
 I tried to use colors but abandoned the effort because it was taking

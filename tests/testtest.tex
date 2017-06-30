@@ -1,0 +1,21 @@
+\providecommand{\documentclassflag}{}
+\documentclass[12pt,\documentclassflag]{lawbrief} 
+
+\usepackage[margin=1in]{geometry}
+\usepackage{newcent,microtype}
+\usepackage{setspace,xcolor}
+\usepackage[hyperindex=false,linkbordercolor=white,pdfborder={0 0 0}]{hyperref}
+\usepackage{test}
+
+
+\begin{document}
+Testing
+
+
+\assert{right}{wrong}
+\assert{right}{right}
+\assert[right and wrong]{right}{wrong}
+\assert[just right]{right}{right}
+
+
+\end{document}
