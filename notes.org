@@ -7,6 +7,10 @@
 ** Tasks
 *** TODO Testing
 Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-api-for-latex.
+**** DONE create test directory and macros
+**** TODO write tests
+***** TODO test duplicate case names
+***** TODO test cases with 1 cite.
 *** TODO Extension
 Extend the existing framework to allow parallel citations and slip opinions.
 
