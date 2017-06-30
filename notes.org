@@ -10,6 +10,9 @@ Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-a
 **** DONE create test directory and macros
 **** TODO write tests
 ***** DONE test duplicate case names
+Use a bash script, because the latex build fails when the test passes.
+I tried to use colors but abandoned the effort because it was taking
+too much time.
 ***** TODO test cases with 1 cite.
 *** TODO Extension
 Extend the existing framework to allow parallel citations and slip opinions.
