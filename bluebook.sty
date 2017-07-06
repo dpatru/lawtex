@@ -770,7 +770,7 @@
 %
 	%If ``n'' is provided in optional arg, force reporter and page number only (just for Cases)
 	\IfSubStr{#3}{n}
-	{%
+	{% n option
 		\ifthenelse{\equal{#2}{}}
 			{\@autofootnote{\@bbSignal\@bbReporterOnlyCite{#1}}}
 			{\@autofootnote{\@bbSignal\@bbReporterOnlyPinCite{#1}{#2}}}%
@@ -778,7 +778,7 @@
 		%By definition, this last cite cannot be an "id", so reset the id counter
 		\setcounter{@bbSequentialIds}{0}%
 	}
-	{%
+	{% 
 		%Pull the volume number out of the pincite, or see if provided
 		%The reason it is so messy looking is to deal with the fact that we do not want to fully expand the pincite,
 		%  in case it contains formatting or other non-expandable control sequences
