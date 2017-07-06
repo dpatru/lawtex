@@ -1,13 +1,15 @@
 
-\newcounter{tst}
-% \setcounter{tst}{9}
+\usepackage{xstring} % IfEq, StrCompare
 
-\newcommand\assert[3][]{%
-  \ttfamily
-  \def\output{#2}
-  \def\correct{#3}
-  \def\name{\if \relax#1\relax\detokenize{#2} = \correct \else #1\fi}
-  \def\desc{\space Test:\,\stepcounter{tst}\thetst (\name)\par}
-   \ifx\output\correct\textcolor{green}{Passed} \desc%
-     \else \textcolor{red}{Failed} \desc \par~~~~~~~~\output $\ne$ \correct\par\fi}
-   
+\newcounter{tst}
+
+\newcommand\assert[3][]{{% add a block to prevent namespace pollution 
+    % \ttfamily 
+    \def\name{\if\relax#1\relax\detokenize{#2} = \detokenize{#3}\else #1\fi}%
+    \def\desc{\space Test:\,\stepcounter{tst}\thetst~(\name)\par}%
+    \comparestrict%
+    \IfEq{#2}{#3}{\textcolor{green}{Passed} \desc}%
+    {\textcolor{red}{Failed} \desc%
+    \par~~~~~~~~#2 $\ne$ \par~~~~~~~~#3\par%
+    First difference at position args \comparestrict\StrCompare{#2}{#3}\par}\vspace{5mm}}}
+
