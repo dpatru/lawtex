@@ -6,16 +6,144 @@
 \usepackage{setspace,xcolor}
 \usepackage[hyperindex=false,linkbordercolor=white,pdfborder={0 0 0}]{hyperref}
 \usepackage{test}
-
+\usepackage{showexpl}
+\usepackage{xstring}
 
 \begin{document}
-Testing
 
+\section{Testing Test Framework}
 
-\assert{right}{wrong}
-\assert{right}{right}
-\assert[right and wrong]{right}{wrong}
-\assert[just right]{right}{right}
+We test the testing framework in this document. First we test
+`\textbackslash{}StrCompare` to understand its output, then we go ahead and test the
+`\textbackslash{}assert` macro.
 
+\subsection{StrCompare}
+
+The `StrCompare` macro takes two string arguments and prints the position of first character that
+is different. If the two strings are the same, it returns 0.  It has two modes, `\comparestrict` and
+`\comparenormal`. The normal mode will only match to the shorter
+string, returning 0 if the shorter string is a prefix.
+  
+\begin{LTXexample}
+  \StrCompare{1234}{01234} = 1, $1\ne0$\par
+  {\comparenormal
+    \StrCompare{1234}{12345}}=0, normal mode accepts prefixes\par
+  {\comparestrict
+    \StrCompare{1234}{12345}}=5, strict mode flags prefixes\par 
+  \StrCompare{1234x}{12345}=5, $x\ne5$\par
+\end{LTXexample}
+
+We can also do simple macro substitutions in `StrCompare`.
+
+\begin{LTXexample}
+  \def\a{1234}
+  \StrCompare{\a}{1234}=0, $1=1$\par
+  \StrCompare{\a}{01234}=1, $1\ne0$\par
+  \StrCompare{right}{wrong}=1, $r\ne{}w$\par
+  \def\a{right}
+  \StrCompare{\a}{wrong}=1, $r\ne\ w$\par
+\end{LTXexample}
+
+We can use macros that take arguments inside `StrCompare`.
+
+\begin{LTXexample}
+  \def\a#1{#1 world}
+  \StrCompare{\a{hello}}{hello world}
+\end{LTXexample}
+
+We can also use \LaTeX\ `newcommand` in `StrCompare`.
+\begin{LTXexample}
+  \newcommand{\aaa}[1]{#1 world}
+  \StrCompare{\aaa{hello}}{hello world}
+\end{LTXexample}
+
+But macros with optional arguements won't work
+in `StrCompare`.
+
+\begin{LTXexample}
+  \newcommand{\aaaa}[1][hello]{#1 world}
+  \aaaa\par\aaaa[hi]\par
+  % \StrCompare{\aaaa[hello]}{hello world} % this raises an error, 
+  % undefined control sequence
+\end{LTXexample}
+
+Macros with multiple arguments work in `StrCompare`.
+\begin{LTXexample}
+  \newcommand{\aaab}[2]{#1 #2}
+  \aaab{hello}{world}\par 
+  \StrCompare{\aaab{hello}{world}}{hello world} $=0$
+\end{LTXexample}
+
+\subsection{assert}
+
+We can assert equality between simple strings. 
+
+\begin{LTXexample}
+  \assert{right}{wrong}
+  \assert{right}{right}
+  \assert[right and wrong]{right}{wrong}
+  \assert[just right]{right}{right}
+\end{LTXexample}
+
+But \TeX complains if we try to use formatting in an assertion. 
+  
+\begin{LTXexample}
+  \def\a{\emph{hello}}
+  \def\b{\emph{hello }}
+  % \assert{\a}{\b} % TeX complains:
+%   I've run across a `}' that doesn't seem to match anything.
+% For example, `\def\a#1{...}' and `\a}' would produce
+% this error. If you simply proceed now, the `\par' that
+% I've just inserted will cause me to report a runaway
+% argument that might be the root of the problem. But if
+% your `}' was spurious, just type `2' and it will go away.
+\end{LTXexample}  
+
+Simple macros with or without arguments are ok.
+
+\begin{LTXexample}
+  \def\a{hello }
+  \assert{hello world}{\a world}
+
+  \def\a#1{hello #1}
+  \assert{\a{world}}{hello world}
+  
+  \def\a#1#2{#1 #2}
+  \assert{\a{hello}{world}}{hello world}
+
+  \newcommand\testAssertA{hello world}
+  \assert{\testAssertA}{hello world}
+
+  \newcommand\testAssertB[1]{#1 world}
+  \assert{\testAssertB{hello}}{hello world}
+
+  \newcommand\testAssertC[2]{#1 #2}
+  \assert{\testAssertC{hello}{world}}{hello world}
+
+\end{LTXexample}
+
+But using `\textbackslash{}assert` with a `\textbackslash{}newcommand` with an optional argument
+causes \TeX\ to throw an error.
+
+\begin{LTXexample}
+  \newcommand\testAssertD[1][hello]{#1 world}
+  % \assert{\testAssertD}{hello world} % error 
+  % TeX encountered an unknown command name. 
+\end{LTXexample}
+
+We can't use a macro defined with a `\textbackslash{}newcommand` in `\textbackslash{}assert`.
+
+\begin{LTXexample}
+  % \DeclareRobustCommand\testAssertE[1][hello]{#1 world}% doesn't work 
+  \newcommand\testAssertE[1][hello]{#1 world}% doesn't work 
+  \testAssertE 
+  
+  \testAssertE{}
+  % \def\testResultE{\testAssertE\relax}% doesn't work 
+  % \edef\testResultE{\protect\testAssertE[hello]}% doesn't work:
+  % testAssertE doesn't match its definition.
+  
+  % \assert{\testResultE{}}{hello world} % error
+\end{LTXexample}
 
 \end{document}
