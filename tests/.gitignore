@@ -4,3 +4,4 @@ testtest.pdf
 *.tmp
 testmaptwo.pdf
 testtest.rel
+.#*.tex
