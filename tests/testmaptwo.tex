@@ -38,4 +38,37 @@ macro to apply to each pair, and the two lists.
   \maptwo;{\par\vspace{5mm}}{\hello}{one;two; three;four}{a;b;c}
   
 \end{LTXexample}
+
+\section{Defining a macro in a macro}
+
+Basic: 
+
+\begin{LTXexample}
+  \def\mklst#1{\def#1{one,two,three}}
+  \mklst{\hello}
+  hello is now: 
+  \hello 
+\end{LTXexample}
+
+If we want to use a macro in its own definition, we need to edef it,  
+otherwise \TeX\ gets confused and goes into an infinite loop.  
+
+ \begin{LTXexample}
+  \def\mklst#1{\edef#1{#1,one,two,three}}
+  \def\hello{zero}
+  \mklst{\hello}
+  hello is now:   \hello 
+\end{LTXexample}
+
+\begin{LTXexample}
+  \def\addtolst#1#2,{\ifx\relax#2\relax\def\next{\relax}%
+    List is #1\par\else Defining #1\par\edef#1{#1;#2}%
+  \def\next{\addtolst{#1}}\fi\next}
+
+\def\mylst{zero}
+
+\addtolst{\mylst}one,two,three,,
+
+\end{LTXexample}
 \end{document}
+
