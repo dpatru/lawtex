@@ -103,13 +103,25 @@ in a list. We can roll our own, or we can use etoolbox's
 
 \begin{LTXexample}
   \def\ltrimtrace#1{{Processing (#1)\par\IfEq{#1}{ }{\def\next{ltrim}}{\def\next{#1}}\next}}
-  \def\ltrim#1{{\IfEq{#1}{ }{\def\next{ltrim}}{\def\next{#1}}\next}}
+  \def\ltrim#1{{\IfEq{#1}{ }{\def\next{ltrim}}{\def\next{\relax #1}}\next}}
+
+  space test
   
-  \def\hello{     hello}
+  \def\hello{    hello}
+
+  trimmed hello: (\ltrim    hello) 
+
+  trimmed \textbackslash{}hello: (\expandafter\ltrim\hello)
+  
+  trimmed \textbackslash{}hello: (\ltrim   \hello) 
+
+  no space test
+  
+  \def\hello{hello}
 
   trimmed hello: (\ltrim    hello)
 
-  trimmed \textbackslash{}hello: (\expandafter\ltrim\hello)
+  trimmed \textbackslash{}hello: (\expandafter\ltrim\hello) 
 
   \hrule
 
@@ -125,23 +137,19 @@ in a list. We can roll our own, or we can use etoolbox's
   
   \renewcommand\do[1]{%
     \par Doing (#1)\par%
-    % \edef\cite{\ltrim #1}%
-    \edef\cite{#1}%
-    \par cite is (\cite)\par%
-    \edef\book{\expandafter\getbook\cite;}\par book is (\book)\par%
-    \edef\page{\expandafter\getpage\cite;}\par page is (\page)\par%
-    \par before-books is (\books)\par%
+    % arg is (\detokenize{#1})%
+    % \edef\cite{\expandafter\ltrim{#1}}%
+    \edef\cite{#1}Cite is (\cite)\par% this is automatically trimmed
+                                % of spaces.
+    \edef\book{\expandafter\getbook\cite;}%
+    \edef\page{\expandafter\getpage\cite;}%
     \IfEq{\books}{}{%
-    \par before-books is empty(\books)\par%
     \edef\books{\book}\edef\pages{\page}%
     }{% else books is not empty
-    \par before-books is not empty (\books)\par%
     \edef\books{\books;\book}%
     \edef\pages{\pages;\page}%
     }%
-    \par books is (\books)\par%
-    \par pages is (\pages)\par%
-    \vspace{5mm}%
+    % \par books is (\books)\par pages is (\pages)\par \vspace{5mm}% debug
     }
 
     processCites:
