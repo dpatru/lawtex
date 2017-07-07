@@ -68,7 +68,30 @@ otherwise \TeX\ gets confused and goes into an infinite loop.
 \def\mylst{zero}
 
 \addtolst{\mylst}one,two,three,,
-
 \end{LTXexample}
+
+\section{Undoing maptwo}
+
+We can undo \textbackslash{}maptwo by taking a list and decomposing it
+into two lists.
+
+\begin{LTXexample}
+  \def\undoMapTwo#1#2#3 #4,{% Expects a comma separated list with
+                            % ending flag being two commas separated
+                            % by a space.
+    \def\next{\undoMapTwo{#1}{#2}}%
+    \ifx\relax#3\relax Lists are: (#1) and (#2)\par\def\next{\relax}% Stop
+    \else\ifx\empty#1\empty Initializing the macros\par\edef#1{#3}\edef#2{#4}% first time
+    \else Adding to the list #1 \edef#1{#1, #3} Adding to the list #2\par \edef#2{#2, #4}%
+    \par\fi\fi\next}
+
+  \def\one{}\def\two{} % TeX complains if these are not defined.
+  \undoMapTwo\one\two 1 one,2 two,3 three, ,
+
+  List one is \one.
+
+  List two is \two.
+  
+\end{LTXexample}  
 \end{document}
 
