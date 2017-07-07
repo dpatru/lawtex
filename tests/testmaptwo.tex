@@ -32,10 +32,10 @@ macro to apply to each pair, and the two lists.
   Testing \textbackslash{}maptwo:
 
   Call \lstinline|\maptwo| with input list separator semicolon,
-  output list separator \lstinline|\par|, macro \lstinline|\hello|, and lists
-  \lstinline|one;two| and \lstinline|a;b;c|.
+  output list separator \lstinline|\par\vspace{5mm}|, macro \lstinline|\hello|, and lists
+  \lstinline|one;two; three;four| and \lstinline|a;b;c|.
   
-  \maptwo;{\par\vspace{5mm}}{\hello}{one;two}{a;b;c}
+  \maptwo;{\par\vspace{5mm}}{\hello}{one;two; three;four}{a;b;c}
   
 \end{LTXexample}
 \end{document}
