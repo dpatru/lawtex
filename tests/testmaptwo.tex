@@ -8,32 +8,34 @@
 \usepackage{test}
 \usepackage{showexpl} % LTXexample blocks
 \usepackage{xstring}
-
+\usepackage{listings}
 \begin{document}
 
 \section{Testing maptwo}
 
 We test a looping macro that applies a two-argument command to each
-pair of two lists. 
+pair of two lists. Macro \lstinline|\maptwo| is called with five
+parameters: the input list separator, the output list separator, the
+macro to apply to each pair, and the two lists.
 
 \begin{LTXexample}
-  \def\maptwo#1#2#3{{% create a block to restrict the scope
+  \long\def\maptwo#1#2#3#4#5{{% create a block to restrict the scope
     \def\endlist{\endlist}% mark the end of the list
     \makeatletter
-    \def\@maptwo##1##2;##3\endlist##4;##5\endlist{%
+    \long\def\@maptwo##1##2#1##3\endlist##4#1##5\endlist{%
       \ifx\empty##2\empty\relax\else\ifx\empty##4\empty\relax\else{}##1{##2}{##4}\fi\fi%
       \ifx\empty##3\empty\relax\else\ifx\empty##5\empty\relax\else%
-      \@maptwo{##1}##3\endlist{}##5\endlist\fi\fi}
-    \@maptwo{#1}#2;\endlist{}#3;\endlist}}
-  \def\hello#1#2{hello #1 #2\par}
-
-  % Testing \textbackslash{}mymaptwo:
-  
-  % \mymaptwo\hello{}one;two;\endlist{}a;b;c;\endlist 
+      #2\@maptwo{##1}##3\endlist{}##5\endlist\fi\fi}
+    \@maptwo{#3}#4#1\endlist{}#5#1\endlist}}
+  \def\hello#1#2{hello #1 #2}
 
   Testing \textbackslash{}maptwo:
+
+  Call \lstinline|\maptwo| with input list separator semicolon,
+  output list separator \lstinline|\par|, macro \lstinline|\hello|, and lists
+  \lstinline|one;two| and \lstinline|a;b;c|.
   
-  \maptwo{\hello}{one;two}{a;b;c}
+  \maptwo;{\par\vspace{5mm}}{\hello}{one;two}{a;b;c}
   
 \end{LTXexample}
 \end{document}
