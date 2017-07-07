@@ -17,18 +17,19 @@ We test a looping macro that applies a two-argument command to each
 pair of two lists. 
 
 \begin{LTXexample}
-  \def\endlist{\endlist}% mark the end of the list
-  \def\mymaptwo#1#2;#3\endlist#4;#5\endlist{%
-    \ifx\empty#2\empty\relax\else\ifx\empty#4\empty\relax\else{}#1{#2}{#4}\fi\fi%
-    \ifx\empty#3\empty\relax\else\ifx\empty#5\empty\relax\else%
-    \mymaptwo{#1}#3\endlist{}#5\endlist\fi\fi}
-
-  \def\maptwo#1#2#3{\mymaptwo{#1}#2;\endlist{}#3;\endlist}
+  \def\maptwo#1#2#3{{% create a block to restrict the scope
+    \def\endlist{\endlist}% mark the end of the list
+    \makeatletter
+    \def\@maptwo##1##2;##3\endlist##4;##5\endlist{%
+      \ifx\empty##2\empty\relax\else\ifx\empty##4\empty\relax\else{}##1{##2}{##4}\fi\fi%
+      \ifx\empty##3\empty\relax\else\ifx\empty##5\empty\relax\else%
+      \@maptwo{##1}##3\endlist{}##5\endlist\fi\fi}
+    \@maptwo{#1}#2;\endlist{}#3;\endlist}}
   \def\hello#1#2{hello #1 #2\par}
 
-  Testing \textbackslash{}mymaptwo:
+  % Testing \textbackslash{}mymaptwo:
   
-  \mymaptwo\hello{}one;two;\endlist{}a;b;c;\endlist 
+  % \mymaptwo\hello{}one;two;\endlist{}a;b;c;\endlist 
 
   Testing \textbackslash{}maptwo:
   
