@@ -44,7 +44,9 @@
 \RequirePackage{multind} 
 \RequirePackage{xstring} 
 \RequirePackage{xspace} 
-\RequirePackage{url} 
+\RequirePackage{url}
+\RequirePackage{list}
+
 %\def\url@leostyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
 \def\url@leostyle{\def\UrlFont{\footnotesize\ttfamily}}
 \urlstyle{leo}
@@ -104,9 +106,85 @@
 %% With case citations that differ from the standard format, you may need to use the _\newcase_ command.
 %% For example, in ``\emph{Marbury v. Madison}, 5 U.S. (1 Cranch), 137 (1803)'', the extra parentheses around
 %% the ``(1~Cranch.)'' will throw off the parser. See the way that this is cited below. 
-%% 
-\newcommand{\citecase}[2][]{%
-	%Find the first space and paren, and cut it and everything else after as the parenthetical
+%%
+\DeclareListParser*{\processCites}{;}
+\newcommand\processCitesDo[1]{% process a cite, used in parseCitations
+  % separates the citations into reporters and pages, citations are
+  % separated by a semicolon (;)
+  \long\def\@parseCitations ##1 ##2 ##3;{%
+    % Citations 1:(##1) 2:(##2) 3:(##3)\par%
+    \listadd{\reporters}{##1 ##2}\listadd{\startpages}{##3}%
+  }%
+  % processCitesDo parsing (#1)\par% for debugging
+  \@parseCitations#1;%
+}
+\newcommand\parseCitations[1]{%
+  \def\c##1{\processCites{\processCitesDo}{##1}}%
+  \def\reporters{\empty}\def\startpages{\empty}% Reset the macros which store the output
+  % Processing cites\par%
+  \expandafter\c\expandafter{#1}%
+  % Done processing Cites\par%
+}
+\newcommand{\deriveShortCaseName}[1]{%
+  % Use the first party name, unless it's too common
+  \IfSubStr{#1}{ v. }{\edef\v{ v. }}%
+  {\IfSubStr{#1}{ v }{\edef\v{ v }}%
+    {\edef\v{\empty}}}%
+  \ifx\empty\v\empty\edef\@shortname{#1}%
+  \else%
+  \StrBefore{#1}{\v}[\@firstpartyname]%
+  \StrBehind{#1}{\v}[\@secondpartyname]%
+  \edef\@shortname{\@firstpartyname}%
+  \IfEq{\@firstpartyname}{United States}{\edef\@shortname{\@secondpartyname}}{}%
+  \IfEq{\@firstpartyname}{State}{\edef\shortname{\@secondpartyname}}{}%
+  \IfEq{\@firstpartyname}{People}{\edef\shortname{\@secondpartyname}}{}%
+  \IfEq{\@firstpartyname}{Commonwealth}{\edef\@shortname{\@secondpartyname}}{}%
+  \fi%
+  (\@shortname)%
+}
+\newcommand{\parseCase}[3][]{%1: short name, 2: full case, 3: continuation
+  % The continuation receives five parameters: shortname, casename,
+  % reporters, startpages, paren
+  parseCase(#1)(#2)\par%
+  % Find the first space and paren, and cut it and everything else after as the parenthetical
+  \StrPosition{#2}{ (}[\@parenpos]%
+  \StrGobbleLeft{#2}{\numexpr \@parenpos}[\@paren]%
+  \StrLeft{#2}{\numexpr \@parenpos-1 }[\@withoutparen]%
+  % 
+  parenpos = (\@parenpos)\par%
+  paren = (\@paren)\par%
+  withoutparen = (\@withoutparen)\par%
+  % 
+  % With the parenthetical gone, we look for the LAST comma,
+  % and assume the citation is there to the end, parallel cites are
+  % separated by a semicolon.
+  \StrCount{\@withoutparen}{,}[\@commacount]%
+  \StrPosition[\@commacount]{\@withoutparen}{,}[\@lastcommapos]%
+  \StrGobbleLeft{\@withoutparen}{\numexpr \@lastcommapos+1}[\@citation]%
+  \StrLeft{\@withoutparen}{\numexpr \@lastcommapos-1}[\@casename]%
+  %
+  citation = (\@citation)\par%
+  casename = (\@casename)\par%
+  %
+  \parseCitations{\@citation}
+  reporters = (\listjoin{\reporters})\par%
+  pages = (\listjoin{\startpages})\par%
+  % % 
+  % Set the short name
+  \IfEq{#1}{}{% Short name was not given explicitly
+    Deriving shortname\par%
+    % an edef here causes an error
+    \def\@shortname{\deriveShortCaseName{\@casename}}
+  }{% If a short name is given explicitly, use that
+    Using explicit shortname (#1)\par%
+    \edef\@shortname{#1}%
+  }
+  shortname = (\@shortname) 
+  #3{\@shortname}{\@casename}{\listjoin\reporters}{\listjoin\startpages}{\@paren}%
+}
+
+  \newcommand{\citecase}[2][]{%
+    % Find the first space and paren, and cut it and everything else after as the parenthetical
 	\StrPosition{#2}{ (}[\@parenpos]%
 	\StrGobbleLeft{#2}{\numexpr \@parenpos-1}[\@paren]%
 	\StrLeft{#2}{\numexpr \@parenpos-1 }[\@withoutparen]%
@@ -586,16 +664,16 @@
 
 \def\@CapLeadingSignal{\futurelet\@NextToken\@@CapLeadingSignal}
 \def\@@CapLeadingSignal{\begingroup%
-                           \ifx\@NextToken\see\See\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\seealso\Seealso\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\seeeg\Seeeg\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\cf\Cf\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\butsee\Butsee\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\butcf\Butcf\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\accord\Accord\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\contra\Contra\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
-                           \ifx\@NextToken\id\Id\absorb\else%
-                           \relax\fi\fi\fi\fi\fi\fi\fi\fi\fi\endgroup}
+  \ifx\@NextToken\see\See\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\seealso\Seealso\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\seeeg\Seeeg\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\cf\Cf\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\butsee\Butsee\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\butcf\Butcf\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\accord\Accord\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\contra\Contra\globalsetboolean{@bbCapNextSource}{false}\absorb\else%
+  \ifx\@NextToken\id\Id\absorb\else%
+  \relax\fi\fi\fi\fi\fi\fi\fi\fi\fi\endgroup}
 
 \newcommand{\citeclause}[1]{%
 	\ifthenelse{\boolean{@bbLawReviewMode} \and \not \boolean{@bbInFootnote}}

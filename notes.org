@@ -1,4 +1,8 @@
 * LaWTeX notes
+** questions
+- Why are macros starting with backslash-at (\@) allowed in
+  bluebook.sty?
+
 ** Objectives
 - Maintain backward compatibility.
 - Allow state customizations.
@@ -10,11 +14,33 @@ Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-a
 **** DONE create test directory and macros
 **** TODO write tests
 ***** DONE test the testing framework
-***** DONE test duplicate case names
+***** DONE test short name generation
+***** DONE test citation separation
+***** TODO test parseCase
+***** TODO test citecase
+***** TODO test cite
+***** TODO test pincite
+***** TODO test duplicate case names
 Use a bash script, because the latex build fails when the test passes.
 I tried to use colors but abandoned the effort because it was taking
 too much time.
+***** TODO Prepare bluebook.sty for testing
+The assert macro of the testing framework only tests clean
+strings. (It cannot handle emphasized strings.) The macros in bluebook
+should be rewritten so as to allow the testing of clean strings. We
+can also test the output of the final `\textbackslash{}cite` and
+`\textbackslash{}pincite` macros by eye, not using the assert macro.
+
+Need to track down how cases are printed. 
+Start with \cite then \pincite 
+\cite -> @bbsource -> @bbReporterOnlyCite 
+\cite -> @bbsource -> @bbReporterOnlyPinCite 
+\cite -> @bbsource -> @bbLongCite -> \@bbCaseLongCite 
+\cite -> @bbsource -> @bbShortCite
+
 ***** TODO test cases with 1 cite.
+***** test cases with 2 cites.
+
 *** TODO Extension
 Extend the existing framework to allow parallel citations and slip opinions.
 

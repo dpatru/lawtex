@@ -6,66 +6,132 @@
 \usepackage{setspace,xcolor}
 \usepackage[hyperindex=false,linkbordercolor=white,pdfborder={0 0 0}]{hyperref}
 \usepackage{test}
+\usepackage{showexpl} % LTXexample blocks
 
 %%Cases
 \makeandletter
 \citecase{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}
-\citecase[Playboy]{United States v. Playboy Entertainment Group, Inc., 529 U.S. 803 (2000)}
-\citecase{Chaplinsky v. New Hampshire, 315 U.S. 568 (1942)}
-\citecase{R.A.V. v. City of St. Paul, Minnesota, 505 U.S. 377 (1992)}
-\citecase{United States v. Stevens, 130 S. Ct. 1577 (2010)}
-\citecase[Carrigan]{Nevada Com'n on Ethics v. Carrigan, 131 S. Ct. 2343 (2011)}
-\citecase[Lorillard]{Lorillard Tobacco Co. v. Reilly, 533 U.S. 525 (2001)}
-\citecase[Ferber]{New York v. Ferber, 458 U.S. 747 (1982)}
-\citecase{Brown v. Entertainment Merchants Ass'n, 131 S. Ct. 2729 (2011)}
-\citecase{Winters v. New York, 333 U.S. 507 (1948)}
-\citecase[Hustler]{Hustler Magazine, Inc. v. Falwell, 485 U.S. 46 (1988)}
-\citecase{Gertz v. Robert Welch, Inc., 418 U.S. 323 (1974)}
-\citecase[BE & K Construction]{BE & K Construction Co. v. N.L.R.B., 536 U.S. 516 (2002)}
-\citecase{Keeton v. Hustler Magazine, Inc., 465 U.S. 770 (1984)}
-\citecase[Bill Johnson's]{Bill Johnson's Restaurants, Inc. v. N.L.R.B., 461 U.S. 731 (1983)}
-\citecase{Herbert v. Lando, 441 U.S. 153 (1979)}
-\citecase{Garrison v. Louisiana, 379 U.S. 64 (1964)}
 
-\newcase{Alvarez I}{United States v. Alvarez \emph{(Alvarez I)}}{Docket 2:07-cr-01035, No. 29}{}{(C.D. Cal., Apr. 9, 2008)}
-\newcase{Alvarez II}{United States v. Alvarez \emph{(Alvarez II)}}{617 F.3d}{1198}{(9th Cir. 2010), \noexpand\emph{reh'g en banc denied}, 638 F.3d 666 (9th Cir. 2011)}
-\SetIndexName{Alvarez II}{United States v. Alvarez \emph{(Alvarez II)}, 617 F.3d 1198 (9th Cir. 2010)}
-
-\citecase{Snyder v. Phelps, 131 S. Ct. 1207 (2011)}
-\citecase[New York Times]{New York Times Co. v. Sullivan, 376 U.S. 254 (1964)}
-\citecase{Va. State Bd. of Pharmacy v. Va. Citizens Consumer Council, Inc., 425 U.S. 748 (1976)}
-\citecase[Johnson]{Texas v. Johnson, 491 U.S. 397 (1989)}
-\citecase[Black]{Virginia v. Black, 538 U.S. 343 (2003)}
-\newcase{Madigan}{Illinois, \emph{ex rel.} Madigan v. Telemarketing Associates, Inc.}{538 U.S.}{600}{(2003)}
-\citecase{United States v. Williams, 553 U.S. 285 (2008)}
-\citecase{Meyer v. Grant, 486 U.S. 414 (1988)}
-\citecase{Carpenter v. United States, 484 U.S. 19 (1987)}
-\citecase{NAACP v. Button, 371 U.S. 415 (1963)}
-\citecase{Riley v. National Federation of the Blind of North Carolina, Inc., 487 U.S. 781 (1988)}
-\citecase{Schaumburg v. Citizens for a Better Environment, 444 U.S. 620 (1980)}
-\citecase[Munson]{Secretary of State of Md. v. Joseph H. Munson Co., 467 U.S. 947 (1984)}
-\citecase[Dun & Bradstreet]{Dun & Bradstreet, Inc. v. Greenmoss Builders, Inc., 472 U.S. 749 (1985)}
-\citecase{United States v. Dunnigan, 507 U.S. 87 (1993)}
-\makeandtab
-
-%The following line add ``U.S. Const. Amend. I'' to the Statutes index section, 
-% uses the aa@ prefix to order it first in the list, 
-% and marks it passim
-\index{Statute}{aa@\textsc{U.S. Const.} amend. I|idxpassim}
-\index{Statute}{ab@Stolen Valor Act, 18 U.S.C. \S 704|idxpassim}
-
-\newmisc{151 Cong. Rec.}{151 Cong. Rec. S12684-01\pin{, }{}}
-\newmisc{152 Cong. Rec.}{152 Cong. Rec. H8819-01\pin{, }{}}
-\newmisc{Restatement of Torts}{Restatement of Torts\pin{ }{} (1938)}
-
-% \def\ifempty#1{\ifx \relax#1\relax}
-
-% \newcommand\ifempty[1]{\def\temp{#1} \ifx\temp\empty }
 
 \begin{document}
-\assert{right}{wrong}
-\assert{right}{right}
-\assert[right and wrong]{right}{wrong}
-\assert[just right]{right}{right}
+
+\section{Testing the brief}
+\subsection{Test newlist}
+\begin{LTXexample}
+  \listadd{\newlist}{a}
+  \listadd{\newlist}{a}
+  \listadd{\newlist}{a}
+  \listadd{\newlist}{a}
+  newlist = (\listjoin{\newlist})
+\end{LTXexample}  
+
+\subsection{Test shortname}
+\begin{LTXexample}
+  shortcasename = (\deriveShortCaseName{Ashcroft v. American Civil Union})\par 
+  shortcasename = (\deriveShortCaseName{Ashcroft v American Civil Union})\par 
+  shortcasename = (\deriveShortCaseName{Ashcroft vs. American Civil Union})\par 
+  shortcasename = (\deriveShortCaseName{Ashcroft v. American Civil 
+    Union})\par 
+  shortcasename = (\deriveShortCaseName{Ashcroft v American Civil 
+    Union})\par 
+  shortcasename = (\deriveShortCaseName{Ashcroft vs. American Civil 
+    Union})\par 
+  \def\nest{\deriveShortCaseName{Ashcroft v. American Civil Union}}
+  shortcasename-def = (\nest)\par 
+  % An edef here throws an error.  I have no idea why
+  % \edef\nest{\deriveShortCaseName{Ashcroft v. American Civil Union}}
+  % shortcasename-nested = (\nest)\par 
+  \newcommand\nested{\deriveShortCaseName{Ashcroft v. American Civil Union}}
+  shortcasename-newcommand = (\nested)\par 
+\end{LTXexample}
+\subsection{Test parseCitations}
+\begin{LTXexample}
+  Basic test\par
+  parseCitations: (\parseCitations{123 reporter1 234; 345 reporter2
+    456}) parens should be empty\par 
+  reporters: \listjoin\reporters\par 
+  start pages: \listjoin\startpages\par
+  \hrule\par
+  Can we do it again? Will reporters and pages reset?\par
+  parseCitations: (\parseCitations{123 reporter1 234; 345 reporter2
+    456}) parens should empty\par 
+  reporters: \listjoin\reporters\par 
+  start pages: \listjoin\startpages\par 
+  \hrule\par
+  Can we parse citations stored in a macro?\par
+  \def\citations{123 reporter1 234; 345 reporter2 456}
+  parseCitations: (\parseCitations{\citations}) parens should be empty\par 
+  reporters: \listjoin\reporters\par 
+  start pages: \listjoin\startpages\par 
+\end{LTXexample}
+
+\subsection{Test case parsing}
+\begin{LTXexample}
+  \def\cont#1#2#3#4#5{%
+    \par%
+    short name: (#1)\par%
+    case name: (#2)\par%
+    reporters: (#3)\par%
+    start pages: (#4)\par%
+    parenthetical: (#5)\par%
+  }
+  % \parseCase{Ashcroft v. American Civil Liberties Union, 535 U.S. 564
+  %   (2002)}{\cont}\par
+
+  % \vspace{5mm}
+  % \par\parseCase{Ashcroft v. American Civil Liberties Union, 535 U.S. 564;
+  %   123 nw2d 456 (2002)}{\cont}
+\end{LTXexample}
+
+
+\subsection{Test FullName}
+
+Check full name.
+
+\assert[FullName]{(\FullName{Ashcroft})}{(Ashcroft v. American Civil Liberties Union)}
+
+Check full name in parens 
+
+\edef\x{(\FullName{Ashcroft})}
+\assert{\x}{(Ashcroft v. American Civil Liberties Union)}
+
+Check full name w/o parens 
+
+\assert[FullName]{\FullName{Ashcroft}}{Ashcroft v. American Civil Liberties Union}
+
+% \strassertx[FullName]{\FullName{Ashcroft}}{Ashcroft v. American Civil Liberties Union}
+
+% \strasserty[FullName]{\FullName{Ashcroft}}{Ashcroft v. American Civil Liberties Union}
+
+\subsection{Test cite}
+
+{\makeatletter%
+  \def\a{\@bbCaseLongCite{Ashcroft}{}}%
+  \def\b{\emph{Ashcroft v. American Civil Liberties Union}, 535 U.S. 564 (2002)}%
+  \def\b{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}%
+  % \assert{\a}{\b}
+}
+
+% \assert{\cite[l]{Ashcroft}}{\cite[l]{Ashcroft}}
+% \assert{\cite[l]{Ashcroft}}{\cite[l]{Ashcroft}} 
+
+% \def\x{(\cite[l]{Ashcroft})}
+% \assert{(\cite[l]{Ashcroft})}{\x}
+
+% \let\y\x 
+% \assert{(\cite[l]{Ashcroft})}{\y}
+
+%assert[sanity]{\cite[l]{Ashcroft}}{\cite[l]{Ashcroft}}
+
+
+% \strasserty[FullName]{(\FullName{Ashcroft})}{(Ashcroft v. American Civil Liberties Union)}
+
+% \strassert[FullName]{(\FullName{Ashcroft})}{(Ashcroft v. American Civil Liberties Union)}
+
+Check cite
+
+% \assert{\cite[l]{Ashcroft}}{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}
+%\strassert{\cite[l]{Ashcroft}}{{\em Ashcroft v. American Civil Liberties Union}, 535 U.S. 564 (2002)}
+
 
 \end{document}
