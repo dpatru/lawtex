@@ -140,20 +140,21 @@
   \IfEq{\@firstpartyname}{People}{\edef\shortname{\@secondpartyname}}{}%
   \IfEq{\@firstpartyname}{Commonwealth}{\edef\@shortname{\@secondpartyname}}{}%
   \fi%
-  (\@shortname)%
+  \@shortname%
 }
 \newcommand{\parseCase}[3][]{%1: short name, 2: full case, 3: continuation
   % The continuation receives five parameters: shortname, casename,
   % reporters, startpages, paren
-  parseCase(#1)(#2)\par%
+  % parseCase(#1)(#2)\par%
   % Find the first space and paren, and cut it and everything else after as the parenthetical
   \StrPosition{#2}{ (}[\@parenpos]%
   \StrGobbleLeft{#2}{\numexpr \@parenpos}[\@paren]%
   \StrLeft{#2}{\numexpr \@parenpos-1 }[\@withoutparen]%
-  % 
-  parenpos = (\@parenpos)\par%
-  paren = (\@paren)\par%
-  withoutparen = (\@withoutparen)\par%
+  %
+  % Debug
+  % parenpos = (\@parenpos)\par%
+  % paren = (\@paren)\par%
+  % withoutparen = (\@withoutparen)\par%
   % 
   % With the parenthetical gone, we look for the LAST comma,
   % and assume the citation is there to the end, parallel cites are
@@ -163,23 +164,27 @@
   \StrGobbleLeft{\@withoutparen}{\numexpr \@lastcommapos+1}[\@citation]%
   \StrLeft{\@withoutparen}{\numexpr \@lastcommapos-1}[\@casename]%
   %
-  citation = (\@citation)\par%
-  casename = (\@casename)\par%
+  % Debug
+  % citation = (\@citation)\par%
+  % casename = (\@casename)\par%
   %
   \parseCitations{\@citation}
-  reporters = (\listjoin{\reporters})\par%
-  pages = (\listjoin{\startpages})\par%
+  % Debug
+  % reporters = (\listjoin{\reporters})\par%
+  % pages = (\listjoin{\startpages})\par%
   % % 
   % Set the short name
   \IfEq{#1}{}{% Short name was not given explicitly
-    Deriving shortname\par%
+    % Deriving shortname\par%
     % an edef here causes an error
     \def\@shortname{\deriveShortCaseName{\@casename}}
   }{% If a short name is given explicitly, use that
-    Using explicit shortname (#1)\par%
+    % Using explicit shortname (#1)\par%
     \edef\@shortname{#1}%
-  }
-  shortname = (\@shortname) 
+  }%
+  %
+  % Debug
+  % shortname = (\@shortname) 
   #3{\@shortname}{\@casename}{\listjoin\reporters}{\listjoin\startpages}{\@paren}%
 }
 

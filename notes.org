@@ -2,7 +2,7 @@
 ** questions
 - Why are macros starting with backslash-at (\@) allowed in
   bluebook.sty?
-
+- Why do edefs in some places cause errors?
 ** Objectives
 - Maintain backward compatibility.
 - Allow state customizations.
@@ -16,7 +16,7 @@ Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-a
 ***** DONE test the testing framework
 ***** DONE test short name generation
 ***** DONE test citation separation
-***** TODO test parseCase
+***** DONE test parseCase
 ***** TODO test citecase
 ***** TODO test cite
 ***** TODO test pincite
