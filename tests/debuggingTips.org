@@ -1,0 +1,8 @@
+* Tips for debugging TeX/LaTeX programs
+
+** Narrow down
+- Try to narrow down the problem, reduce it to its essence. 
+- Test as you go, in small increments. 
+
+** Macro definitions
+- Try replacing an edef with def or vice versa.
