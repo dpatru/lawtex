@@ -188,20 +188,50 @@ Check full name w/o parens
 
 \begin{LTXexample}
   \citecase{A v. B, 1 U.S. 2 (2002)}
-  \citecase{B v. B, 1 U.S. 2; 3 M 4 (2002)}
-  \citecase{C v. B, 1 U.S. 2; 3 M 4; 5 T 6 (2002)}
+  \citecase{B v. B, 1 U.S. 2; 3 Mich App 4 (2002)}
+  \citecase{C v. B, 1 U.S. 2; 3 Mich App 4; 5 Mich App 6 (2002)}
   {\makeatletter%
     % \let\CF\empty 
     \hrule 
-    \@bbCaseLongCite{A}{}\par
-    \@bbCaseLongCite{A}{1}\par
-    \@bbCaseLongCite{B}{}\par
-    \@bbCaseLongCite{B}{1}\par
-    \@bbCaseLongCite{B}{1; 2}\par
-    \@bbCaseLongCite{C}{}\par
-    \@bbCaseLongCite{C}{1}\par
-    \@bbCaseLongCite{C}{1; 2}\par
-    \@bbCaseLongCite{C}{1; 2; 3}\par
+    \@bbCaseLongCite{A}{}\par 
+    \@bbCaseLongCite{A}{1}\par 
+    \@bbCaseLongCite{B}{}\par 
+    \@bbCaseLongCite{B}{1}\par 
+    \@bbCaseLongCite{B}{1; 2}\par 
+    \@bbCaseLongCite{C}{}\par 
+    \@bbCaseLongCite{C}{1}\par 
+    \@bbCaseLongCite{C}{1; 2}\par 
+    \@bbCaseLongCite{C}{1; 2; 3}\par 
+  }
+\end{LTXexample}
+
+\begin{LTXexample}
+  \citecase{A v. B, 1 Mich App 2 (2002)}
+  \citecase{B v. B, 1 U.S. 2; 3 Mich\,App 4 (2002)}
+  \citecase{C v. B, 1 U.S. 2; 3 Mich\,App 4; 5 Mich App 6 (2002)}
+  {\makeatletter%
+    % \let\CF\empty 
+    \hrule 
+    \@bbCaseShortCite{A}{}\par 
+    \@bbCaseShortCite{A}{1}\par 
+    \@bbCaseShortCite{B}{}\par 
+    \@bbCaseShortCite{B}{1}\par 
+    \@bbCaseShortCite{B}{1; 2}\par 
+    \@bbCaseShortCite{C}{}\par 
+    \@bbCaseShortCite{C}{1}\par 
+    \@bbCaseShortCite{C}{1; 2}\par 
+    \@bbCaseShortCite{C}{1; 2; 3}\par 
+  }
+ 
+\end{LTXexample}
+
+\begin{LTXexample}
+  \citecase{A v. B, \_\_  U.S. \_\_ (2002)}
+  {\makeatletter%
+    % \let\CF\empty 
+    \hrule 
+    \@bbCaseLongCite{A}{}\par  
+    \@bbCaseLongCite{A}{slip op at 1}\par 
   }
 \end{LTXexample}
 
