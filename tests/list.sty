@@ -1,17 +1,43 @@
 \usepackage{etoolbox}
 
+% \newcommand\maplist[3]{{% 1:separator; 2:macro; 3: list 
+% \protected\def\maplist#1#2#3{{% 1:separator; 2:macro; 3: list 
+\DeclareRobustCommand\maplist[3]{% 1:separator; 2:macro; 3: list 
+  \def\maplistMap##1#1{%
+    \ifx\empty##1\empty\def\next{\relax}%
+    \else%
+    #2{##1}\def\next{\maplistMap}%
+    \fi\next}%
+  % maplist 1[#1];2[#2];3[#3]
+  \expandafter\maplistMap#3#1#1%
+}
 
-\newcommand\listjoin[2][,]{{%
-        \makeatletter\def\separator@{\empty}%
-        \renewcommand\do[1]{\separator@##1\def\separator@{#1}}%
-        \dolistloop{#2}}}
+\def\altmap#1,{\ifx\empty#1\empty\else(hello #1)\expandafter\altmap\fi}
 
-    \newcommand\splitlist[3][,]{% 1: separator (default ,), 2: list name
-      \DeclareListParser{\splitListParser}[#1]%
-      \def\do##1{\listadd{#2}{##1}}%
-      \splitListParser{#3}
-    }
-  \long\def\maptwo#1#2#3#4#5{{% create a block to restrict the scope
+\edef\fixed#1{(hello #1)}
+
+
+\newcommand\join[3]{%1: in separator, 2: out separator, 3: list
+    \def\second##1{#2##1}%
+    \def\first##1{##1\let\first\second}%
+    \maplist{#1}{\first}{#3}}
+    
+% \newcommand\listjoin[3][\empty]{{%
+%     \makeatletter\def\separator@{\empty}%
+%     \ifx\empty#1\empty%
+%     \renewcommand\do[1]{\separator@##1\long\def\separator@{#1}}%
+%     \def\next\dolistloop{#2}}}
+%     \else
+
+\newcommand\splitlist[3][,]{% 1: separator (default ,), 2: list name
+  \DeclareListParser{\splitListParser}[#1]%
+  \def\do##1{\listadd{#2}{##1}}%
+  \splitListParser{#3}%
+}
+
+% map a two-argument macro onto two lists
+% args: 1: input separator, 2: output separator, 3: macro, 4: list one, 5: list two.
+\long\def\maptwo#1#2#3#4#5{{% create a block to restrict the scope
     \def\endlist{\endlist}% mark the end of the list
     \makeatletter
     % maptwo,;\mac{a,b,c}{1,3,3} ->
@@ -19,7 +45,18 @@
     % note that args 1 and 3 are the first elements, and 2 and 4 are
     % the rest. Comma \endlist serves as an end-of-list marker
     \long\def\@maptwo##1#1##2\endlist##3#1##4\endlist{%
-      \ifx\empty##1\empty\relax\else\ifx\empty##3\empty\relax\else{}#3{##1}{##3}\fi\fi%
+      % check if either list is empty
+      \ifx\empty##1\empty\relax\else\ifx\empty##3\empty\relax\else%
+      % both lists are not empty, apply macro (#3) to the first
+      % elements of each list
+      #3{##1}{##3}\fi\fi%
+      %
+      % now check of the remainders of either list is empty
       \ifx\empty##2\empty\relax\else\ifx\empty##4\empty\relax\else%
-      #2\@maptwo##2\endlist{}##4\endlist\fi\fi}
-    \@maptwo#4#1\endlist{}#5#1\endlist}}
+      % both remainders are not empty, tack on output separator and recurse
+      #2\@maptwo##2\endlist{}##4\endlist\fi\fi%
+    }% finish defining utility macro
+    %
+    % call utility macro on the two lists with endlist markers inserted
+    \@maptwo#4#1\endlist{}#5#1\endlist%
+  }}% end maptwo
