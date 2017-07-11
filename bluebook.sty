@@ -835,42 +835,41 @@
   % pages. 
   % This is a nonexpandable macro because it uses xstring. Defining it
   % separately allows testing of the macros connected to this.
-  \edef\name{#1}\edef\pages{#2}\def\continuation{#3}
-  \IfSubStr{\pages}{slip}% Does this reference a slip opinion? 
-  {\edef\bbCaseSlipSuffix{; \pages}\edef\bbCasePages{}}% yes 
-  {\edef\bbCaseSlipSuffix{}\edef\bbCasePages{\pages}}% no
+  \edef\bbname{#1}\edef\bbpages{#2}\def\continuation{#3}
+  \IfSubStr{\bbpages}{slip}% Does this reference a slip opinion? 
+  {\edef\bbCaseSlipSuffix{; \bbpages}\edef\bbCasePages{}}% yes 
+  {\edef\bbCaseSlipSuffix{}\edef\bbCasePages{\bbpages}}% no
   % 
   % Count the reporters
-  \edef\bbCaseReporters{\Reporter{\name}}
+  \edef\bbCaseReporters{\Reporter{\bbname}}
   \StrCount{\bbCaseReporters;}{;}[\bbCaseNumberOfReporters]%
-  \ifcase\bbCaseNumberOfReporters %
-  \errmessage{\numberOfReporters is too few reporters \name at \pages (\Reporter{\name})}%
+  \ifcase\numexpr\bbCaseNumberOfReporters\relax%
+  \errmessage{\numberOfReporters is too few reporters \bbname at \bbpages (\Reporter{\bbname})}%
   \or%1 reporter 
   \or%2 reporters 
   \or%3 reporters 
-  \else\errmessage{too many reporters! \name at \pages}%
+  \else\errmessage{too many reporters! \bbname at \bbpages}%
   \fi 
   % % 
   % find number of pages 
-  \newcount\numberOfPages%
   \ifx\empty\bbCasePages\empty\def\bbCaseNumberOfPages{0}\relax%
   \else%
   \StrCount{\bbCasePages;}{;}[\bbCaseNumberOfPages]%
   \ifnum\numexpr\bbCaseNumberOfPages>\numexpr\bbCaseNumberOfReporters\relax%
   \errmessage{More pages (\bbCaseNumberOfPages) than 
-    reporters(\bbCaseNumberOfReporters). \name at \pages. When you defined this 
+    reporters(\bbCaseNumberOfReporters). \bbname at \bbpages. When you defined this 
     case, did you separate the reporters with a semicolon and space? 
     e.g., Smith v Jones, 123 US 234; 345 SuprCt 456 (2000)}
   \fi 
   \fi 
-  \continuation{\name}{\bbCaseReporters}{\StartPage{#1}}{\bbCasePages}{\bbCaseSlipSuffix}{\bbCaseNumberOfReporters}{\bbCaseNumberOfPages}
+  \continuation{\bbname}{\bbCaseReporters}{\StartPage{#1}}{\bbCasePages}{\bbCaseSlipSuffix}{\bbCaseNumberOfReporters}{\bbCaseNumberOfPages}
   }% end bbCaseCitationEval
-
+\let\bbCaseCitationEval\@bbCaseCitationEval
   
   \newcommand{\@bbCaseLongCiteCitations}[7]{%
     % continuation receives 1: shortname 2: reporters, 3: start pages, 
     % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
-    % pages.
+    % pages. 
     {%
       \edef\name{#1}%
       \edef\reporters{#2}%
