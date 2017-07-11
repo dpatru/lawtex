@@ -878,7 +878,7 @@
       \edef\slipsuffix{#5}%
       \edef\numberOfReporters{#6}%
       \edef\numberOfPages{#7}%
-      \ifcase\numberOfReporters
+      \ifcase\numexpr\numberOfReporters\relax
         \errmessage{no reporters for \name}
         \or% one reporter
         \ifcase\numexpr\numberOfPages\relax%
@@ -987,13 +987,13 @@
       \edef\slipsuffix{#5}%
       \edef\numberOfReporters{#6}%
       \edef\numberOfPages{#7}%
-      \ifcase\numberOfReporters
-        \errmessage{no reporters for \name}
+      \ifcase\numexpr\numberOfReporters\relax%
+        \errmessage{no reporters for \name}%
         \or% one reporter
         \ifcase\numexpr\numberOfPages\relax%
-          \reporters\penalty100\ \startpages\slipsuffix 
+          \reporters\penalty100\ \startpages\slipsuffix %
           \or% one page 
-          \reporters\penalty100\ at~\pages\slipsuffix 
+          \reporters\penalty100\ at~\pages\slipsuffix %
           \else\errmessage{More than one page reference(\numberOfPages), but only one reporter. \name at \pages}%
         \fi% handle cases for one reporter 
         \or% two reporters
@@ -1014,8 +1014,7 @@
         \fi% handle cases for two reporters
       \or% three reporters
         \ifcase\numexpr\numberOfPages\relax%
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1\penalty100\ ##4; ##2\penalty100\ ##5;
-            ##3\penalty100\ ##6 }%
+          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1\penalty100\ ##4; ##2\penalty100\ ##5; ##3\penalty100\ ##6 }%
           \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
           \helper\slipsuffix% 
         \or% one page 
@@ -1023,13 +1022,11 @@
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
           \helper\slipsuffix%
         \or% two pages 
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8;{##1\penalty100\ at~##7; 
-            ##2\penalty100\ at~##8}%
+          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8;{##1\penalty100\ at~##7; ##2\penalty100\ at~##8}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
           \helper\slipsuffix%
         \or% three pages 
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8; ##9;{##1\penalty100\ at~##7; 
-            ##2\penalty100\ at~##8; ##3\penalty100\ at~##9 }%
+          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8; ##9;{##1\penalty100\ at~##7; ##2\penalty100\ at~##8; ##3\penalty100\ at~##9 }%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
           \helper\slipsuffix%
         \else% more than three pages
@@ -1092,8 +1089,13 @@
 	\provideboolean{@forceShort}%
 	\IfSubStr{#3}{l}{\setboolean{@forceLong}{true}}{\setboolean{@forceLong}{false}}%
 	\IfSubStr{#3}{s}{\setboolean{@forceShort}{true}}{\setboolean{@forceShort}{false}}%
+        % Set boolean for multiple cite
+	\provideboolean{@multiplepin}%
+        \IfSubStr{#2}{;}{\setboolean{@multiplepin}{true}}{\setboolean{@multiplepin}{false}}%
+
+
 %
-	%If ``n'' is provided in optional arg, force reporter and page number only (just for Cases)
+	%if ``n'' is provided in optional arg, force reporter and page number only (just for Cases)
 	\IfSubStr{#3}{n}
 	{% n option
 		\ifthenelse{\equal{#2}{}}
@@ -1115,13 +1117,20 @@
 		\fullexpandarg%
 %\show\@pin
 %	
-		%If this authority has not been seen before, or we have not seen it in N notes, use complete form
-		\ifthenelse{\boolean{#1@FirstUse} \or \boolean{@forceLong} \or%
-			\( \boolean{@bbLawReviewMode} \and \( \equal{\SrcType{#1}}{Case} \or \equal{\SrcType{#1}}{Statute} \) \and
-				\(	\( \not \boolean{@bbInFootnote} \and \numexpr\thefootnote-\LastNote{#1}+1\relax > \forcelongevery \) \or			
-					\( \boolean{@bbInFootnote} \and \numexpr\thefootnote-\LastNote{#1}\relax > \forcelongevery \) 
-				\)
-			\) }%
+		%If this authority has not been seen before, or we
+                %have not seen it in N notes, use complete form
+		\ifthenelse{\boolean{#1@FirstUse} \or%
+                  \boolean{@forceLong} \or%
+                  \( \boolean{@bbLawReviewMode} \and%
+                      \( \equal{\SrcType{#1}}{Case} \or \equal{\SrcType{#1}}{Statute} \) \and %
+                      \( \( \not \boolean{@bbInFootnote} \and%
+                          \numexpr\thefootnote-\LastNote{#1}+1\relax > \forcelongevery%
+                       \) \or %
+                       \( \boolean{@bbInFootnote} \and%
+                              \numexpr\thefootnote-\LastNote{#1}\relax > \forcelongevery%
+                        \) %
+                      \) %
+                  \) }%
 		{%
 %\show\@pin
 			\@autofootnote{\@bbSignal\@bbLongCite{#1}{\@pin}\@Period}%
@@ -1150,10 +1159,18 @@
 				\IfInteger{\@pin}{\def\@At{~at~}}{}%
 %
 				%If the exact page as well (or there is no pincite), just use id; otherwise use Id. with pin cite
-				\ifthenelse{\equal{\@bbLastPinPage}{#2} \or \equal{}{#2} }
+				\ifthenelse{\equal{\@bbLastPinPage}{#2} \or \equal{}{#2} }%
 					%{\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id}\@Period}} %I eliminated this because I found cases where there was no way to have a period after the Id.
 					{\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id\@Period}}}%
-					{\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id.}\@At\@pin\@Period}}%
+					{\ifthenelse{\equal{\SrcType{#1}}{Case} \and%
+                                            \boolean{@multiplepin}}{%
+                                            \@autofootnote{\@bbSignal\FillIn{}{\@vol}{%
+                                              }\emph{\@Id.}, \@bbCaseCitationEval{#1}{#2}{\@bbCaseShortCitations}%
+                                            }%
+                                          }{%
+                                            \@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id.}\@At\@pin\@Period}%
+                                          }%
+                                        }%
 				\stepcounter{@bbSequentialIds}%
 			}%
 			{%	
