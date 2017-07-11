@@ -123,12 +123,33 @@
 %Use parseCitations as: (\parseCitations 123 US 234; 345 SuprCt 456; X X 
 % X; ), note that "; X X X; " (9 characters) are  added after the last
 % cite.
-\def\parseCitations #1 #2 #3; {\ifx#2X\else%
-  % reporters: (#1)(#2)(#3)\par%
-  \edef\reporters{\ifx\empty\reporters#1 #2\else\reporters; #1 #2\fi}%
-  \edef\startpages{\ifx\empty\startpages#3\else\startpages; #3\fi}%
-  \expandafter\parseCitations\fi}% we want to read the ending \fi so
-                               % that \parseCitations is the first token left
+\def\parseCitations#1; {%Find the last space-delimited word for the
+  % page
+  % \par parseCitations (#1)\par
+  \IfSubStr{#1}{X X X}{% found the end marker, stop
+  }{%
+    \StrCount{#1}{ }[\@spacecount]%
+    \StrPosition[\@spacecount]{#1}{ }[\@lastspacepos]%
+    \StrGobbleLeft{#1}{\numexpr \@lastspacepos}[\@page]%
+    % \par Grabbed page (\@page) from (#1)\par 
+    \StrLeft{#1}{\numexpr \@lastspacepos-1}[\@reporter]%
+    % \par Grabbed reporter (\@reporter) from (#1)\par 
+    \edef\reporters{\ifx\empty\reporters\@reporter\else\reporters; \@reporter\fi}%
+    \edef\startpages{\ifx\empty\startpages\@page\else\startpages;
+      \@page\fi}%
+    % Recursing\par%
+    \parseCitations%
+  }%
+}
+    % \expandafter\parseCitations}}% we want to read the ending brace so 
+                               % that \parseCitations is the first token left 
+
+% \def\parseCitations #1 #2 #3; {\ifx#2X\else%
+%   % reporters: (#1)(#2)(#3)\par%
+%   \edef\reporters{\ifx\empty\reporters#1 #2\else\reporters; #1 #2\fi}%
+%   \edef\startpages{\ifx\empty\startpages#3\else\startpages; #3\fi}%
+%   \expandafter\parseCitations\fi}% we want to read the ending \fi so 
+%                                % that \parseCitations is the first token left 
 
 % \newcommand\parseCitations[1]{%
 %   \def\c##1{\processCites{\processCitesDo}{##1}}%
@@ -186,6 +207,7 @@
   % citation = (\@citation)\par casename = (\@casename)\par%
   %
   \let\reporters\empty\let\startpages\empty%
+  % Parsing Citations: (\@citation)
   \expandafter\parseCitations\@citation; X X X; %
   % Debug
   % reporters = (\listjoin{\reporters})\par%
@@ -861,49 +883,49 @@
         \errmessage{no reporters for \name}
         \or% one reporter
         \ifcase\numexpr\numberOfPages\relax%
-          \reporters \startpages \Parenthetical{\name}\slipsuffix 
+          \reporters\ \startpages\ \Parenthetical{\name}\slipsuffix 
           \or% one page 
-          \reporters \startpages, \pages \Parenthetical{\name}\slipsuffix 
+          \reporters\ \startpages, \pages\ \Parenthetical{\name}\slipsuffix 
           \else\errmessage{More than one page reference(\numberOfPages), but only one reporter. \name at \pages}%
         \fi% handle cases for one reporter 
         \or% two reporters
         \ifcase\numexpr\numberOfPages\relax%
-          \def\listrefs##1; ##2; ##3; ##4;{##1 ##3; ##2 ##4 }%
+          \def\listrefs##1; ##2; ##3; ##4;{##1 ##3; ##2 ##4}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
-          \helper \Parenthetical{\name}\slipsuffix% 
+          \helper\ \Parenthetical{\name}\slipsuffix% 
         \or% one page 
-          \def\listrefs##1; ##2; ##3; ##4; ##5;{##1 ##3, ##5; ##2 ##4 }%
+          \def\listrefs##1; ##2; ##3; ##4; ##5;{##1 ##3, ##5; ##2 ##4}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper \Parenthetical{\name}\slipsuffix%
+          \helper\ \Parenthetical{\name}\slipsuffix%
         \or% two pages
           \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1 ##3, ##5; ##2
-            ##4, ##6 }%
+            ##4, ##6}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper \Parenthetical{\name}\slipsuffix%
+          \helper\ \Parenthetical{\name}\slipsuffix%
         \else% more than two pages
           \errmessage{More than two page references (\numberOfPages), but only two reporters. \name at \pages}%
         \fi% handle cases for two reporters
       \or% three reporters
         \ifcase\numexpr\numberOfPages\relax%
           \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1 ##4; ##2 ##5;
-            ##3 ##6 }%
+            ##3 ##6}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
-          \helper \Parenthetical{\name}\slipsuffix% 
+          \helper\ \Parenthetical{\name}\slipsuffix% 
         \or% one page 
           \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7;{##1 ##4,
-            ##7; ##2 ##5; ##3 ##6 }%
+            ##7; ##2 ##5; ##3 ##6}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper \Parenthetical{\name}\slipsuffix%
+          \helper\ \Parenthetical{\name}\slipsuffix%
         \or% two pages 
           \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8;{##1 ##4, ##7; 
-            ##2 ##5, ##8; ##3 ##6 }%
+            ##2 ##5, ##8; ##3 ##6}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper \Parenthetical{\name}\slipsuffix%
+          \helper\ \Parenthetical{\name}\slipsuffix%
         \or% three pages 
           \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8; ##9;{##1 ##4, ##7; 
-            ##2 ##5, ##8; ##3 ##6, ##9 }%
+            ##2 ##5, ##8; ##3 ##6, ##9}%
           \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper \Parenthetical{\name}\slipsuffix%
+          \helper\ \Parenthetical{\name}\slipsuffix%
         \else% more than three pages
           \errmessage{More than three page references (\numberOfPages), but only three reporters. \name at \pages}%
         \fi% handle cases for three reporters
