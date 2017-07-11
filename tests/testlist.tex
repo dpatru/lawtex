@@ -1,0 +1,62 @@
+ \providecommand{\documentclassflag}{}
+\documentclass[12pt,\documentclassflag]{article} 
+
+\usepackage{test}
+\usepackage{showexpl} % LTXexample blocks
+\usepackage{list}
+
+\begin{document}
+
+\section{Testing the list macros}
+\subsection{Test maplist}
+\begin{LTXexample}
+  \def\hello#1{(hello #1)}
+  (\maplist{,}{\hello}{one,two,three})
+  % \par\assert{maplist}{\maplist{,}{\hello}{one,two,three}}{(hello
+  %   one)(hello two)(hello three)}
+    
+  \def\lst{one,two,three}
+  \maplist{,}{\hello}{\lst}
+
+  \def\result{\maplist{,}{\hello}{1,2,3}}
+  def result = (\result)\par 
+
+  \meaning\fixed{there}
+  \par\fixed{There}
+  \par\edef\result{\fixed{result}}\par\result\par
+
+  \hrule\par 
+  \edef\result{\altmap one, two, three,,\par}\par 
+  edef result = (\result)\par 
+  \hrule\par 
+    
+  \def\result{\maplist{,}{\hello}{1,2,3}}
+  def result = (\result)\par 
+
+  % \edef\result{\maplist{,}{\hello}{1,2,3}}
+  % edef result = (\result)\par 
+
+  % \edef\result{\maplist,\hello{1,2,3},,}
+  % edef result = (\result)\par 
+
+  % \edef\result{\maplist,\hello\noexpand{1,2,3},,}
+  % edef result = (\result)\par 
+
+  \def\result{\maplist{,}{\hello}{\lst}}
+  def result = (\result)\par 
+
+  
+  % \edef\result{\maplist{,}{\hello}{\lst}}
+  % edef result = (\result)\par 
+
+  
+\end{LTXexample}  
+
+\subsection{Test join}
+\begin{LTXexample}
+  \join{,}{; }{one,two,three}
+\end{LTXexample}  
+
+
+
+\end{document}
