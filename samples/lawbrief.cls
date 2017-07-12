@@ -1,0 +1,1 @@
+../lawbrief.cls
