@@ -1054,8 +1054,8 @@
 % \newcommand{\@bbReporterOnlyCite}[1]{\Reporter{#1} \StartPage{#1}}
 % \newcommand{\@bbReporterOnlyPinCite}[2]{\Reporter{#1}\penalty100\ at~#2}
 
-\newcommand{\@bbReporterOnlyCite}[1]{\@bbCaseCitationEval{#1}{}{\@bbCaseShortCiteCitations}}
-\newcommand{\@bbReporterOnlyPinCite}[2]{\@bbCaseCitationEval{#1}{#2}{\@bbCaseShortCiteCitations}}%
+\newcommand{\@bbReporterOnlyCite}[1]{\@bbCaseCitationEval{#1}{}{\@bbCaseShortCitations}}
+\newcommand{\@bbReporterOnlyPinCite}[2]{\@bbCaseCitationEval{#1}{#2}{\@bbCaseShortCitations}}%
 
 %Dispatch a call to the type-specific citation form
 %\newcommand{\@bbIndexCite}[2]{{\protect\frenchspacing\Call{@bb\SrcType{#1}IndexCite}{#1}{#2}}}
@@ -1206,7 +1206,7 @@
 	\def\pin##1##2{}%
 	\IfSubStr{#3}{*}{}{%	
 		\ifempty{\IndexType{#1}}{}{%
-			\index{\IndexType{#1}}{\@bbIndexCite{#1}{#2}}%
+			\index{\IndexType{#1}}{\@bbIndexCite{#1}{#2}}%tk
 		}%
 	}%
 	\endgroup%
