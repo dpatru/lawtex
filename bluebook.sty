@@ -786,7 +786,8 @@
 %http://web2.westlaw.com/find/default.wl?ifm=NotSet&rp=%2ffind%2fdefault.wl&sv=Split&utid=1&rs=WLW9.10&cite=421+US+1&fn=_top&mt=LawSchoolPractitioner&vr=2.0&pbc=9B14F39A
 \newcommand{\@bbLink}[1]{#1}
 
-\newcommand{\@bbCaseIndexCite}[2]{{\CF\@bbLink{\FullName{#1}}},\idxbreak\ \Reporter{#1}~\StartPage{#1} \Parenthetical{#1}}
+\newcommand{\@bbCaseIndexCite}[2]{{\CF\FullName{#1}},%
+  \@bbCaseCitationEval{#1}{}{\@bbCaseLongCitations}}%
 %\newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ \FillIn{}{\@vol}{ }{\em\Title{#1}} \Parenthetical{#1}}
 \newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ {\em\Title{#1}} \Parenthetical{#1}}
 %\newcommand{\@bbStatuteIndexCite}[2]{\ShortName{#1} !#2}
@@ -829,7 +830,7 @@
 
 \newcommand{\@bbCaseLongCite}[2]{%
   {\CF\FullName{#1}},%
-  \@bbCaseCitationEval{#1}{#2}{\@bbCaseLongCiteCitations}%
+  \@bbCaseCitationEval{#1}{#2}{\@bbCaseLongCitations}%
 }
 \newcommand{\@bbCaseCitationEval}[3]{%1: shortname, 2: pages, 3: continuation
   % continuation receives 1: shortname 2: reporters, 3: start pages, 
@@ -868,7 +869,7 @@
   }% end bbCaseCitationEval
 \let\bbCaseCitationEval\@bbCaseCitationEval
   
-  \newcommand{\@bbCaseLongCiteCitations}[7]{%
+  \newcommand{\@bbCaseLongCitations}[7]{%
     % continuation receives 1: shortname 2: reporters, 3: start pages, 
     % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
     % pages. 
