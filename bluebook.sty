@@ -885,9 +885,9 @@
         \errmessage{no reporters for \name}
         \or% one reporter
         \ifcase\numexpr\numberOfPages\relax%
-          \reporters\~\startpages\ \Parenthetical{\name}\slipsuffix 
+          \reporters~\startpages\ \Parenthetical{\name}\slipsuffix 
           \or% one page 
-          \reporters\~\startpages, \pages\ \Parenthetical{\name}\slipsuffix 
+          \reporters~\startpages, \pages\ \Parenthetical{\name}\slipsuffix 
           \else\errmessage{More than one page reference(\numberOfPages), but only one reporter. \name at \pages}%
         \fi% handle cases for one reporter 
         \or% two reporters
