@@ -17,6 +17,17 @@ Use tests like https://tex.stackexchange.com/questions/42328/testing-framework-a
 ***** DONE test short name generation
 ***** DONE test citation separation
 ***** DONE test parseCase
+***** DONE write citation builder, test
+Write a partial application of citation and citationAt using the
+currying techniques in curry1 and curry2.
+Test seperately and make all the tests in test*.tex pass. This should
+take a few hours, but after this the job should be largely done.
+***** TODO Remove Eval code from bluebook
+***** TODO Test the rest of bluebook code with the new citation macros
+****** TODO short cite
+****** TODO long cite
+****** TODO index cite
+
 ***** TODO test citecase
 ***** TODO test cite
 ***** TODO test pincite
