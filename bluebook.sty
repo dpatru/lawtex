@@ -271,41 +271,123 @@
   \setboolean{#2@FirstUse}{true}%
   % \par setting last note\par%
   \XDef{#2@LastNote}{0}%
-  % Compute now the full citation string
-  \@bbMakeCaseCitationMacros#2{#4}{#5}%
+  \bgroup%
+  \def\helper##1; ##2; ##3; #4XXX##5; ##6; ##7; #8XXX{%%
+    \EDef{#2@FirstReporter}{##1}%
+    \EDef{#2@SecondReporter}{##2}%
+    \EDef{#2@ThirdReporter}{##3}%
+    \EDef{#2@FirstStartPage}{##5}%
+    \EDef{#2@SecondStartPage}{##6}%
+    \EDef{#2@ThirdStartPage}{##7}%
+  }%
+  \edef\helpertwo{\egroup\noexpand\helper#4; ; ; XXX#5; ; ; XXX}%
+  \helpertwo%
 }%end \newcase definition
 
+\newcommand{\bbFirstReporterLong}[3]{%1: reporter, 2: start page, 3: page 
+  #1 #2\ifx\empty#3\empty\else%
+  \IfSubStr{#3}{slip}{}{, #3}\fi%
+}
+\newcommand{\bbFollowingReporterLong}[3]{%1: reporter, 2: start page, 3: page 
+  \ifx\empty#1\empty\else%
+  ; #1 #2\ifx\empty#3\empty\else%
+  \IfSubStr{#3}{slip}{}{, #3}\fi\fi%
+}
+\newcommand{\bbFirstReporterShort}[3]{%1: reporter, 2: start page, 3: page 
+  #1 \ifx\empty#3\empty#2\else%
+  \IfSubStr{#3}{slip}{#2}{at #3}\fi%
+}
+\newcommand{\bbFollowingReporterShort}[3]{%1: reporter, 2: start page, 3: page 
+  \ifx\empty#1\empty\else%
+  ; #1 \ifx\empty#3\empty#2\else%
+  \IfSubStr{#3}{slip}{#2}{at #3}\fi\fi%
+}
+\newcommand{\bbSlipParenthetical}[1]{%1: page
+  \IfSubStr{#1}{slip}{ #1}{}%
+}
+\newcommand{\bbCaseLongCitations}[2]{%1: shortname, 2: page 
+  \bgroup%
+  \def\helper##1; ##2; ##3; #4XXX{%
+    \bbFirstReporterLong{\Call{#1@FirstReporter}}{\Call{#1@FirstStartPage}}{##1}%
+    \bbFollowingReporterLong{\Call{#1@SecondReporter}}{\Call{#1@SecondStartPage}}{##2}%
+    \bbFollowingReporterLong{\Call{#1@ThirdReporter}}{\Call{#1@ThirdStartPage}}{##3}%
+    \Call{#1@Parenthetical}%
+    \bbSlipParenthetical{##1}%
+    \bbSlipParenthetical{##2}%
+    \bbSlipParenthetical{##3}%
+  }%
+  \edef\helpertwo{\egroup\noexpand\helper#2; ; ; XXX}%
+  \helpertwo%
+}% end bbCaseLongCite
+ 
+\newcommand{\bbCaseShortCitations}[2]{%1: shortname, 2: page 
+  \bgroup%
+  \def\helper##1; ##2; ##3; #4XXX{%
+    \bbFirstReporterShort{\Call{#1@FirstReporter}}{\Call{#1@FirstStartPage}}{##1}%
+    \bbFollowingReporterShort{\Call{#1@SecondReporter}}{\Call{#1@SecondStartPage}}{##2}%
+    \bbFollowingReporterShort{\Call{#1@ThirdReporter}}{\Call{#1@ThirdStartPage}}{##3}%
+    \bbSlipParenthetical{##1}%
+    \bbSlipParenthetical{##2}%
+    \bbSlipParenthetical{##3}%
+  }%
+  \edef\helpertwo{\egroup\noexpand\helper#2; ; ; XXX}%
+  \helpertwo%
+}% end bbCaseShortCite
+ 
 \def\bbCaseCiteOne#1; #2; #3; #4XXX{%
-  #1 #2\ifx\empty#3\empty\else, #3\fi%
+  % \IfSubStr{#3}{slip}{#1 #2 \Call{#1@Parenthetical} #3}%
+  % {%
+    #1 #2\ifx\empty#3\empty\else, #3 \Call{#1@Parenthetical}\fi%
+  % }%
   \if\empty#4\empty\else%
   \errmessage{Error: more than one page cite but only one reporter.}%
   \fi}
 \def\bbCaseCiteTwo#1; #2; #3; #4; #5; #6; #7XXX{%
-  #1 #3\ifx\empty#5\empty\else, #5\fi; %
-  #2 #4\ifx\empty#6\empty\else, #6\fi; %
-  \if\empty#7\empty\else%
-  \errmessage{Error: more than one page cite but only one reporter.}%
-  \fi}
+  % \IfSubStr{#5}{slip}{#1 #3; #2 #4 \Call{#1@Parenthetical} #5}%
+  % {%
+    #1 #3\ifx\empty#5\empty\else, #5\fi; %
+    #2 #4\ifx\empty#6\empty\else, #6\fi; %
+    \Call{#1@Parenthetical}%
+    \if\empty#7\empty\else%
+    \errmessage{Error: more than one page cite but only one reporter.}%
+    \fi%
+  % }%
+}
 \def\bbCaseCiteThree#1; #2; #3; #4; #5; #6; #7; #8; #9; XXX{%
-  #1 #4\ifx\empty#7\empty\else, #7\fi; %
-  #2 #5\ifx\empty#8\empty\else, #8\fi; %
-  #3 #6\ifx\empty#9\empty\else, #9\fi; %
+  % \IfSubStr{#7}{slip}{#1 #4; #2 #5; #3 #6 \Call{#1@Parenthetical} #7}%
+  % {%
+    #1 #4\ifx\empty#7\empty\else, #7\fi; %
+    #2 #5\ifx\empty#8\empty\else, #8\fi; %
+    #3 #6\ifx\empty#9\empty\else, #9\fi %
+    \Call{#1@Parenthetical}%
+  % }%
 }
 \def\bbCaseCiteAtOne#1; #2; #3; #4XXX{%
-  #1\penalty100\ \ifx\empty#3\empty#2\else at~#3\fi%
-  \if\empty#4\empty\else%
-  \errmessage{Error: more than one page cite but only one reporter.}%
-  \fi}
+  % \IfSubStr{#3}{slip}{#3}%
+  % {%
+    #1\penalty100\ \ifx\empty#3\empty#2\else at~#3\fi%
+    \if\empty#4\empty\else%
+    \errmessage{Error: more than one page cite but only one reporter.}%
+    \fi%
+  % }%
+}
 \def\bbCaseCiteAtTwo#1; #2; #3; #4; #5; #6; #7XXX{%
-  \ifx\empty#5\empty\else#1\penalty100\ at~#5\fi%
-  \ifx\empty#6\empty\else#2\penalty100\  at~#6\fi%
-  \if\empty#7\empty\else%
-  \errmessage{Error: more than one page cite but only one reporter.}%
-  \fi}
+  % \IfSubStr{#5}{slip}{#5}%
+  % {%
+    \ifx\empty#5\empty\else#1\penalty100\ at~#5\fi%
+    \ifx\empty#6\empty\else#2\penalty100\  at~#6\fi%
+    \if\empty#7\empty\else%
+    \errmessage{Error: more than one page cite but only one reporter.}%
+    \fi%
+  % }%
+}
 \def\bbCaseCiteAtThree#1; #2; #3; #4; #5; #6; #7; #8; #9XXX{%
-  \ifx\empty#7\empty\else #1\penalty100\ at~#7\fi%
-  \ifx\empty#8\empty\else#2\penalty100\  at~#8\fi%
-  \ifx\empty#9\empty\else#3\penalty100\  at~#9\fi%
+  % \IfSubStr{#7}{slip}{#7}%
+  % {%
+    \ifx\empty#7\empty\else #1\penalty100\ at~#7\fi%
+    \ifx\empty#8\empty\else#2\penalty100\  at~#8\fi%
+    \ifx\empty#9\empty\else#3\penalty100\  at~#9\fi%
+  % }%
 }
 \newcommand{\bbNumberToWord}[1]{%
   \ifcase\numexpr#1\relax%
@@ -318,12 +400,12 @@
   % because this is when everything can be determined.
   % bbMakeCaseCitationMacros(#1)(#2)(#3)\par%
   \StrCount{#2;}{;}[\bbCaseNumberOfReporters]%
+  % \expandafter\edef\csname#1@LongCitations\endcsname##1{%
+  %   \expandafter\noexpand\expandafter\csname\expandafter bbCaseCite\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
   \expandafter\edef\csname#1@LongCitations\endcsname##1{%
-    \expandafter\noexpand\expandafter\csname\expandafter bbCaseCite\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
+    \csname bbCaseCite\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
   \expandafter\edef\csname#1@ShortCitations\endcsname##1{%
     \expandafter\noexpand\expandafter\csname\expandafter bbCaseCiteAt\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
-    % \expandafter\edef\csname#1@ShortCitations\endcsname##1{%
-    % \noexpand\bbCaseCiteAtOne#2; #3; ##1; XXX}%
 }
   
 %%
@@ -841,12 +923,11 @@
 %http://web2.westlaw.com/find/default.wl?ifm=NotSet&rp=%2ffind%2fdefault.wl&sv=Split&utid=1&rs=WLW9.10&cite=421+US+1&fn=_top&mt=LawSchoolPractitioner&vr=2.0&pbc=9B14F39A
 \newcommand{\@bbLink}[1]{#1}
 
-\newcommand{\@bbCaseIndexCite}[2]{%tk
-  {\CF\FullName{#1}},\idxbreak\ \LongCite{#1}%
+\newcommand{\@bbCaseIndexCite}[2]{%
+  {\CF\FullName{#1}},\idxbreak\ \Call{#1@LongCitations}{}%
 }%
 %\newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ \FillIn{}{\@vol}{ }{\em\Title{#1}} \Parenthetical{#1}}
 \newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ {\em\Title{#1}} \Parenthetical{#1}}
-%\newcommand{\@bbStatuteIndexCite}[2]{\ShortName{#1} !#2}
 \newcommand{\@bbStatuteIndexCite}[2]{\IndexName{#1}#2}
 \newcommand{\@bbArticleIndexCite}[2]{\Authors{#1}, {\ATF\Title{#1}},\idxbreak\ {\JTF\Reporter{#1}}~\StartPage{#1} \Parenthetical{#1}}
 \newcommand{\@bbInCollectionIndexCite}[2]{\Authors{#1}, \Title{#1}}
@@ -854,243 +935,12 @@
 %\newcommand{\@bbMiscIndexCite}[2]{{\def\pin##1##2{}\FullName{#1}}}
 
 \def\@bbMiscIndexCite#1#2{\FullName{#1}}
-\def\caselongcitestest #1; #2X#3; #4X#5; #6X{%
-  \par caselongcites TEST ref(#1) refs(#2) startpage(#3) startpages(#4) 
-  page(#5) pages(#6)\par%
-}
-\def\caselongcites #1; #2X#3; #4X#5; #6X{%
-  % \par caselongcites ref(#1) refs(#2) startpage(#3) startpages(#4) page(#5) pages(#6)\par%
-  #1~#3\FillIn{, }{#5}{}%
-  \ifx\empty#2\empty%
-  \else%
-    \ifx\empty#6\empty% ran out of pages
-    % \par Recursing references only \par%
-    ; \caselongcites #2X#4X; X% No space between args and X
-    \else% still have references and pages
-    % \par Recursing\par%
-    ; \caselongcites #2X#4X#6X% No space between args and X
-    \fi%
-  \fi%
-}
-% Long-form citation, with and without a pin cite
-  % \newcommand{\@bbCaseLongCiteOld}[2]{%
-  %   % \par Case long cite: (#1)(#2)\par fullname(\FullName{#1})\par 
-  %   % Reporter(\Reporter{#1})\par Start page(\StartPage{#1})\par 
-  %   {\CF\FullName{#1}},\ %
-  %   \IfSubStr{#2}{slip}%
-  %     {{\edef\c{\noexpand\caselongcites \Reporter{#1}; X\StartPage{#1}; X; X}\c} %
-  %       \Parenthetical{#1}; #2}
-  %     {{\edef\c{\noexpand\caselongcites \Reporter{#1}; X\StartPage{#1}; X#2; X}\c} %
-  %       \Parenthetical{#1}}%
-  %   }% end \@bbCaseLongCite 
 
 \newcommand{\@bbCaseLongCite}[2]{%
-  {\CF\FullName{#1}},%
-  \@bbCaseCitationEval{#1}{#2}{\@bbCaseLongCitations}%
+  {\CF\FullName{#1}}, %
+  \Call{#1@LongCitations}{#2}%
 }
-
-  \def\bbPrintCitationContinuationArgs#1#2#3#4#5#6#7{%
-    \par%
-    short name: (#1)\par%
-    reporters: (#2)\par%
-    start pages: (#3)\par%
-    pages: (#4)\par%
-    slip suffix: (#5)\par%
-    number of reporters: (#6)\par%
-    number of pages: (#7)\par
-    \vspace{5mm}%
-  }
-  
-  \long\def\bbCheckCitationContinuation#1#2#3#4#5#6#7#8#9{{%
-      % 1-7 expected return, 8-9 args to CitationEval
-      % in extra blocks to avoid contamination
-      \long\def\check##1##2##3##4##5##6##7{%
-        \assert{short name given}{##1}{#1}\par%
-        \assert{short name}{##1}{#8}\par%
-        \assert{reporters}{##2}{#2}\par%
-        \assert{start pages}{##3}{#3}\par%
-        \assert{pages}{##4}{#4}\par%
-        \assert{slip suffix}{##5}{#5}%
-        \assert{number of reporters}{##6}{#6}%
-        \assert{number of pages}{##7}{#7}%
-      }% end check
-      % parsing with arguments (#8) and (#9)\par
-      \@bbCaseCitationEval[#1]{#2}{\check}%
-    }}%end bbCheckCitationContinuation
-
-\newcommand{\@bbCaseCitationEval}[3]{%1: shortname, 2: pages, 3: continuation
-  % continuation receives 1: shortname 2: reporters, 3: start pages, 
-  % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
-  % pages. 
-  % This is a nonexpandable macro because it uses xstring. Defining it
-  % separately allows testing of the macros connected to this.
-  bbCaseCitationEval (#1)(#2)\par
-  \def\bbSetSlip##1slip##2XXX{% if ##1 contains the word 'slip', then ##2 will not be empty
-    \ifx\empty##2\empty% no slip in pages
-    \edef\bbCaseSlipSuffix{}%
-    \else%
-    \edef\bbCaseSlipSuffix{#2}%
-    \fi%
-  }%
-  \expandafter\bbSetSlip#2slipXXX%
-  \edef\bbCaseReporters{\Reporter{#1}}%
-  \edef\bbCaseStartPages{\StartPage{#1}}%
-  \def\bbCountReporters##1; ##2; ##3; ##4; ##5XXX{%
-    \ifx\empty##1\empty\errmassage{No reporters for #1}%
-    \else\ifx\empty##2\empty\edef\bbCaseNumberOfReporters{1}%
-    \else\ifx\empty##3\empty\edef\bbCaseNumberOfReporters{2}%
-    \else\ifx\empty##4\empty\edef\bbCaseNumberOfReporters{3}%
-    \else\errmessage{Too many reporters in #1}%
-    \fi\fi\fi\fi}%
-  \expandafter\bbCountReporters\bbCaseReporters; ; ; ; XXX%
-  \def\bbCountPages##1; ##2; ##3; ##4; ##5XXX{%
-    \ifx\empty##1\empty\edef\bbCaseNumberOfPages{0}%
-    \else\ifx\empty##2\empty\edef\bbCaseNumberOfPages{1}%
-    \else\ifx\empty##3\empty\edef\bbCaseNumberOfPages{2}%
-    \else\ifx\empty##4\empty\edef\bbCaseNumberOfPages{3}%
-    \else%
-    \errmessage{More pages (#2) than reporters(\bbCaseNumberOfReporters). \bbname at \bbpages. When you defined this case, did you separate the reporters with a semicolon and space? e.g., Smith v Jones, 123 US 234; 345 SuprCt 456 (2000)}%
-    \fi\fi\fi\fi}%
-  \expandafter\bbCountPages#2; ; ; ; XXX%
-  #3{#1}{\bbCaseReporters}{\bbCaseStartPages}{#2}{\bbCaseSlipSuffix}{\bbCaseNumberOfReporters}{\bbCaseNumberOfPages}%
-}% end bbCaseCitationEval
-% \newcommand{\@bbCaseCitationEval}[3]{%1: shortname, 2: pages, 3: continuation
-%   % continuation receives 1: shortname 2: reporters, 3: start pages, 
-%   % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
-%   % pages. 
-%   % This is a nonexpandable macro because it uses xstring. Defining it
-%   % separately allows testing of the macros connected to this.
-%   \edef\bbname{#1}\edef\bbpages{#2}\def\continuation{#3}
-%   \IfSubStr{\bbpages}{slip}% Does this reference a slip opinion? 
-%   {\edef\bbCaseSlipSuffix{; \bbpages}\edef\bbCasePages{}}% yes 
-%   {\edef\bbCaseSlipSuffix{}\edef\bbCasePages{\bbpages}}% no
-%   % 
-%   % Count the reporters
-%   \edef\bbCaseReporters{\Reporter{\bbname}}
-%   \StrCount{\bbCaseReporters;}{;}[\bbCaseNumberOfReporters]%
-%   \ifcase\numexpr\bbCaseNumberOfReporters\relax%
-%   \errmessage{\numberOfReporters is too few reporters \bbname at \bbpages (\Reporter{\bbname})}%
-%   \or%1 reporter 
-%   \or%2 reporters 
-%   \or%3 reporters 
-%   \else\errmessage{too many reporters! \bbname at \bbpages}%
-%   \fi 
-%   % % 
-%   % find number of pages 
-%   \ifx\empty\bbCasePages\empty\def\bbCaseNumberOfPages{0}\relax%
-%   \else%
-%   \StrCount{\bbCasePages;}{;}[\bbCaseNumberOfPages]%
-%   \ifnum\numexpr\bbCaseNumberOfPages>\numexpr\bbCaseNumberOfReporters\relax%
-%   \errmessage{More pages (\bbCaseNumberOfPages) than 
-%     reporters(\bbCaseNumberOfReporters). \bbname at \bbpages. When you defined this 
-%     case, did you separate the reporters with a semicolon and space? 
-%     e.g., Smith v Jones, 123 US 234; 345 SuprCt 456 (2000)}%
-%   \fi%
-%   \fi%
-%   \continuation{\bbname}{\bbCaseReporters}{\StartPage{#1}}{\bbCasePages}{\bbCaseSlipSuffix}{\bbCaseNumberOfReporters}{\bbCaseNumberOfPages}%
-%   }% end bbCaseCitationEval
-\let\bbCaseCitationEval\@bbCaseCitationEval
-  
-  \newcommand{\@bbCaseLongCitations}[7]{%
-    % continuation receives 1: shortname 2: reporters, 3: start pages, 
-    % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
-    % pages. 
-    {%
-      bbCaseLongCitations %(#1)(#2)(#3)(#4)(#5)(#6)(#7) %
-      % \edef\name{#1}%
-      % \edef\reporters{#2}%
-      % \edef\startpages{#3}%
-      % \edef\pages{#4}%
-      % \edef\slipsuffix{#5}%
-      % \edef\numberOfReporters{#6}%
-      % \edef\numberOfPages{#7}%
-      % \ifcase\numexpr\numberOfReporters\relax
-      %   \errmessage{no reporters for \name}
-      %   \or% one reporter
-      %   \ifcase\numexpr\numberOfPages\relax%
-      %     \reporters~\startpages\ \Parenthetical{\name}\slipsuffix 
-      %     \or% one page 
-      %     \reporters~\startpages, \pages\ \Parenthetical{\name}\slipsuffix 
-      %     \else\errmessage{More than one page reference(\numberOfPages), but only one reporter. \name at \pages}%
-      %   \fi% handle cases for one reporter 
-      %   \or% two reporters
-      %   \ifcase\numexpr\numberOfPages\relax%
-      %     \def\listrefs##1; ##2; ##3; ##4;{##1~##3; ##2~##4}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix% 
-      %   \or% one page 
-      %     \def\listrefs##1; ##2; ##3; ##4; ##5;{##1~##3, ##5; ##2~##4}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix%
-      %   \or% two pages
-      %     \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1~##3, ##5; ##2~##4, ##6}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix%
-      %   \else% more than two pages
-      %     \errmessage{More than two page references (\numberOfPages), but only two reporters. \name at \pages}%
-      %   \fi% handle cases for two reporters
-      % \or% three reporters
-      %   \ifcase\numexpr\numberOfPages\relax%
-      %     \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1~##4; ##2~##5;
-      %       ##3~##6}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix% 
-      %   \or% one page 
-      %     \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7;{##1~##4,
-      %       ##7; ##2~##5; ##3~##6}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix%
-      %   \or% two pages 
-      %     \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8;{##1 ##4, ##7; 
-      %       ##2~##5, ##8; ##3~##6}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix%
-      %   \or% three pages 
-      %     \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8; ##9;{##1~##4, ##7; 
-      %       ##2~##5, ##8; ##3~##6, ##9}%
-      %     \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-      %     \helper\ \Parenthetical{\name}\slipsuffix%
-      %   \else% more than three pages
-      %     \errmessage{More than three page references (\numberOfPages), but only three reporters. \name at \pages}%
-      %   \fi% handle cases for three reporters
-      % \else\errmessage{More than three reporters, this is an error. #2 at #3}%
-      % \fi% handle number of reporters
-}}% end \@bbCaseLongCitations
-
-%   \newcommand{\@bbCaseLongCiteNotWorking}[3][]{%
-%     % \par Case long cite: (#1)(#2)(#3)\par fullname(\FullName{#2})\par 
-%     % Reporter(\Reporter{#3})\par Start page(\StartPage{#1})\par 
-%     \IfSubStr{#3}{slip}%
-%     {%
-%       \def\@bbCaseLongCiteVal{
-%         % {\CF\FullName{#2}},\ %
-%         {% a slip opinion 
-%           \edef\c{\noexpand\caselongcites \Reporter{#2}; X\StartPage{#2}; X; X}%
-%           % \c%
-%         }%
-%         % \Parenthetical{#2}; #3%
-%       }%
-%     }{% Not a slip opinion 
-%       \def\@bbCaseLongCiteVal{
-%         % {\CF\FullName{#2}},\ %
-%         {%
-%           \edef\c{\noexpand\caselongcites \Reporter{#2}; 
-%             X\StartPage{#2}; X#3; X}%
-%           % \c%
-%         } %
-%         % \Parenthetical{#2}%
-%       }%
-%     }%
-%     \ifx\empty#1\empty%
-%     \@bbCaseLongCiteVal%
-%     \else%
-%     % \expandafter\edef#1{\@bbCaseLongCiteVal}%
-%     \edef#1{\@bbCaseLongCiteVal}%
-%     \fi
-%   }
-% }% end \@bbCaseLongCiteNotWorking
-
-    \newcommand{\@bbStatuteLongCite}[2]{\ShortName{#1} #2\FillIn{ }{\Parenthetical{#1}}{}}
+\newcommand{\@bbStatuteLongCite}[2]{\ShortName{#1} #2\FillIn{ }{\Parenthetical{#1}}{}}
 \newcommand{\@bbBookLongCite}[2]{\FillIn{}{\@vol}{ }{\BAF\Authors{#1}}, {\BTF\Title{#1}}\FillIn{ }{#2}{}\ \Parenthetical{#1}}
 \newcommand{\@bbArticleLongCite}[2]{\Authors{#1}, {\ATF\Title{#1}}, {\JTF\Reporter{#1}} \StartPage{#1}\FillIn{, }{#2}{} \Parenthetical{#1}\unskip}
 %\newcommand{\@bbInCollectionLongCite}[2]{\Authors{#1}, {\ATF\Title{#1}} \emph{in} \@vol{\BTF\CollectionTitle{#1}} \StartPage{#1}\FillIn{, }{#2}{} \Parenthetical{#1}}
@@ -1100,70 +950,10 @@
 \def\@bbMiscLongCite#1#2{{\def\pin##1##2{\FillIn{##1}{#2}{##2}}\FullName{#1}}}
 
 % Short-form citation, with and without a pin cite
-\newcommand{\@bbCaseShortCitations}[7]{%
-    % continuation receives 1: shortname 2: reporters, 3: start pages, 
-    % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
-    % pages.
-    {%
-      \edef\name{#1}%
-      \edef\reporters{#2}%
-      \edef\startpages{#3}%
-      \edef\pages{#4}%
-      \edef\slipsuffix{#5}%
-      \edef\numberOfReporters{#6}%
-      \edef\numberOfPages{#7}%
-      \ifcase\numexpr\numberOfReporters\relax%
-        \errmessage{no reporters for \name}%
-        \or% one reporter
-        \ifcase\numexpr\numberOfPages\relax%
-          \reporters\penalty100\ \startpages\slipsuffix %
-          \or% one page 
-          \reporters\penalty100\ at~\pages\slipsuffix %
-          \else\errmessage{More than one page reference(\numberOfPages), but only one reporter. \name at \pages}%
-        \fi% handle cases for one reporter 
-        \or% two reporters
-        \ifcase\numexpr\numberOfPages\relax%
-          \def\listrefs##1; ##2; ##3; ##4;{##1\penalty100\ ##3; ##2\penalty100\ ##4 }%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
-          \helper\slipsuffix% 
-        \or% one page 
-          \def\listrefs##1; ##2; ##3; ##4; ##5;{##1\penalty100\ at~##5}%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper\slipsuffix%
-        \or% two pages
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1\penalty100\ at~##5; ##2\penalty100\ at~##6 }%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper\slipsuffix%
-        \else% more than two pages
-          \errmessage{More than two page references (\numberOfPages), but only two reporters. \name at \pages}%
-        \fi% handle cases for two reporters
-      \or% three reporters
-        \ifcase\numexpr\numberOfPages\relax%
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6;{##1\penalty100\ ##4; ##2\penalty100\ ##5; ##3\penalty100\ ##6 }%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages;}%
-          \helper\slipsuffix% 
-        \or% one page 
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7;{##1\penalty100\ at~##7; ##2\penalty100\ at~##7}%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper\slipsuffix%
-        \or% two pages 
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8;{##1\penalty100\ at~##7; ##2\penalty100\ at~##8}%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper\slipsuffix%
-        \or% three pages 
-          \def\listrefs##1; ##2; ##3; ##4; ##5; ##6; ##7; ##8; ##9;{##1\penalty100\ at~##7; ##2\penalty100\ at~##8; ##3\penalty100\ at~##9 }%
-          \edef\helper{\noexpand\listrefs\reporters; \startpages; \pages;}%
-          \helper\slipsuffix%
-        \else% more than three pages
-          \errmessage{More than three page references (\numberOfPages), but only three reporters. \name at \pages}%
-        \fi% handle cases for three reporters
-      \else\errmessage{More than three reporters, this is an error. #2 at #3}%
-      \fi% handle number of reporters
-}}% end \@bbCaseShortCitations
 \newcommand{\@bbCaseShortCite}[2]{%
   {\CF\ShortName{#1}},%
   \ifdefined\@bbCaseSupra{{\em supra}, }\fi%
-  \@bbCaseCitationEval{#1}{#2}{\@bbCaseShortCitations}%
+  \Call{#1@ShortCitations}{#2}%
 }
 \newcommand{\@bbBookShortCite}[2]{\FillIn{}{\@vol}{ }{\BTF\ShortName{#1}}, {\em supra}\IfFootnote{ note \SupraNote{#1}}\ifpin{, at #2}}
 \newcommand{\@bbStatuteShortCite}[2]{\ShortName{#1} #2}
@@ -1174,11 +964,8 @@
 \newcommand{\@bbMiscShortCite}[2]{\ShortName{#1}\ifpin{ #2}}
 
 %Reporter-number-only citation, with and without a pin cite
-% \newcommand{\@bbReporterOnlyCite}[1]{\Reporter{#1} \StartPage{#1}}
-% \newcommand{\@bbReporterOnlyPinCite}[2]{\Reporter{#1}\penalty100\ at~#2}
-
-\newcommand{\@bbReporterOnlyCite}[1]{\@bbCaseCitationEval{#1}{}{\@bbCaseShortCitations}}
-\newcommand{\@bbReporterOnlyPinCite}[2]{\@bbCaseCitationEval{#1}{#2}{\@bbCaseShortCitations}}%
+\newcommand{\@bbReporterOnlyCite}[1]{\Call{#1@ShortCitations}{}}
+\newcommand{\@bbReporterOnlyPinCite}[2]{\Call{#1@ShortCitations}{#2}}
 
 %Dispatch a call to the type-specific citation form
 %\newcommand{\@bbIndexCite}[2]{{\protect\frenchspacing\Call{@bb\SrcType{#1}IndexCite}{#1}{#2}}}
@@ -1287,7 +1074,7 @@
 					{\ifthenelse{\equal{\SrcType{#1}}{Case} \and%
                                             \boolean{@multiplepin}}{%
                                             \@autofootnote{\@bbSignal\FillIn{}{\@vol}{%
-                                              }\emph{\@Id.}, \@bbCaseCitationEval{#1}{#2}{\@bbCaseShortCitations}%
+                                              }\emph{\@Id.}, \Call{#1@ShortCitations}{#2}%
                                             }%
                                           }{%
                                             \@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id.}\@At\@pin\@Period}%
