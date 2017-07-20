@@ -1,5 +1,6 @@
 test*.pdf
 test*.rel
+test*.tmp
 testtest.rel
 .#*.tex
 *.rel
