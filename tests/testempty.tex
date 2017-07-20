@@ -1,0 +1,44 @@
+\documentclass{article}
+\NeedsTeXFormat{LaTeX2e}
+
+\usepackage{etoolbox}
+\def\ifempty#1#2#3{\if\relax\expandafter\detokenize\expandafter{#1}\relax #2\else #3\fi} 
+
+\xdef\mymacroA{}
+
+\begin{document}
+\def\A#1{
+  \def\B##1{
+\ifempty{\mymacroA}{mymacroA is empty}{mymacroA is NOT empty}\par
+
+\def\mymacroB{\mymacroA}
+\ifempty{\mymacroB}{mymacroB is empty}{mymacroB is NOT empty (\mymacroB)}\par 
+
+\edef\mymacroC{\mymacroA}
+\ifempty{\mymacroC}{mymacroC is empty}{mymacroC is NOT empty (\mymacroC)}\par 
+ 
+\xdef\mymacroD{\mymacroA}
+\ifempty{\mymacroD}{mymacroD is empty}{mymacroD is NOT empty (\mymacroD)}\par 
+
+\xdef\mymacroE{##1}
+\ifempty{\mymacroE}{mymacroE is empty}{mymacroE is NOT empty (\mymacroE)}\par 
+
+Is mymacroA empty? \ifdefempty{\mymacroA}{YES}{NO}\par
+Is mymacroB empty? \ifdefempty{\mymacroB}{YES}{NO}\par 
+Is mymacroC empty? \ifdefempty{\mymacroC}{YES}{NO}\par 
+Is mymacroD empty? \ifdefempty{\mymacroD}{YES}{NO}\par 
+Is mymacroE empty? \ifdefempty{\mymacroE}{YES}{NO}\par 
+
+meaning of mymacroA: (\meaning\mymacroA)\par 
+meaning of mymacroB: (\meaning\mymacroB)\par 
+meaning of mymacroC: (\meaning\mymacroC)\par 
+meaning of mymacroD: (\meaning\mymacroD)\par 
+meaning of mymacroE: (\meaning\mymacroE)\par 
+}
+\B{#1}
+}
+
+% \A{\mymacroA}
+\A{}
+
+\end{document}

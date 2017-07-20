@@ -1,0 +1,24 @@
+\documentclass{article}
+\begin{document}
+% from https://tex.stackexchange.com/a/104508/135718
+
+\def\x#1#2#3#4{%
+  \def\arga{#2}%
+  \def\argb{#3}%
+  \def\argc{#4}%
+  \begingroup
+    \edef\x{%
+      \endgroup
+      \noexpand#1
+        {\unexpanded\expandafter{\arga}}%
+        {\unexpanded\expandafter{\argb}}%
+        {\unexpanded\expandafter{\argc}}%
+    }%
+  \x
+}    
+
+\def\y#1#2#3{\detokenize{#1#2#3}}
+
+\x\y{arg1}{arg2}{arg3}
+
+\end{document}

@@ -1,0 +1,32 @@
+% from https://tex.stackexchange.com/a/104512/135718
+
+\documentclass{article}
+\begin{document}
+
+\def\x#1#2#3#4{%
+  \def\arga{#2}%
+  \def\argb{#3}%
+  \def\argc{#4}%
+  \begingroup\edef\z{\endgroup\noexpand#1{\arga}{\argb}{\argc}}\z
+}
+
+\def\y#1#2#3{\detokenize{#1#2#3}}
+
+\def\foo{This is foo}
+
+\texttt{\x\y{arg1}{arg2}{arg3\foo}}
+
+% curry f
+\par 
+\def\f#1#2{(#1)(#2)}
+\def\g#1{\edef\h##1{\noexpand\f{#1}{##1}}}
+\g{one}
+\h{two}
+
+\par 
+\def\f#1#2{(#1)(#2)}
+\def\g#1#2{\edef\h##1{\noexpand\f{#1}{##1}}}
+\g{\f}{one}
+\h{two}
+
+\end{document}

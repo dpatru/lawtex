@@ -1,0 +1,158 @@
+% from https://tex.stackexchange.com/a/104512/135718
+\documentclass{article}
+\usepackage{xstring}
+\usepackage{test}
+\usepackage{trace}
+
+\begin{document}
+\def\x{\edef\y{hello}\y}% gives undefined control sequence error
+\DeclareRobustCommand\x{\edef\y{hello}\y} % gives same error
+\makeatletter
+\protected@edef\z{\x}
+z = \z
+
+
+% \def\x{initial x}
+% \def\y{initial y}
+% \def\z{initial z}
+
+% \def\processIfStrEq#1; #2; #3; #4;;{%
+%   % processing with IfStrEq (#1)(#2)(#3)(#4): %
+%   \IfStrEq{#1}{}{Empty1}{(#1)}%
+%   \IfStrEq{#2}{}{, Empty2}{, (#2)}%
+%   \IfStrEq{#3}{}{, Empty3}{, (#3)}%
+%   \par%
+% }
+% \def\processIfx#1; #2; #3; #4;;{%
+%   % processing with IfStrEq (#1)(#2)(#3)(#4): %
+%   \if\relax\detokenize{#1}\relax, Empty1\else(#1)\fi%
+%   \if\relax\detokenize{#2}\relax, Empty2\else, (#2)\fi%
+%   \if\relax\detokenize{#3}\relax, Empty3\else, (#3)\fi%
+%   \par%
+% }
+
+% \def\justApply#1{\processIfStrEq#1; ; ; ;;}
+
+% justApply: \justApply{1; 2}
+
+% %\assert{justApply}{\justApply{1; 2}}{(1), (2), Empty3}%  Fails with
+% % 1st err: ./expandable.tex:24: Argument of \@xs@IfStrEq@@ has an extra }.
+
+
+
+% % \def\a#1{\justApply{#1}}
+% % a(1; 2): \a{1; 2}
+
+% % % \assert{indirect justApply}{\x{1; 2}}{(1), (2), Empty3}%  Fails with 
+% % % 1st err: ./expandable.tex:24: Argument of \@xs@IfStrEq@@ has an extra }. 
+% % \assert{indirect justApply}{\a{1; 2}}{(1), (2), Empty3}%  Fails with 
+
+
+
+% % \def\b#1#2{\expandafter\def\expandafter#1\expandafter{\justApply{#2}}}
+% % b(a)(1; 2): \b{\a}{1; 2}\par 
+% % meaning a: \meaning\a\par 
+% % meaning b: \meaning\b\par 
+% % % \assert{indirect justApply}{\a}{(1), (2), Empty3}%  Fails ... 
+
+% % \traceon 
+% % \def\c#1#2{\unexpanded{\edef#1}{\protect\justApply{#2}}}
+% % c(a)(1; 2): \c{\a}{1; 2}\par 
+% % meaning c: \meaning\c\par 
+% % meaning a: \meaning\a\par 
+% % a: \a\par 
+% % \assert{indirect justApply}{\a}{(1), (2), Empty3}%  Fails ... 
+% % \traceoff 
+
+
+% \traceon 
+% \def\c#1#2{\unexpanded{\edef#1}{\processIfx#2; ; ; ;;}}
+% c(a)(1; 2): \c{\a}{1; 2}\par 
+% meaning c: \meaning\c\par 
+% meaning a: \meaning\a\par 
+% a: \a\par 
+% \assert{indirect justApply}{\a}{(1), (2), Empty3}%  Fails ... 
+% \traceoff 
+
+% % \assert{indirect justApply}{\x{1; 2}}{(1), (2), Empty3}%  Fails with 
+% % 1st err: ./expandable.tex:24: Argument of \@xs@IfStrEq@@ has an extra }. 
+
+
+  
+
+% % \def\processifx#1; #2; #3; #4;;{%
+% %   % processing with ifx (#1)(#2)(#3)(#4): %
+% %   \ifx\empty#1\empty Empty1\else(#1)\fi%
+% %   \ifx\empty#1\empty, Empty2\else, (#2)\fi%
+% %   \ifx\empty#1\empty, Empty3\else, (#3)\fi%
+% %   \par%
+% % }
+
+% % \def\process#1; #2; #3; #4;;{%
+% %   % processing with ifx (#1)(#2)(#3)(#4): %
+% %   \ifx\empty#1\empty Empty1\else(#1)\fi%
+% %   \ifx\empty#1\empty, Empty2\else, (#2)\fi%
+% %   \ifx\empty#1\empty, Empty3\else, (#3)\fi%
+% %   \par%
+% % }
+
+% % \def\justdo#1{\expandafter\process#1; ; ; ;;}
+
+% % \def\do#1{%
+% %   \traceon%
+% %   \edef\x{\unexpanded{\def\xx}{\expandafter\process#1; ; ; ;;}}\par%
+% %     \traceoff%
+% %   % \edef\y{\expandafter\process#1; ; ; ;;}\par%
+% %   % \edef\z{\noexpand\process#1; ; ; ;;}\par%
+% %   defined\par%
+% % }
+ 
+% % \def\do#1#2{%
+% %   \traceon%
+% %   \edef\x{\unexpanded{\def\xx}{\expandafter\process#1; ; ; ;;}}\par%
+% %   \edef\temp{\noexpand\process#1; ; ; ;;}\par%
+% %   \edef\temptwo{\unexpanded{\def\yy}{\temp}}
+% %   \traceoff%
+% %   % \edef\y{\expandafter\process#1; ; ; ;;}\par%
+% %   % \edef\z{\noexpand\process#1; ; ; ;;}\par%
+% %   x = (\meaning\x)\par
+% %   temp = (\meaning\temp)\par
+% %   temptwo = (\meaning\temptwo)\par
+% %   running temptwo\par
+% %   \temptwo\par
+% %   yy = (\meaning\yy)\par
+% % }
+ 
+% % doing 5: \par\do{1; 2; 3; 4; 5}\par  
+% % x: \x\par   
+% % xx: \xx\par   
+% % y: \y\par
+% % % \edef\z{\do{1
+% % z: \z\par
+% % meaning x: \meaning\x\par
+% % % meaning z: \meaning\z\par
+% % \assert{5xx}{\xx}{(1), (2), (3)\par}
+% % \assert{5xx}{\xx}{\process1; 2; 3; 4; 5;;}
+% % % \assert{5xx}{\xx}{\do{1; 2; 3; 4; 5}} % this gives an error
+
+% % % \assert{5x}{\x}{\x}
+% % % \assert{5z}{\z}{\z}
+% % % \assert{5}{\x}{\z}
+% % \vspace{5mm}
+ 
+% % doing 2: \par\do{1; 2}\par  
+% % x: \x\par  
+% % y: \y\par 
+% % z: \z\par 
+% % % \assert{2}{\x}{\z}
+% % \vspace{5mm}
+ 
+% % doing 0: \par\do{}\par  
+% % x: \x\par  
+% % y: \y\par 
+% % z: \z\par 
+% % % \assert{0}{\x}{\z}
+% % \vspace{5mm}
+ 
+
+\end{document}
