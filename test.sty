@@ -1,5 +1,6 @@
 
 \usepackage{xstring} % IfEq, StrCompare
+\usepackage{xcolor}
 
 \newcounter{tst}
 
@@ -8,18 +9,20 @@
     % arguments because the macros won't expand properly in an edef.
     % see https://tex.stackexchange.com/questions/21514/why-isnt-a-command-defined-by-newcommand-with-an-optional-argument-expandable
     % \edef\t{\noexpand\ifEq{#1}{#2}}%
+    \makeatletter%
+    % \protected@edef\assertA{#2}\protected@edef\assertB{#3}%
     \edef\assertA{#2}\edef\assertB{#3}%
-    \def\name{\if\relax#1\relax\detokenize{#2} = \detokenize{#3}\else #1\fi}%
+    \def\name{\if\relax\detokenize{#1}\relax\detokenize{#2} = \detokenize{#3}\else #1\fi}%
     \def\desc{\space Test:\,\stepcounter{tst}\thetst~(\name)\par}%
     \comparestrict%
-    % \IfEq{#2}{#3}
-    \IfEq{\assertA}{\assertB}%
-    {\textcolor{green}{Passed} \desc}%
-    {\textcolor{red}{Failed} \desc%
-      \par~~~~~~~~\assertA $\ne$ \par~~~~~~~~\assertB\par%
-      First difference at position args
-      % \comparestrict\StrCompare{#2}{#3}\par}%
-      \comparestrict\StrCompare{\assertA}{\assertB}\par}%
-    % \vspace{5mm}%
-  }}
+    % \IfEq{#2}{#3}{%
+    \IfEq{\assertA}{\assertB}{%
+      \textcolor{green}{Passed} \desc%
+    }{%
+      \textcolor{red}{Failed} \desc%
+      \par~~~~~~~~(\assertA)(\detokenize{#2}) $\ne$ \par~~~~~~~~(\assertB)(\detokenize{#3})\par%
+      First difference at position args %
+      \comparestrict\StrCompare{\assertA}{\assertB}\par%
+    }%
+}}
 

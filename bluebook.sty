@@ -109,17 +109,6 @@
 %% For example, in ``\emph{Marbury v. Madison}, 5 U.S. (1 Cranch), 137 (1803)'', the extra parentheses around
 %% the ``(1~Cranch.)'' will throw off the parser. See the way that this is cited below. 
 %%
-% \DeclareListParser*{\processCites}{;}
-% \newcommand\processCitesDo[1]{% process a cite, used in parseCitations
-%   % separates the citations into reporters and pages, citations are
-%   % separated by a semicolon (;)
-%   \long\def\@parseCitations ##1 ##2 ##3;{%
-%     % Citations 1:(##1) 2:(##2) 3:(##3)\par%
-%     \listadd{\reporters}{##1 ##2}\listadd{\startpages}{##3}%
-%   }%
-%   % processCitesDo parsing (#1)\par% for debugging
-%   \@parseCitations#1;%
-% }
 %
 %
 %Use parseCitations as: (\parseCitations 123 US 234; 345 SuprCt 456; X X 
@@ -136,30 +125,13 @@
     % \par Grabbed page (\@page) from (#1)\par 
     \StrLeft{#1}{\numexpr \@lastspacepos-1}[\@reporter]%
     % \par Grabbed reporter (\@reporter) from (#1)\par 
-    \edef\reporters{\ifx\empty\reporters\@reporter\else\reporters; \@reporter\fi}%
-    \edef\startpages{\ifx\empty\startpages\@page\else\startpages;
-      \@page\fi}%
+    \edef\reporters{\ifempty{\reporters}{\@reporter}{\reporters; \@reporter}}%
+    \edef\startpages{\ifempty{\startpages}{\@page}{\startpages; \@page}}%
     % Recursing\par%
     \parseCitations%
   }%
 }
-    % \expandafter\parseCitations}}% we want to read the ending brace so 
-                               % that \parseCitations is the first token left 
 
-% \def\parseCitations #1 #2 #3; {\ifx#2X\else%
-%   % reporters: (#1)(#2)(#3)\par%
-%   \edef\reporters{\ifx\empty\reporters#1 #2\else\reporters; #1 #2\fi}%
-%   \edef\startpages{\ifx\empty\startpages#3\else\startpages; #3\fi}%
-%   \expandafter\parseCitations\fi}% we want to read the ending \fi so 
-%                                % that \parseCitations is the first token left 
-
-% \newcommand\parseCitations[1]{%
-%   \def\c##1{\processCites{\processCitesDo}{##1}}%
-%   \def\reporters{\empty}\def\startpages{\empty}% Reset the macros which store the output
-%   % Processing cites\par%
-%   \expandafter\c\expandafter{#1}%
-%   % Done processing Cites\par%
-% }
 \newcommand{\deriveShortCaseName}[2][\empty]{% Set case name to
                                 % optional argument if it's given,
                                 % otherwise just leave the output.
@@ -272,141 +244,130 @@
   % \par setting last note\par%
   \XDef{#2@LastNote}{0}%
   \bgroup%
-  \def\helper##1; ##2; ##3; #4XXX##5; ##6; ##7; #8XXX{%%
-    \EDef{#2@FirstReporter}{##1}%
-    \EDef{#2@SecondReporter}{##2}%
-    \EDef{#2@ThirdReporter}{##3}%
-    \EDef{#2@FirstStartPage}{##5}%
-    \EDef{#2@SecondStartPage}{##6}%
-    \EDef{#2@ThirdStartPage}{##7}%
+  \def\helper##1; ##2; ##3; ##4;;##5; ##6; ##7; ##8;;{%%
+    % \par helper(##1)(##2)(##3)(##4)(##5)(##6)(##7)(##8)\par
+    % shortname: #2\par
+    \XDef{#2@ReporterA}{##1}%
+    \XDef{#2@ReporterB}{##2}%
+    \XDef{#2@ReporterC}{##3}%
+    \XDef{#2@StartPageA}{##5}%
+    \XDef{#2@StartPageB}{##6}%
+    \XDef{#2@StartPageC}{##7}%
   }%
-  \edef\helpertwo{\egroup\noexpand\helper#4; ; ; XXX#5; ; ; XXX}%
+  \edef\helpertwo{\noexpand\helper#4; ; ; ;;#5; ; ; ;;}%
   \helpertwo%
+  \egroup% erase helper and helpertwo 
 }%end \newcase definition
 
-\newcommand{\bbFirstReporterLong}[3]{%1: reporter, 2: start page, 3: page 
-  #1 #2\ifx\empty#3\empty\else%
-  \IfSubStr{#3}{slip}{}{, #3}\fi%
-}
-\newcommand{\bbFollowingReporterLong}[3]{%1: reporter, 2: start page, 3: page 
-  \ifx\empty#1\empty\else%
-  ; #1 #2\ifx\empty#3\empty\else%
-  \IfSubStr{#3}{slip}{}{, #3}\fi\fi%
-}
-\newcommand{\bbFirstReporterShort}[3]{%1: reporter, 2: start page, 3: page 
-  #1 \ifx\empty#3\empty#2\else%
-  \IfSubStr{#3}{slip}{#2}{at #3}\fi%
-}
-\newcommand{\bbFollowingReporterShort}[3]{%1: reporter, 2: start page, 3: page 
-  \ifx\empty#1\empty\else%
-  ; #1 \ifx\empty#3\empty#2\else%
-  \IfSubStr{#3}{slip}{#2}{at #3}\fi\fi%
-}
-\newcommand{\bbSlipParenthetical}[1]{%1: page
-  \IfSubStr{#1}{slip}{ #1}{}%
-}
-\newcommand{\bbCaseLongCitations}[2]{%1: shortname, 2: page 
-  \bgroup%
-  \def\helper##1; ##2; ##3; #4XXX{%
-    \bbFirstReporterLong{\Call{#1@FirstReporter}}{\Call{#1@FirstStartPage}}{##1}%
-    \bbFollowingReporterLong{\Call{#1@SecondReporter}}{\Call{#1@SecondStartPage}}{##2}%
-    \bbFollowingReporterLong{\Call{#1@ThirdReporter}}{\Call{#1@ThirdStartPage}}{##3}%
-    \Call{#1@Parenthetical}%
-    \bbSlipParenthetical{##1}%
-    \bbSlipParenthetical{##2}%
-    \bbSlipParenthetical{##3}%
-  }%
-  \edef\helpertwo{\egroup\noexpand\helper#2; ; ; XXX}%
-  \helpertwo%
-}% end bbCaseLongCite
+\newcommand{\bbFirstReporterLong}[4]{%1: reporter, 2: start page, 3:
+  % page, 4: slip presence
+  \if\relax\detokenize{#1}\relax\relax\errmessage{Error! no reporter is defined for %
+    this case.}%
+  \else#1 #2%
+  \if\relax#3\relax\else%
+  \if\relax\detokenize{#4}\relax, #3\else, #2%
+  \fi\fi\fi}
+
+% \newcommand{\bbFollowingReporterLong}[4]{%1: reporter, 2: start page,
+%                                 %3: page, 4: slip presence
+%   \ifdefempty{#1}{}{; #1 #2%
+%     \ifdefempty{#3}{}{%
+%       \ifdefempty{#4}{, #3}{}}}}
+
+\newcommand{\bbFollowingReporterLong}[4]{%1: reporter, 2: start page,
+                                %3: page, 4: slip presence
+  \if\relax#1\relax\else; #1 #2%
+  \if\relax#3\relax\else%
+  \if\relax\detokenize{#4}\relax, #3\else, #2%
+  \fi\fi\fi}
+
+\newcommand{\bbFirstReporterShort}[4]{%1: reporter, 2: start page, 3:
+                                %page, 4: slip presence
+  \if\relax#1\relax\relax\errmessage{Error! no reporter is defined for %
+    this case.}%
+  \else%
+  #1\penalty100\ %
+  \if\relax#3\relax\elseat~3\fi\fi}
+
+\newcommand{\bbFollowingReporterShort}[4]{%1: reporter, 2: start page,
+                                %3: page, 4: slip presence
+  \if\relax#1\relax\else; #1\penalty100\ %
+  \if\relax#3\relax#2\else~#3\fi\fi}
+
+\newcommand{\bbSlipParenthetical}[2]{%1: slip test, 2: slip content 
+  \if\relax\detokenize{#1}\relax\else; #2\fi}
+
+\def\bbCaseLongCitationsHelper #1; #2; #3; #4XXX#5XXX#6slip#7XXX{%
+  \bbFirstReporterLong{\ReporterA{#5}}{\StartPageA{#5}}{#1}{#7}%
+  \expandafter\bbFollowingReporterLong\expandafter{\ReporterB{#5}}{\StartPageB{#5}}{#2}{#7}%
+  \expandafter\bbFollowingReporterLong\expandafter{\ReporterC{#5}}{\StartPageC{#5}}{#3}{#7} %
+  \Call{#5@Parenthetical}%
+  \bbSlipParenthetical{#7}{#1}%
+}%
+
+\newcommand{\bbCaseLongCitations}[2]{% 1: shortname, 3: page 
+% \DeclareRobustCommand{\bbCaseLongCitations}[2]{% 1: shortname, 3: page 
+  \bbCaseLongCitationsHelper#2; ; ; XXX#1XXX#2slipXXX}
+
+
+%  % \newcommand{\bbCaseLongCitations}[3][]{%1: edef name 2: shortname,
+%  % 3:
+%  \DeclareRobustCommand{\bbCaseLongCitations}[3][]{%1: edef name 2: shortname, 3:
+%   % page
+%   % \bgroup%
+%   % \edef\bbCaseCitationArgs{\noexpand\bbCaseLongCitationsHelper#3; ; ; XXX#2XXX#3slipXXX}%
+%   \if\relax\detokenize{#1}\relax% just output the result
+%   % Simple\par%
+%   \bbCaseLongCitationsHelper#3; ; ; XXX#2XXX#3slipXXX%
+%   \fi%
+%   % \bbCaseCitationArgs%
+%   % \else% Save the result to a macro
+%   % Save to a macro\par%
+%   % \edef\bbCaseCitationAssign{\unexpanded{\xdef#1}{\bbCaseCitationArgs}}%
+%   % % \edef\bbCaseCitationArgs{\unexpanded{\expandafter\xdef\expandafter#1\expandafter}{\noexpand\bbCaseLongCitationsHelper#3; ; ; XXX#2XXX#3slipXXX}}%
+%   % % \expandafter\edef \expandafter\edef\bbCaseCitationArgs\expandafter{\unexpanded{\expandafter\xdef\expandafter#1\expandafter}{\noexpand\bbCaseLongCitationsHelper#3; ; ; XXX#2XXX#3slipXXX}}%
+%   % \show\bbCaseCitationAssign%
+%   % \bbCaseCitationAssign%
+%   % % \edef\bbCaseCitationAssign{\unexpanded{\xdef#1}{\bbCaseCitationArgs}}%
+%   % % bbCaseCitationAssign = \meaning\bbCaseCitationAssign%
+%   % % bbCaseCitationAssign = \show\bbCaseCitationAssign%
+%   % \fi%
+%   % \egroup%
+% }% end bbCaseLongCitations 
+
+
+
+
+
+% \newcommand{\bbCaseLongCitations}[3][]{%1: shortname, 2: page 
+%   \bgroup%
+%   \def\helper##1; ##2; ##3; ##4XXX{%
+%     \bbFirstReporterLong{\Call{#2@FirstReporter}}{\Call{#2@FirstStartPage}}{##1}%
+%     \bbFollowingReporterLong{\Call{#2@SecondReporter}}{\Call{#2@SecondStartPage}}{##2}%
+%     \bbFollowingReporterLong{\Call{#2@ThirdReporter}}{\Call{#2@ThirdStartPage}}{##3} %
+%     \Call{#2@Parenthetical}%
+%     \bbSlipParenthetical{##1}%
+%     \bbSlipParenthetical{##2}%
+%     \bbSlipParenthetical{##3}%
+%   }%
+%   \edef\helpertwo{\noexpand\helper#3; ; ; XXX}%
+%   \helpertwo%
+%   \egroup%
+% }% end bbCaseLongCitations
  
-\newcommand{\bbCaseShortCitations}[2]{%1: shortname, 2: page 
-  \bgroup%
-  \def\helper##1; ##2; ##3; #4XXX{%
-    \bbFirstReporterShort{\Call{#1@FirstReporter}}{\Call{#1@FirstStartPage}}{##1}%
-    \bbFollowingReporterShort{\Call{#1@SecondReporter}}{\Call{#1@SecondStartPage}}{##2}%
-    \bbFollowingReporterShort{\Call{#1@ThirdReporter}}{\Call{#1@ThirdStartPage}}{##3}%
-    \bbSlipParenthetical{##1}%
-    \bbSlipParenthetical{##2}%
-    \bbSlipParenthetical{##3}%
+\def\bbCaseShortCitationsHelper#1; #2; #3; #4XXX#5{%
+    \bbFirstReporterShort{\Call{#5@FirstReporter}}{\Call{#5@FirstStartPage}}{#1}%
+    \bbFollowingReporterShort{\Call{#5@SecondReporter}}{\Call{#5@SecondStartPage}}{#2}%
+    \bbFollowingReporterShort{\Call{#5@ThirdReporter}}{\Call{#5@ThirdStartPage}}{#3}%
+    \bbSlipParenthetical{#1}%
+    \bbSlipParenthetical{#2}%
+    \bbSlipParenthetical{#3}%
   }%
-  \edef\helpertwo{\egroup\noexpand\helper#2; ; ; XXX}%
+\newcommand{\bbCaseShortCitations}[2]{%1: shortname, 2: page 
+  \edef\helpertwo{\noexpand\bbCaseShortCitationsHelper#2; ; ; XXX{#1}}%
   \helpertwo%
 }% end bbCaseShortCite
  
-\def\bbCaseCiteOne#1; #2; #3; #4XXX{%
-  % \IfSubStr{#3}{slip}{#1 #2 \Call{#1@Parenthetical} #3}%
-  % {%
-    #1 #2\ifx\empty#3\empty\else, #3 \Call{#1@Parenthetical}\fi%
-  % }%
-  \if\empty#4\empty\else%
-  \errmessage{Error: more than one page cite but only one reporter.}%
-  \fi}
-\def\bbCaseCiteTwo#1; #2; #3; #4; #5; #6; #7XXX{%
-  % \IfSubStr{#5}{slip}{#1 #3; #2 #4 \Call{#1@Parenthetical} #5}%
-  % {%
-    #1 #3\ifx\empty#5\empty\else, #5\fi; %
-    #2 #4\ifx\empty#6\empty\else, #6\fi; %
-    \Call{#1@Parenthetical}%
-    \if\empty#7\empty\else%
-    \errmessage{Error: more than one page cite but only one reporter.}%
-    \fi%
-  % }%
-}
-\def\bbCaseCiteThree#1; #2; #3; #4; #5; #6; #7; #8; #9; XXX{%
-  % \IfSubStr{#7}{slip}{#1 #4; #2 #5; #3 #6 \Call{#1@Parenthetical} #7}%
-  % {%
-    #1 #4\ifx\empty#7\empty\else, #7\fi; %
-    #2 #5\ifx\empty#8\empty\else, #8\fi; %
-    #3 #6\ifx\empty#9\empty\else, #9\fi %
-    \Call{#1@Parenthetical}%
-  % }%
-}
-\def\bbCaseCiteAtOne#1; #2; #3; #4XXX{%
-  % \IfSubStr{#3}{slip}{#3}%
-  % {%
-    #1\penalty100\ \ifx\empty#3\empty#2\else at~#3\fi%
-    \if\empty#4\empty\else%
-    \errmessage{Error: more than one page cite but only one reporter.}%
-    \fi%
-  % }%
-}
-\def\bbCaseCiteAtTwo#1; #2; #3; #4; #5; #6; #7XXX{%
-  % \IfSubStr{#5}{slip}{#5}%
-  % {%
-    \ifx\empty#5\empty\else#1\penalty100\ at~#5\fi%
-    \ifx\empty#6\empty\else#2\penalty100\  at~#6\fi%
-    \if\empty#7\empty\else%
-    \errmessage{Error: more than one page cite but only one reporter.}%
-    \fi%
-  % }%
-}
-\def\bbCaseCiteAtThree#1; #2; #3; #4; #5; #6; #7; #8; #9XXX{%
-  % \IfSubStr{#7}{slip}{#7}%
-  % {%
-    \ifx\empty#7\empty\else #1\penalty100\ at~#7\fi%
-    \ifx\empty#8\empty\else#2\penalty100\  at~#8\fi%
-    \ifx\empty#9\empty\else#3\penalty100\  at~#9\fi%
-  % }%
-}
-\newcommand{\bbNumberToWord}[1]{%
-  \ifcase\numexpr#1\relax%
-  Zero\or One\or Two\or Three\or Four\or Five\else%
-  \errmessage{Number #1 is invalid.}\fi%
-}
-\newcommand{\@bbMakeCaseCitationMacros}[3]{% Make the macros for
-  % case citations. Given: 1: shortname, 2: reporters, 3: start pages.
-  % This macro should be called when a new case is introduced,
-  % because this is when everything can be determined.
-  % bbMakeCaseCitationMacros(#1)(#2)(#3)\par%
-  \StrCount{#2;}{;}[\bbCaseNumberOfReporters]%
-  % \expandafter\edef\csname#1@LongCitations\endcsname##1{%
-  %   \expandafter\noexpand\expandafter\csname\expandafter bbCaseCite\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
-  \expandafter\edef\csname#1@LongCitations\endcsname##1{%
-    \csname bbCaseCite\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
-  \expandafter\edef\csname#1@ShortCitations\endcsname##1{%
-    \expandafter\noexpand\expandafter\csname\expandafter bbCaseCiteAt\bbNumberToWord{\bbCaseNumberOfReporters}\endcsname#2; #3; ##1; XXX}%
-}
   
 %%
 %%\cmd{newbook}{Short Name}{Authors}{Title}{Parenthetical}[Define a new book citation.]
@@ -876,9 +837,15 @@
 %%
 
 \newcommand{\Reporter}[1]{\Call{#1@Reporter}}
+\newcommand{\ReporterA}[1]{\Call{#1@ReporterA}}
+\newcommand{\ReporterB}[1]{\Call{#1@ReporterB}}
+\newcommand{\ReporterC}[1]{\Call{#1@ReporterC}}
 \newcommand{\ShortName}[1]{\Call{#1@ShortName}}
 \newcommand{\FullName}[1]{\Call{#1@FullName}}%tk
 \newcommand{\StartPage}[1]{\Call{#1@StartPage}}
+\newcommand{\StartPageA}[1]{\Call{#1@StartPageA}}
+\newcommand{\StartPageB}[1]{\Call{#1@StartPageB}}
+\newcommand{\StartPageC}[1]{\Call{#1@StartPageC}}
 \newcommand{\Parenthetical}[1]{\Call{#1@Parenthetical}}
 \newcommand{\Authors}[1]{\Call{#1@Authors}}
 \newcommand{\Title}[1]{\Call{#1@Title}}
@@ -924,7 +891,7 @@
 \newcommand{\@bbLink}[1]{#1}
 
 \newcommand{\@bbCaseIndexCite}[2]{%
-  {\CF\FullName{#1}},\idxbreak\ \Call{#1@LongCitations}{}%
+  {\CF\FullName{#1}},\idxbreak\ \bbCaseLongCitations{#1}{}%
 }%
 %\newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ \FillIn{}{\@vol}{ }{\em\Title{#1}} \Parenthetical{#1}}
 \newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ {\em\Title{#1}} \Parenthetical{#1}}
@@ -937,8 +904,7 @@
 \def\@bbMiscIndexCite#1#2{\FullName{#1}}
 
 \newcommand{\@bbCaseLongCite}[2]{%
-  {\CF\FullName{#1}}, %
-  \Call{#1@LongCitations}{#2}%
+  {\CF\FullName{#1}},  \bbCaseLongCitations{#1}{#2}%
 }
 \newcommand{\@bbStatuteLongCite}[2]{\ShortName{#1} #2\FillIn{ }{\Parenthetical{#1}}{}}
 \newcommand{\@bbBookLongCite}[2]{\FillIn{}{\@vol}{ }{\BAF\Authors{#1}}, {\BTF\Title{#1}}\FillIn{ }{#2}{}\ \Parenthetical{#1}}
@@ -953,7 +919,7 @@
 \newcommand{\@bbCaseShortCite}[2]{%
   {\CF\ShortName{#1}},%
   \ifdefined\@bbCaseSupra{{\em supra}, }\fi%
-  \Call{#1@ShortCitations}{#2}%
+  \bbCaseShortCitations{#1}{#2}%
 }
 \newcommand{\@bbBookShortCite}[2]{\FillIn{}{\@vol}{ }{\BTF\ShortName{#1}}, {\em supra}\IfFootnote{ note \SupraNote{#1}}\ifpin{, at #2}}
 \newcommand{\@bbStatuteShortCite}[2]{\ShortName{#1} #2}
