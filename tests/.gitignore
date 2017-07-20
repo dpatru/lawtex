@@ -1,9 +1,5 @@
-testbrief.pdf
-testbrief-duplicateCase.pdf
-testtest.pdf
-testlist.pdf
-*.tmp
-testmaptwo.pdf
+test*.pdf
+test*.rel
 testtest.rel
 .#*.tex
 *.rel
