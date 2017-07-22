@@ -65,295 +65,274 @@
 %   \assert{short name vs.}{\name}{Ashcroft vs. American Civil Union}\par
 % \end{LTXexample}
 
-\subsection{Test parseCitations}
-Test new builtin citations.
-
+\subsection{Test long citations}
+Test new builtin citations. 
 \begin{LTXexample}
-  \citecase{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}
+  \citecase{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}\par
+  \assert{Checking first reporter}{\Call{Ashcroft@ReporterA}}{535 U.S.}\par
+  \assert{Checking second reporter}{\Call{Ashcroft@ReporterB}}{} \par
+  \assert{Checking third reporter}{\Call{Ashcroft@ReporterB}}{} \par
+  \assert{1 citation}{\bbCaseLongCitations{Ashcroft}{}}{535 U.S. 564 (2002)}\par
+  \assert{1 citation with page}{\bbCaseLongCitations{Ashcroft}{12}}{535 U.S. 564, 12 (2002)}\par
+\end{LTXexample}
 
-\assert{Checking first reporter}{\Call{Ashcroft@ReporterA}}{535 U.S.} 
+Two reporters. 
+\begin{LTXexample}
+  \citecase{Two v. X, 123 Mich 234; 345 NW2d 456 (2010)}\par 
+  \assert{2 citation}{\bbCaseLongCitations{Two}{}}%
+  {123 Mich 234; 345 NW2d 456 (2010)}\par 
 
-\assert{Checking second reporter}{\Call{Ashcroft@ReporterB}}{} 
+  \assert{2 citation with 1 page}{\bbCaseLongCitations{Two}{89}}%
+  {123 Mich 234, 89; 345 NW2d 456 (2010)}\par 
 
-\assert{Checking third reporter}{\Call{Ashcroft@ReporterB}}{} 
-
-% \traceon 
-% \bbCaseLongCitations{Ashcroft}{}
-% \traceoff 
-
-\assert{1 citation}{\bbCaseLongCitations{Ashcroft}{}}%
-{535 U.S. 564 (2002)}
-
-\assert{1 citation with page}{\bbCaseLongCitations{Ashcroft}{12}}%
-{535 U.S. 564, 12 (2002)}
-
-\citecase{Two v. X, 123 Mich 234; 345 NW2d 456 (2010)}
-\assert{2 citation}{\bbCaseLongCitations{Two}{}}%
-{123 Mich 234; 345 NW2d 456 (2010)}
-
-\assert{2 citation with 1 page}{\bbCaseLongCitations{Two}{89}}%
-{123 Mich 234, 89; 345 NW2d 456 (2010)}
-
-\assert{2 citation with 2 pages}{\bbCaseLongCitations{Two}{89; 356}}%
-{123 Mich 234, 89; 345 NW2d 456, 356 (2010)}
-
-\citecase{Three v. X, 123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}
-\assert{3 citation}{\bbCaseLongCitations{Three}{}}%
-{123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}
-
-\assert{3 citation with 1 page}{\bbCaseLongCitations{Three}{1}}%
-{123 Mich 234, 1; 345 NW2d 456; 789 MyRep 456 (2010)}
-
-\assert{3 citation with 2 pages}{\bbCaseLongCitations{Three}{1; 2}}%
-{123 Mich 234, 1; 345 NW2d 456, 2; 789 MyRep 456 (2010)}
-
-\assert{3 citation with 3 pages}{\bbCaseLongCitations{Three}{1; 2; 3}}%
-{123 Mich 234, 1; 345 NW2d 456, 2; 789 MyRep 456, 3 (2010)}
+  \assert{2 citation with 2 pages}{\bbCaseLongCitations{Two}{89; 356}}%\par 
+  {123 Mich 234, 89; 345 NW2d 456, 356 (2010)}\par 
 
 \end{LTXexample}
 
-Check Slip Opinions.
-
+Three reporters. 
 \begin{LTXexample}
-  \let\reporters\empty\let\startpages\empty
-  \parseCitations \_\_ Mich \_\_; X X X; 
-  \assert{slip reporter}{\reporters}{\_\_ Mich}
-  \assert{slip page}{\startpages}{\_\_}
-  \citecase{Ashcroft v. American Civil Liberties Union, \_\_\_  U.S. \_\_\_ (2002)}
+  \citecase{Three v. X, 123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+  \assert{3 citation}{\bbCaseLongCitations{Three}{}}%
+  {123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+
+  \assert{3 citation with 1 page}{\bbCaseLongCitations{Three}{1}}%\par 
+  {123 Mich 234, 1; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+
+\assert{3 citation with 2 pages}{\bbCaseLongCitations{Three}{1; 2}}%
+{123 Mich 234, 1; 345 NW2d 456, 2; 789 MyRep 456 (2010)}\par 
+
+\assert{3 citation with 3 pages}{\bbCaseLongCitations{Three}{1; 2; 3}}%
+{123 Mich 234, 1; 345 NW2d 456, 2; 789 MyRep 456, 3 (2010)}\par 
+\end{LTXexample}
+
+Check Slip Opinions. 
+\begin{LTXexample}
+  \let\reporters\empty\let\startpages\empty 
+  \parseCitations \_\_ Mich \_\_; X X X; \par 
+  \assert{slip reporter}{\reporters}{\_\_ Mich}\par 
+  \assert{slip page}{\startpages}{\_\_}\par 
+  \citecase{Ashcroft v. American Civil Liberties Union, \_\_\_  U.S. \_\_\_ (2002)}\par 
   \assert{slip op}{\bbCaseLongCitations{Ashcroft}{}}%
   {\_\_\_ U.S. \_\_\_ (2002)}
 
   \assert{slip op with page}{\bbCaseLongCitations{Ashcroft}{slip op at 3}}%
-  {\_\_\_ U.S. \_\_\_, \_\_\_ (2002); slip op at 3}
+  {\_\_\_ U.S. \_\_\_, \_\_\_ (2002); slip op at 3}\par 
+\end{LTXexample}
+
+\subsection{Test short citations}
+Test new builtin citations. 
+\begin{LTXexample}
+  \citecase{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}\par
+  \assert{1 citation}{\bbCaseShortCitations{Ashcroft}{}}{}\par
+  \assert{1 citation with page}%
+  {\bbCaseShortCitations{Ashcroft}{12}}%
+  {535 U.S.\penalty100\ at~12}\par
+\end{LTXexample}
+
+Two reporters. 
+\begin{LTXexample}
+  \citecase{Two v. X, 123 Mich 234; 345 NW2d 456 (2010)}\par
+  \assert{2 citation}{\bbCaseShortCitations{Two}{}}{}\par
+  \assert{2 citation with 1 page}{\bbCaseShortCitations{Two}{89}}%
+  {123 Mich\penalty100\ at~89}\par
+
+  \assert{2 citation with 2 pages}{\bbCaseShortCitations{Two}{89; 356}}%\par
+  {123 Mich\penalty100\ at~89; 345 NW2d\penalty100\ at~356}\par
 
 \end{LTXexample}
 
-%   \subsection{Test Citations}
-%   % \begin{LTXexample}
-%   %   \def\testCitations#1#2#3#4#5#6#7{%
-%   %     % 1: shortname 2: reporters, 3: start pages, 
-%   %     % 4: pages, 5: slip suffix, 6: number of reporters, 7: number of 
-%   %     % pages.
-%   %     \edef\name{#1}%
-%   %     \edef\reporters{#2}%
-%   %     \edef\startpages{#3}%
-%   %     \edef\pages{#4}%
-%   %     \edef\slipsuffix{#5}%
-%   %     \edef\numberOfReporters{#6}%
-%   %     \edef\numberOfPages{#7}%
-%   %     \long\def\check##1##2##3##4##5##6##7{%
-%   %       % \par check 1(##1) 2(##2) 3(##3) 4(##4) 5(##5) 6(##6) 7(##7)\par%
-%   %       % \par testing\par%
-%   %       \expandafter\assert\expandafter{\name ~name}{\name}{##1}%
-%   %       \expandafter\assert\expandafter{\name ~reporters}{\reporters}{##2}%
-%   %       \expandafter\assert\expandafter{\name ~startpages}{\startpages}{##3}%
-%   %       \expandafter\assert\expandafter{\name ~pages}{\pages}{##4}%
-%   %       \expandafter\assert\expandafter{\name ~slipsuffix}{\slipsuffix}{##5}%
-%   %       \expandafter\assert\expandafter{\name ~numberOfReporters}{\numberOfReporters}{##6}%
-%   %       \expandafter\assert\expandafter{\name ~numberOfPages}{\numberOfPages}{##7}%
-%   %     }%
-%   %     % testCitations 1(#1) 2(#2) 3(#3) 4(#4) 5(#5) 6(#6) 7(#7)\par%
-%   %     \bbCaseCitationEval{\name}{\pages}{\check}%
-%   %   }%
+Three reporters. 
+\begin{LTXexample}
+  \citecase{Three v. X, 123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}\par
+  \assert{3 citation}{\bbCaseShortCitations{Three}{}}{}\par%
 
-%   %   \citecase{A1 v. B, 1 U.S. 2 (2002)}\par
-%   %   \citecase{B1 v. B, 1 U.S. 2; 3 Mich App 4 (2002)}
-%   %   \citecase{C1 v. B, 1 U.S. 2; 3 Mich App 4; 5 Mich App 6 (2002)}
-%   %   \assert{A1-long cite}{bb
-%   %   \testCitations{A1}{1 U.S.}{2}{3}{\empty}{1}{1}\par
-%   %   \testCitations{B1}{1 U.S.; 3 Mich App}{2; 4}{3}{}{2}{1}
-%   %   \testCitations{C1}{1 U.S.; 3 Mich App; 5 Mich App}{2; 4; 6}{3}{}{3}{1}
- 
-%   % \end{LTXexample}
-%   \subsection{Test case parsing}
-% \begin{LTXexample}
-%   \def\cont#1#2#3#4#5{%
-%     \par%
-%     short name: (#1)\par%
-%     case name: (#2)\par%
-%     reporters: (#3)\par%
-%     start pages: (#4)\par%
-%     parenthetical: (#5)\par%
-%     \vspace{5mm}
-%   }
-%   \long\def\checkparse#1#2#3#4#5#6#7{{%1,2: args to parseCase, 3-7:
-%       % expected
-%       % in extra blocks to avoid contamination
-%       \long\def\check##1##2##3##4##5{%
-%         \assert{short name}{##1}{#3}\par%
-%         \assert{case name}{##2}{#4}\par%
-%         \assert{reporters}{##3}{#5}\par%
-%         \assert{start pages}{##4}{#6}\par%
-%         \assert{parenthetical}{##5}{#7}\par%
-%       }% end check
-%       \long\def\checkShortname##1##2##3##4##5{%
-%         \assert{derived short name}{##1}{#3}\par%
-%         \vspace{5mm}%
-%       }% end checkShortname
-%       parsing with arguments (#1) and (#2)\par
-%       \parseCase[#1]{#2}{\check}%
-%       \parseCase{#2}{\checkShortname}%
-%     }}%end checkparse
- 
+  \assert{3 citation with 1 page}{\bbCaseShortCitations{Three}{1}}%\par
+  {123 Mich\penalty100\ at~1}\par
 
-%   \checkparse{Ashcroft}{Ashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564 (2002)}{Ashcroft}{Ashcroft v. American Civil 
-%     Liberties Union}{535 U.S.}{564}{(2002)}\par 
-%   \checkparse{Ashcroft}{Ashcroft v. American Civil Liberties Union, 535 U.S. 564; 
-%     123 nw2d 456 (2002)}{Ashcroft}{Ashcroft v. American Civil 
-%     Liberties Union}{535 U.S.; 123 nw2d}{564; 456}{(2002)}
+\assert{3 citation with 2 pages}{\bbCaseShortCitations{Three}{1; 2}}%
+{123 Mich\penalty100\ at~1; 345 NW2d\penalty100\ at~2}\par
 
-% \end{LTXexample}
+\assert{3 citation with 3 pages}{\bbCaseShortCitations{Three}{1; 2; 3}}%
+{123 Mich\penalty100\ at~1; 345 NW2d\penalty100\ at~2; 789 MyRep\penalty100\ at~3}\par
+\end{LTXexample}
 
-% \subsection{Test citecase}
+Check Slip Opinions. 
+\begin{LTXexample}
+  \citecase{Ashcroft v. American Civil Liberties Union, \_\_\_  U.S. \_\_\_ (2002)}\par
+  \assert{slip op}{\bbCaseShortCitations{Ashcroft}{}}{}\par%
+  \assert{slip op with page}{\bbCaseShortCitations{Ashcroft}{slip op at 3}}%
+  {\_\_\_ U.S.\penalty 100\ at~\_\_\_; slip op at 3}\par
 
-% \begin{LTXexample}
-%   \citecase{x v y, 12 ny2d 34 (2015)}
-%   \citecase[X]{X v Y, 12 ny2d 34 (2015)}
-%   % \citecase[X]{X v Y, 12 ny2d 34 (2015)} % throws error, X is
-%   % already defined.
-% \end{LTXexample}  
+\end{LTXexample}
 
-% \subsection{Test FullName}
+\subsection{Test citecase}
+\begin{LTXexample}
+  \citecase{x v y, 12 ny2d 34 (2015)}
+  \citecase[X]{X v Y, 12 ny2d 34 (2015)}
+  % \citecase[X]{X v Y, 12 ny2d 34 (2015)} % throws error, X is
+  % already defined.
+\end{LTXexample}  
 
-% \begin{LTXexample}
-% \citecase{Ashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564 (2002)}
-% \assert{FullName}{(\FullName{Ashcroft})}{(Ashcroft v. American Civil Liberties Union)}
+\subsection{Test FullName}
 
-% \edef\x{(\FullName{Ashcroft})}
-% \assert{edef full name}{\x}{(Ashcroft v. American Civil Liberties Union)}
+\begin{LTXexample}
+\citecase{Ashcroft v. American Civil Liberties Union, 
+    535 U.S. 564 (2002)}
+\assert{FullName}{(\FullName{Ashcroft})}{(Ashcroft v. American Civil Liberties Union)}
 
-% Check full name w/o parens 
+\edef\x{(\FullName{Ashcroft})}
+\assert{edef full name}{\x}{(Ashcroft v. American Civil Liberties Union)}
 
-% \assert{FullName}{\FullName{Ashcroft}}{Ashcroft v. American Civil Liberties Union}
+Check full name w/o parens 
 
-% \end{LTXexample}
+\assert{FullName}{\FullName{Ashcroft}}{Ashcroft v. American Civil Liberties Union}
 
-% \subsection{Test cite}
-% \begin{LTXexample}
-%   \citecase{Ashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564 (2002)}
-%   \citecase{Bashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564; 123 Mich 234 (2002)} % semicolon ; separate parallel citations 
-%   {\makeatletter%
-%     \let\CF\empty% disable emphasis of case name, we want all text
-%     % \@bbCaseLongCite[\cccccc]{Ashcroft}{}
-%     % \assert{long}{\c}{Ashcroft v. American Civil Liberties Union, 535 U.S. 564 (2002)}
-%     \hrule 
-%     \@bbCaseLongCite{Ashcroft}{2}
-%   } 
-% \end{LTXexample}
+\end{LTXexample}
 
-% \begin{LTXexample}
-%   \citecase{Ashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564 (2002)}
-%   \citecase{Bashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564; 123 Mich 234 (2002)} % separate parallel citations 
-%                                 % with semicolon followed by a space 
-%                                 % as shown. 
-%   \citecase[Bashcroft2]{Bashcroft v.\@ American Civil Liberties Union, 
-%     535 U.S. 564; 123 Mich 234 (2002)} % separate parallel citations 
-%                                 % with semicolon followed by a space 
-%                                 % as shown. 
-%   {\makeatletter%
-%     \let\CF\empty% this is used to emphasize text, disable it so we
-%                  % can use assert
-%     \hrule 
-%     % \assert{2 cites}{\@bbCaseLongCite{Bashcroft}{}}{Bashcroft v. American Civil Liberties Union, 
-%     % 535 U.S. 564; 123 Mich 234 (2002)}
+\subsection{Test long cite}
+\begin{LTXexample}
+  \citecase{Ashcroft v. American Civil Liberties Union, 
+    535 U.S. 564 (2002)}
+  \citecase{Bashcroft v. American Civil Liberties Union, 
+    535 U.S. 564; 123 Mich 234 (2002)} % semicolon ; separate parallel citations 
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+    \assert{long cite}{\LongCite{Ashcroft}{}}{\CF{Ashcroft v. American Civil Liberties Union}, 535 U.S. 564 (2002)}
+    \assert{long cite}{\LongCite{Ashcroft}{2}}%
+    {\CF{Ashcroft v. American Civil Liberties Union}, 535 U.S. 564, 2 (2002)}
+  } 
+\end{LTXexample}
 
-%     \hrule 
-%     \@bbCaseLongCite{Bashcroft}{2}
-%     \@bbCaseLongCite{Bashcroft2}{2}
-%   }
-% \end{LTXexample}
+Test cites with parallel citations
+\begin{LTXexample}
+  \citecase{Two v. X, 123 Mich 234; 345 NW2d 456 (2010)}\par 
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+    \assert{2 citation}{\LongCite{Two}{}}%
+    {\CF{Two v. X}, 123 Mich 234; 345 NW2d 456 (2010)}\par 
+    \assert{2 citation with 1 page}{\LongCite{Two}{89}}%
+    {\CF{Two v. X}, 123 Mich 234, 89; 345 NW2d 456 (2010)}\par 
+    \assert{2 citation with 2 pages}{\LongCite{Two}{89; 356}}%\par 
+    {\CF{Two v. X}, 123 Mich 234, 89; 345 NW2d 456, 356 (2010)}\par 
+  }
+\end{LTXexample}
 
-% \begin{LTXexample}
-%   \citecase{Ashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564 (2002)}
-%   \citecase{Bashcroft v. American Civil Liberties Union, 
-%     535 U.S. 564; 123 Mich 234 (2002)} % semicolon ; separate parallel citations 
-%   {\makeatletter%
-%     \let\CF\empty 
-%     \hrule 
-%     \@bbCaseLongCite{Bashcroft}{2; 3}
-%   }
-% \end{LTXexample}
+Three reporters. 
+\begin{LTXexample}
+  \citecase{Three v. X, 123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+  \assert{3 citation}{\LongCite{Three}{}}%
+  {\CF{Three v. X}, 123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+  \assert{3 citation with 1 page}{\LongCite{Three}{1}}%\par 
+  {\CF{Three v. X}, 123 Mich 234, 1; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+  \assert{3 citation with 2 pages}{\LongCite{Three}{1; 2}}%
+  {\CF{Three v. X}, 123 Mich 234, 1; 345 NW2d 456, 2; 789 MyRep 456 (2010)}\par 
+  \assert{3 citation with 3 pages}{\LongCite{Three}{1; 2; 3}}%
+  {\CF{Three v. X}, 123 Mich 234, 1; 345 NW2d 456, 2; 789 MyRep 456, 3
+    (2010)}\par
+  }
+\end{LTXexample}
 
-% \begin{LTXexample}
-%   \citecase{A v. B, 1 U.S. 2 (2002)}
-%   \citecase{B v. B, 1 U.S. 2; 3 Mich App 4 (2002)}
-%   \citecase{C v. B, 1 U.S. 2; 3 Mich App 4; 5 Mich App 6 (2002)}
-%   {\makeatletter%
-%     % \let\CF\empty 
-%     \hrule 
-%     \@bbCaseLongCite{A}{}\par 
-%     \@bbCaseLongCite{A}{1}\par 
-%     \@bbCaseLongCite{B}{}\par 
-%     \@bbCaseLongCite{B}{1}\par 
-%     \@bbCaseLongCite{B}{1; 2}\par 
-%     \@bbCaseLongCite{C}{}\par 
-%     \@bbCaseLongCite{C}{1}\par 
-%     \@bbCaseLongCite{C}{1; 2}\par 
-%     \@bbCaseLongCite{C}{1; 2; 3}\par 
-%   }
-% \end{LTXexample}
+Check Slip Opinions. 
+\begin{LTXexample}
+  \citecase{Ashcroft v. American Civil Liberties Union, \_\_\_ U.S. \_\_\_ (2002)}\par
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+    \assert{slip op}{\LongCite{Ashcroft}{}}%
+    {\CF{Ashcroft v. American Civil Liberties Union}, \_\_\_ U.S. \_\_\_ (2002)}
+    \assert{slip op with page}{\LongCite{Ashcroft}{slip op at 3}}%
+    {\CF{Ashcroft v. American Civil Liberties Union}, \_\_\_
+      U.S. \_\_\_, \_\_\_ (2002); slip op at 3}\par
+  }
+\end{LTXexample}
 
-% \begin{LTXexample}
-%   \citecase{A v. B, 1 Mich App 2 (2002)}
-%   \citecase{B v. B, 1 U.S. 2; 3 Mich\,App 4 (2002)}
-%   \citecase{C v. B, 1 U.S. 2; 3 Mich\,App 4; 5 Mich App 6 (2002)}
-%   {\makeatletter%
-%     % \let\CF\empty 
-%     \hrule 
-%     \@bbCaseShortCite{A}{}\par 
-%     \@bbCaseShortCite{A}{1}\par 
-%     \@bbCaseShortCite{B}{}\par 
-%     \@bbCaseShortCite{B}{1}\par 
-%     \@bbCaseShortCite{B}{1; 2}\par 
-%     \@bbCaseShortCite{C}{}\par 
-%     \@bbCaseShortCite{C}{1}\par 
-%     \@bbCaseShortCite{C}{1; 2}\par 
-%     \@bbCaseShortCite{C}{1; 2; 3}\par 
-%   }
+\subsection{Test short cite}
+\begin{LTXexample}
+  \citecase{Ashcroft v. American Civil Liberties Union, 
+    535 U.S. 564 (2002)}
+  \citecase{Bashcroft v. American Civil Liberties Union, 
+    535 U.S. 564; 123 Mich 234 (2002)} % semicolon ; separate parallel citations 
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+    \assert{short cite}{\ShortCite{Ashcroft}{}}{\CF{Ashcroft}}
+    \assert{short cite}{\ShortCite{Ashcroft}{2}}%
+    {\CF{Ashcroft}, 535 U.S.\penalty100\ at~2}
+  } 
+\end{LTXexample}
 
-% \end{LTXexample}
+Test cites with parallel citations
+\begin{LTXexample}
+  \citecase{Two v. X, 123 Mich 234; 345 NW2d 456 (2010)}\par 
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+    \assert{2 short citation}{\ShortCite{Two}{}}%
+    {\CF{Two}}\par 
+    \assert{2 short citation with 1 page}{\ShortCite{Two}{89}}%
+    {\CF{Two}, 123 Mich\penalty100\ at~89}\par 
+    \assert{2 short citation with 2 pages}{\ShortCite{Two}{89; 356}}%\par 
+    {\CF{Two}, 123 Mich\penalty100\ at~89; 345 NW2d\penalty100\ at~356}\par 
+  }
+\end{LTXexample}
 
-% \begin{LTXexample}
-%   \citecase{A v. B, \_\_  U.S. \_\_ (2002)}
-%   {\makeatletter%
-%     % \let\CF\empty 
-%     \hrule 
-%     \@bbCaseLongCite{A}{}\par  
-%     \@bbCaseLongCite{A}{slip op at 1}\par 
-%   }
-% \end{LTXexample}
+Three reporters. 
+\begin{LTXexample}
+  \citecase{Three v. X, 123 Mich 234; 345 NW2d 456; 789 MyRep 456 (2010)}\par 
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+  \assert{3 short citation}{\ShortCite{Three}{}}%
+  {\CF{Three}}\par 
+  \assert{3 short citation with 1 page}{\ShortCite{Three}{1}}%\par 
+  {\CF{Three}, 123 Mich\penalty100\ at~1}\par 
+  \assert{3 short citation with 2 pages}{\ShortCite{Three}{1; 2}}%
+  {\CF{Three}, 123 Mich\penalty100\ at~1; 345 NW2d\penalty100\ at~2}\par 
+  \assert{3 short citation with 3 pages}{\ShortCite{Three}{1; 2; 3}}%
+  {\CF{Three}, 123 Mich\penalty100\ at~1; 345 NW2d\penalty100\ at~2; 789 MyRep\penalty100\ at~3}\par
+  }
+\end{LTXexample}
 
-% \subsection{Testing cite and pincite}
-% Testing cites and pincites cannot take place in LTXexample blocks.
+Check Slip Opinions. 
+\begin{LTXexample}
+  \citecase{Ashcroft v. American Civil Liberties Union, \_\_\_ U.S. \_\_\_ (2002)}\par
+  {
+    \let\CF\empty% disable emphasis of case name, we want all text 
+    \assert{slip op}{\ShortCite{Ashcroft}{}}%
+    {\CF{Ashcroft}}
+    \traceon
+    \assert{slip op with page}{\ShortCite{Ashcroft}{slip op at 3}}%
+    {\CF{Ashcroft}, \_\_\_ U.S.\penalty100\ at~\_\_\_; slip op at 3}\par
+    \traceoff
+  }
+\end{LTXexample}
 
-%   \citecase{A v. B, 1 Mich App 2 (2002)}
-%   \citecase{B v. B, 1 U.S. 2; 3 Mich\,App 4 (2002)}
-%   \citecase{C v. B, 1 U.S. 2; 3 Mich\,App 4; 5 Mich App 6 (2002)}
-%   Here are some pincites.
-%  \pincite{A}{2} and \par
-%   \pincite{B}{3} and \par
-%   \pincite{A}{4} and \par 
-%   \pincite{B}{2; 3} and \par
-%   \pincite{A}{2} and \par
-%   \pincite{C}{1} and 
-%   \pincite{C}{2} and 
-%   \pincite{C}{1; 3} and  
-%   \pincite{C}{1; 2; 3} and  
-%   And some cites  and \par
-%   \cite{A} and \par
-%   \cite{A} and \par
+\subsection{Testing cite and pincite}
+Pincites and cites use assignments (let, def, edef) and index and as
+far as I know, cannot be used in assert.
 
-%   \cite{A} and \par
-%   \cite{A} and \par
-%   \cite{A} and \par
-%   \cite{A} and \par
-%   \cite{A} and \par
+Testing cites and pincites cannot take place in LTXexample blocks.
+
+  \citecase{A v. B, 1 Mich App 2 (2002)}
+  \citecase{B v. B, 1 U.S. 2; 3 Mich\,App 4 (2002)}
+  \citecase{C v. B, 1 U.S. 2; 3 Mich\,App 4; 5 Mich App 6 (2002)}
+  Here are some pincites.
+  \pincite{A}{2} and \par
+  \pincite{B}{3} and \par
+  \pincite{A}{4} and \par 
+  \pincite{B}{2; 3} and \par
+  \pincite{A}{2} and \par
+  \pincite{C}{1} and 
+  \pincite{C}{2} and 
+  \pincite{C}{1; 3} and  
+  \pincite{C}{1; 2; 3} and  
+  And some cites  and \par
+  \cite{A} and \par
+  \cite{A} and \par
+
+  \cite{A} and \par
+  \cite{A} and \par
+  \cite{A} and \par
+  \cite{A} and \par
+  \cite{A} and \par
 
 \end{document}
