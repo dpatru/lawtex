@@ -1003,29 +1003,47 @@
 				\IfSubStr{#3}{i}{\def\@Id{id}}{}%
 %
 				%Choose either ``at'' or just a space based on the type of authority
-				%\def\@At{\ifthenelse{\equal{\SrcType{#1}}{Statute}}{~}{~at~}}%
+				\def\@At{\ifthenelse{\equal{\SrcType{#1}}{Statute}}{~}{~at~}}%
 				%ALTERNATE: Use "at" iff the pin is numeric
-				\def\@At{~}%
-				\IfInteger{\@pin}{\def\@At{~at~}}{}%
+                                % But how to test for numeric range?
+                                % (e.g., 7-12) We need to strip out
+                                % dashes and do the numeric test on
+                                % what's left over. There may be more
+                                % than one way to write the dash. 
+				% \def\@At{~}\IfInteger{\@pin}{\def\@At{~at~}}{}%
 %
 				%If the exact page as well (or there is no pincite), just use id; otherwise use Id. with pin cite
 				\ifthenelse{\equal{\@bbLastPinPage}{#2} \or \equal{}{#2} }%
-					%{\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id}\@Period}} %I eliminated this because I found cases where there was no way to have a period after the Id.
-					{\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id\@Period}}}%
-					{\ifthenelse{\equal{\SrcType{#1}}{Case} \and%
-                                            \boolean{@multiplepin}}{%
-                                            \@autofootnote{\@bbSignal\FillIn{}{\@vol}{%
-                                              }\emph{\@Id.}, \Call{#1@ShortCitations}{#2}%
-                                            }%
-                                          }{%
-                                            \@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id.}\@At\@pin\@Period}%
-                                          }%
-                                        }%
+                                % {\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id}\@Period}} %I eliminated this because I found cases where there was no way to have a period after the Id.
+                                {\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id\@Period}}}%
+                                {\ifthenelse{\equal{\SrcType{#1}}{Case} \and%
+                                    \boolean{@multiplepin}}{%
+                                    \@autofootnote{\@bbSignal\FillIn{}{\@vol}{%
+                                      }\emph{\@Id.}, \Call{#1@ShortCitations}{#2}
+                                      % 
+                                      % note comma is used before the
+                                      % call to ShortCitations, this
+                                      % is ok as long
+                                      % as there
+                                      % is a page
+                                      % argument. ShortCitations
+                                      % without a page does
+                                      % not print anything,
+                                      % and in this case we
+                                      % should use
+                                      % ShortCitationsWithComma
+                                      % which omits the comma
+                                      % if nothing is printed.
+                                    }%
+                                  }{%
+                                    \@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id.}\@At\@pin\@Period}%
+                                  }%
+                                }%
 				\stepcounter{@bbSequentialIds}%
 			}%
 			{%	
 				%If this is not the second-in-a-row occurence of this authority, use short form
-				\@autofootnote{\@bbSignal\@bbShortCite{#1}{\@pin}\@Period}%
+				\@autofootnote{\@bbSignal\@bbShortCite{#1}{\@pin}\@Period}%tk
 				\setcounter{@bbSequentialIds}{0}%
 			}%
 		}%
