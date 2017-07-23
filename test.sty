@@ -1,3 +1,4 @@
+% \documentclass{article}
 
 \usepackage{xstring} % IfEq, StrCompare
 \usepackage{xcolor}
@@ -11,7 +12,6 @@
     % Note that you cannot use the macro on macros with optional
     % arguments because the macros won't expand properly in an edef.
     % see https://tex.stackexchange.com/questions/21514/why-isnt-a-command-defined-by-newcommand-with-an-optional-argument-expandable
-    \makeatletter%
     \edef\assertA{#2}\edef\assertB{#3}%
     \def\name{\if\relax\detokenize{#1}\relax\detokenize{#2} = \detokenize{#3}\else #1\fi}%
     \def\desc{\space Test:\,\stepcounter{tst}\thetst~(\name)\par}%
@@ -25,8 +25,17 @@
       \fi%
       \textcolor{red}{Failed} \desc%
       \par~~~~~~~~(\assertA)(\detokenize{#2}) $\ne$ \par~~~~~~~~(\assertB)(\detokenize{#3})\par%
-      First difference at position args %
-      \comparestrict\StrCompare{\assertA}{\assertB}\par%
+      First difference at position %
+      \comparestrict\StrCompare{\assertA}{\assertB}.\par%
     }%
 }}
 
+% \begin{document}
+
+% \def\hello#1{hello #1}
+
+% \assert{hello world}{\hello{world}}{hello world}
+
+% \assert{failing hello world}{\hello{world}}{hello cruel world}
+
+% \end{document}
