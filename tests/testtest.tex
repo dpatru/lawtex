@@ -79,10 +79,12 @@ Macros with multiple arguments work in `StrCompare`.
 We can assert equality between simple strings. 
 
 \begin{LTXexample}
-  \assert{right}{wrong}
-  \assert{right}{right}
-  \assert[right and wrong]{right}{wrong}
-  \assert[just right]{right}{right}
+  \ifcsname EnforceAssertions\endcsname\else%
+  \assert{right and wrong}{right}{wrong}\par%
+  \assert{right != wrong}{right}{wrong}\par%
+  \fi 
+  \assert{right == right}{right}{right}\par
+  \assert{just right}{right}{right}\par
 \end{LTXexample}
 
 But \TeX complains if we try to use formatting in an assertion. 
@@ -103,22 +105,22 @@ Simple macros with or without arguments are ok.
 
 \begin{LTXexample}
   \def\a{hello }
-  \assert{hello world}{\a world}
+  \assert{hello world}{hello world}{\a world}
 
   \def\a#1{hello #1}
-  \assert{\a{world}}{hello world}
+  \assert{hello world2}{\a{world}}{hello world}
   
   \def\a#1#2{#1 #2}
-  \assert{\a{hello}{world}}{hello world}
+  \assert{hello world3}{\a{hello}{world}}{hello world}
 
   \newcommand\testAssertA{hello world}
-  \assert{\testAssertA}{hello world}
+  \assert{testAssertA}{\testAssertA}{hello world}
 
   \newcommand\testAssertB[1]{#1 world}
-  \assert{\testAssertB{hello}}{hello world}
+  \assert{testAssertB}{\testAssertB{hello}}{hello world}
 
   \newcommand\testAssertC[2]{#1 #2}
-  \assert{\testAssertC{hello}{world}}{hello world}
+  \assert{testAssertC}{\testAssertC{hello}{world}}{hello world}
 
 \end{LTXexample}
 
