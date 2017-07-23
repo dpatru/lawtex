@@ -4,18 +4,18 @@
 
 \newcounter{tst}
 
+% \assert{test name}{string value1}{string value 2}- will test that
+% the second argument matches the third argument and print in green if
+% it passed or in red if it fails.
 \long\def\assert#1#2#3{{% add a block to prevent namespace pollution
     % Note that you cannot use the macro on macros with optional
     % arguments because the macros won't expand properly in an edef.
     % see https://tex.stackexchange.com/questions/21514/why-isnt-a-command-defined-by-newcommand-with-an-optional-argument-expandable
-    % \edef\t{\noexpand\ifEq{#1}{#2}}%
     \makeatletter%
-    % \protected@edef\assertA{#2}\protected@edef\assertB{#3}%
     \edef\assertA{#2}\edef\assertB{#3}%
     \def\name{\if\relax\detokenize{#1}\relax\detokenize{#2} = \detokenize{#3}\else #1\fi}%
     \def\desc{\space Test:\,\stepcounter{tst}\thetst~(\name)\par}%
     \comparestrict%
-    % \IfEq{#2}{#3}{%
     \IfEq{\assertA}{\assertB}{%
       \textcolor{green}{Passed} \desc%
     }{%
