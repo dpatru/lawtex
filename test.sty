@@ -19,6 +19,10 @@
     \IfEq{\assertA}{\assertB}{%
       \textcolor{green}{Passed} \desc%
     }{%
+      \ifcsname EnforceAssertions\endcsname%
+      \errmessage{Assertion \thetst (#1) failed. (#2) $\ne$ (#3)}%
+      \else%
+      \fi%
       \textcolor{red}{Failed} \desc%
       \par~~~~~~~~(\assertA)(\detokenize{#2}) $\ne$ \par~~~~~~~~(\assertB)(\detokenize{#3})\par%
       First difference at position args %
