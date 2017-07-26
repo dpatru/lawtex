@@ -984,7 +984,7 @@
                   \) }%
 		{%
 %\show\@pin
-			\@autofootnote{\@bbSignal\@bbLongCite{#1}{\@pin}\@Period}%
+                  \@autofootnote{\@bbSignal\@bbLongCite{#1}{#2}\@Period}%
 			\setcounter{@bbSequentialIds}{0}%
 			\ifthenelse{\boolean{#1@FirstUse}}{\XDef{#1@SupraNote}{\thefootnote}}{}%
 		}{%
@@ -1043,7 +1043,7 @@
 			}%
 			{%	
 				%If this is not the second-in-a-row occurence of this authority, use short form
-				\@autofootnote{\@bbSignal\@bbShortCite{#1}{\@pin}\@Period}%tk
+				\@autofootnote{\@bbSignal\@bbShortCite{#1}{#2}\@Period}%tk
 				\setcounter{@bbSequentialIds}{0}%
 			}%
 		}%
