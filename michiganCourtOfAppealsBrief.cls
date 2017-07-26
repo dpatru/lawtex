@@ -480,4 +480,13 @@
 \clubpenalty=3000
 \widowpenalty=3000
 
+\usepackage[shortlabels]{enumitem}% remove extra spaces in itemize and enumerate, see http://mirror.utexas.edu/ctan/macros/latex/contrib/enumitem/enumitem.pdf
+\setlist[enumerate]{nosep}
+\setlist[itemize]{nosep}
+\renewenvironment{quote}%
+{\begin{singlespacing}\list{}{\rightmargin=\leftmargin\topsep=0pt\itemsep=0pt\parsep=0pt}\item\relax}%
+{\endlist\end{singlespacing}}
+% \AtBeginEnvironment{quote}{\singlespacing}%\small}
+
+
 % vim: set syntax=tex :
