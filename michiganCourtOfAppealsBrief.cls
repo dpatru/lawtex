@@ -63,9 +63,17 @@
 
 %Syntax for @startsection{name}{level}{indent}{abovespace}{belowspace}{format}
 %The 4th argument is negative to suppress indenting after the section heading
-\def\section{\@startsection{section}{2}{0pt}{-10pt}{2pt}{\centering\normalsize\bfseries}}%
-\def\subsection{\@startsection{subsection}{2}{0pt}{-2pt}{2pt}{\hyphenpenalty=10000\normalsize\bfseries}}%
-\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-2pt}{2pt}{\hyphenpenalty=10000\bfseries}}%
+% \def\section{\@startsection{section}{1}{0pt}{.5\baselineskip}{.5\baselineskip}{\centering\normalsize\bfseries}}%
+% \def\subsection{\@startsection{subsection}{2}{0pt}{.5\baselineskip}{.5\baselineskip}{\hyphenpenalty=10000\normalsize\bfseries}}%
+% \def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{.5\baselineskip}{.5\baselineskip}{\hyphenpenalty=10000\bfseries}}%
+\def\section{\@startsection{section}{1}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\centering\normalsize\bfseries}}%
+\def\subsection{\@startsection{subsection}{2}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\hyphenpenalty=10000\normalsize\bfseries}}%
+\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-.999\baselineskip}{0.001\baselineskip}{\hyphenpenalty=10000\bfseries}}%
+
+% \def\section{\@startsection{section}{1}{0pt}{-10pt}{2pt}{\centering\normalsize\bfseries}}%
+% \def\subsection{\@startsection{subsection}{2}{0pt}{-2pt}{2pt}{\hyphenpenalty=10000\normalsize\bfseries}}%
+% \def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-2pt}{2pt}{\hyphenpenalty=10000\bfseries}}%
+
 
 %No numbers printed for section (remove \quad); I. Subsection; A. Subsubsection
 \renewcommand{\thesection}{\hspace{-1em}}
@@ -131,12 +139,12 @@
 
 \renewenvironment{theindex}
                {\parindent=\indexindentsize%
-                \parskip=10pt plus .3pt%
-				\linepenalty=1000%
-				\hyphenpenalty=10000%
-				\rightskip=\indexrightmargin%
-				\parfillskip=-\indexrightmargin%
-				\setcounter{@passimcount}{0}%
+                % \parskip=10pt plus .3pt%
+                \linepenalty=1000%
+                \hyphenpenalty=10000%
+                \rightskip=\indexrightmargin%
+                \parfillskip=-\indexrightmargin%
+                \setcounter{@passimcount}{0}%
                 \let\item\@idxitem
                 \let\subitem\@idxsubitem}
                {\@printpagenums\par}
@@ -177,7 +185,7 @@
 \singlespacing
 \section{Table of Authorities} \pagestyle{toa}\thispagestyle{romanparen}%
 	\noindent\sc \@caseindextitle\hfill\rm Page\par
-	\vspace{6pt}
+	% \vspace{6pt}
 	\everypar={\mark{\@caseindextitle---Continued}}
 	\printindex{Case}
 %
@@ -205,7 +213,8 @@
 %%
 %%_\tableofcontents_ --- Print the table of contents.
 %%
-\renewcommand\tableofcontents{{\setlength{\parskip}{2ex plus 1ex minus .5ex} \@starttoc{toc}}}
+% \renewcommand\tableofcontents{{\setlength{\parskip}{2ex plus 1ex minus .5ex} \@starttoc{toc}}}
+\renewcommand\tableofcontents{\@starttoc{toc}}
 
 \def\@snumwidth{2em}		%Size of box around toc section number
 \def\@pnumwidth{2em}		%Size of right margin in toc for all but last line
@@ -335,6 +344,9 @@
 
 \newcommand{\firstparty}[1]{\def\@firstparty{#1}}
 \newcommand{\firstpartytitle}[1]{\def\@firstpartytitle{#1}}
+
+% Calling the following macros (plaintiff, appellant, ...) sets the
+% first and second party automatically.
 \newcommand{\plaintiff}[1]{\firstparty{#1}\firstpartytitle{Plaintiff}}
 \newcommand{\plaintiffs}[1]{\firstparty{#1}\firstpartytitle{Plaintiffs}}
 \newcommand{\appellant}[1]{\firstparty{#1}\firstpartytitle{Appellant}}
@@ -379,59 +391,6 @@
 
 \renewcommand{\maketitle}{\makesupremetitle}
 
-\newcommand{\makesupremetitle}{%
-\setlength{\parskip}{2ex plus 1ex minus .5ex}
-\vfill ~
-\vspace{-10pt}
-\begin{center}
-\thispagestyle{empty}
-{\bf \@docket}
-\sectionline
-
-\sc\large
-In The \\
-\vspace{10pt}
-\includegraphics[width=.95\textwidth]{\@titlegraphic}
-%\includegraphics[width=.95\textwidth]{MorrisTyler.pdf}
-
-\@firstparty \\
-\hfill \textit{\@firstpartytitle} \\
-\textit{v.} \\
-~\\
-\@secondparty \\
-\hfill \emph{\@secondpartytitle} \\
-
-\smallrule
-
-On Writ of Certiorari to the\\
-United States Court of Appeals\\
-For The \@circuit{} Circuit 
-
-\smallrule
-
-Brief for \@brieffor{}
-
-\smallrule
-
-\end{center}
-
-\begingroup
-\sc\large
-\setlength{\leftskip}{.5\textwidth}
-\parindent=0pt
-
-\@author \\
-\@address
-
-\endgroup
-
-~\\
-
-\sectionline
-
-\vfill ~\\
-\newpage
-}
 
 
 \newcommand{\makecaption}[1]{{
@@ -448,19 +407,13 @@ Brief for \@brieffor{}
 
 \raggedright\@firstparty, 
 
-~
+\hfill\textit{\@firstpartytitle,}
 
-\hspace*{1in}\textit{\@firstpartytitle,}
-
-\hspace*{.5in}v.
-
-~ 
+\centerline{v}
 
 \raggedright\@secondparty, 
 
-~
-
-\hspace*{1in}\textit{\@secondpartytitle.} 
+\hfill\textit{\@secondpartytitle.} 
 
 ~
 } &
