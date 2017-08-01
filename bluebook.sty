@@ -47,7 +47,6 @@
 \RequirePackage{xstring} 
 \RequirePackage{xspace} 
 \RequirePackage{url}
-\RequirePackage{list}
 
 %\def\url@leostyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
 \def\url@leostyle{\def\UrlFont{\footnotesize\ttfamily}}
@@ -65,7 +64,8 @@
 \setboolean{@bbLawReviewMode}{false}	
 \newcounter{@bbSequentialIds}
 
-%Helper rountines - we should consider if these need to be renamed to avoid clashes
+%Helper rountines - we should consider if these need to be renamed to
+%avoid clashes
 \def\Def#1#2{\expandafter\def\csname#1\endcsname{#2}}
 \def\EDef#1#2{\expandafter\edef\csname#1\endcsname{#2}}
 \def\ProtectedEDef#1#2{\expandafter\protected@edef\csname#1\endcsname{#2}}
@@ -183,10 +183,7 @@
   \let\reporters\empty\let\startpages\empty%
   % Parsing Citations: (\@citation)
   \expandafter\parseCitations\@citation; X X X; %
-  % Debug
-  % reporters = (\listjoin{\reporters})\par%
-  % pages = (\listjoin{\startpages})\par%
-  % % 
+
   % Set the short name
   \IfEq{#1}{\empty}{% Short name was not given explicitly
     % Deriving shortname\par%
@@ -264,7 +261,7 @@
   \if\relax\detokenize{#1}\relax%
   \errmessage{Error in FirstReporterLong! no reporter for this case.}%
   \else#1 #2%
-  \if\relax#3\relax\else%
+  \if\relax\detokenize{#3}\relax\else%
   \if\relax\detokenize{#4}\relax, #3\else, #2%
   \fi\fi\fi}
 
@@ -277,7 +274,7 @@
 \newcommand{\bbFollowingReporterLong}[4]{%1: reporter, 2: start page,
                                 %3: page, 4: slip presence
   \if\relax#1\relax\else; #1 #2%
-  \if\relax#3\relax\else%
+  \if\relax\detokenize{#3}\relax\else%
   \if\relax\detokenize{#4}\relax, #3\else, #2%
   \fi\fi\fi}
 
@@ -286,7 +283,7 @@
   \if\relax\detokenize{#1}\relax%
   \errmessage{Error in FirstReporterShort! no reporter for this case.}%
   \else% show something, no error 
-  \if\relax#3\relax\else% no page, show nothing 
+  \if\relax\detokenize{#3}\relax\else% no page, show nothing 
   \if\relax\detokenize{#4}\relax#1\penalty100\ at~#3% no slip, show page 
   \else#1\penalty100\ at~#2% slip, show start page 
   \fi\fi\fi}
@@ -296,7 +293,7 @@
   \if\relax\detokenize{#1}\relax%
   \errmessage{Error in FirstReporterShort! no reporter for this case.}%
   \else% show something, no error 
-  \if\relax#3\relax\else% no page, show nothing 
+  \if\relax\detokenize{#3}\relax\else% no page, show nothing 
   \if\relax\detokenize{#4}\relax, #1\penalty100\ at~#3% no slip, show page 
   \else, #1\penalty100\ at~#2% slip, show start page 
   \fi\fi\fi}
@@ -305,7 +302,7 @@
                                 %page, 4: slip presence 
   \if\relax#1\relax% No reporter, do nothing
   \else%
-  \if\relax#3\relax\else% no page, show nothing 
+  \if\relax\detokenize{#3}\relax\else% no page, show nothing 
   \if\relax\detokenize{#4}\relax; #1\penalty100\ at~#3% no slip, show page 
   \else; #1\penalty100\ at~#2% slip, show start page 
   \fi\fi\fi}
