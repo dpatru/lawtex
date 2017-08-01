@@ -66,10 +66,23 @@
 % \def\section{\@startsection{section}{1}{0pt}{.5\baselineskip}{.5\baselineskip}{\centering\normalsize\bfseries}}%
 % \def\subsection{\@startsection{subsection}{2}{0pt}{.5\baselineskip}{.5\baselineskip}{\hyphenpenalty=10000\normalsize\bfseries}}%
 % \def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{.5\baselineskip}{.5\baselineskip}{\hyphenpenalty=10000\bfseries}}%
-\def\section{\@startsection{section}{1}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\centering\normalsize\bfseries}}%
-\def\subsection{\@startsection{subsection}{2}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\hyphenpenalty=10000\normalsize\bfseries}}%
-\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-.999\baselineskip}{0.001\baselineskip}{\hyphenpenalty=10000\bfseries}}%
+% \renewcommand\cftsecaftersnum{.}
+\def\section{\@startsection{section}{1}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\centering\normalsize\bfseries}}%
+\def\subsection{\@startsection{subsection}{2}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=10000\normalsize\bfseries}}%
+\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=10000\bfseries}}%
 
+\DeclareRobustCommand{\@seccntformat}[1]{%https://tex.stackexchange.com/a/308739/135718
+  \def\temp@@a{#1}%
+  \def\temp@@b{section}%
+  \ifx\temp@@a\temp@@b
+  \csname the#1\endcsname\quad%
+  \else
+  \csname the#1\endcsname .\quad%
+  \fi
+} 
+
+
+% \renewcommand{\@seccntformat}[1]{\csname the#1\endcsname\quad}
 % \def\section{\@startsection{section}{1}{0pt}{-10pt}{2pt}{\centering\normalsize\bfseries}}%
 % \def\subsection{\@startsection{subsection}{2}{0pt}{-2pt}{2pt}{\hyphenpenalty=10000\normalsize\bfseries}}%
 % \def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-2pt}{2pt}{\hyphenpenalty=10000\bfseries}}%
@@ -78,7 +91,7 @@
 %No numbers printed for section (remove \quad); I. Subsection; A. Subsubsection
 \renewcommand{\thesection}{\hspace{-1em}}
 \renewcommand{\thesubsection}{\Roman{subsection}}
-\renewcommand{\thesubsubsection}{\Alph{subsubsection}.}
+\renewcommand{\thesubsubsection}{\Alph{subsubsection}}
 
 %==============================================================================
 %%
@@ -483,6 +496,7 @@
 \usepackage[shortlabels]{enumitem}% remove extra spaces in itemize and enumerate, see http://mirror.utexas.edu/ctan/macros/latex/contrib/enumitem/enumitem.pdf
 \setlist[enumerate]{nosep}
 \setlist[itemize]{nosep}
+\setlist[description]{nosep}
 \renewenvironment{quote}%
 {\begin{singlespacing}\list{}{\rightmargin=\leftmargin\topsep=0pt\itemsep=0pt\parsep=0pt}\item\relax}%
 {\endlist\end{singlespacing}}
