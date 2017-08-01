@@ -558,15 +558,21 @@
 %%   \pincite{42 U.S.C.}{\S 1983}.
 %% \end{Example}
 %%
-\newcommand{\newstatute}[2]{
+\newcommand{\newstatute}[3][]{
 	\begingroup
-		\xdef\@HandleName{#1}
+		\xdef\@HandleName{#2}
 		\XDef{\@HandleName @Type}{Statute}
 		\XDef{\@HandleName @IndexType}{Statute}
 
-		\XDef{\@HandleName @ShortName}{#1}
-		\XDef{\@HandleName @IndexName}{#1 !}
-		\XDef{\@HandleName @Parenthetical}{#2}
+                \if\empty\detokenize{#1}\empty%
+                \XDef{\@HandleName @IndexPosition}{}%
+                \else%
+                \XDef{\@HandleName @IndexPosition}{#1@}%
+                \fi%
+
+		\XDef{\@HandleName @ShortName}{#2}
+		\XDef{\@HandleName @IndexName}{\Call{\@HandleName @IndexPosition}#2 !}
+		\XDef{\@HandleName @Parenthetical}{#3}
 
 		\globaldefs=1
 		\newboolean{\@HandleName @FirstUse} 
@@ -863,7 +869,7 @@
 \newcommand{\@bbLink}[1]{#1}
 
 \newcommand{\@bbCaseIndexCite}[2]{%
-  {\CF\FullName{#1}},\idxbreak\ \bbCaseLongCitations{#1}{}%
+  #1@{\CF\FullName{#1}},\idxbreak\ \bbCaseLongCitations{#1}{}%
 }%
 %\newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ \FillIn{}{\@vol}{ }{\em\Title{#1}} \Parenthetical{#1}}
 \newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ {\em\Title{#1}} \Parenthetical{#1}}
