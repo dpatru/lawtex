@@ -13,6 +13,7 @@
 \usepackage{setspace,xcolor}
 \usepackage[hyperindex=false,linkbordercolor=white]{hyperref}
 \usepackage[T1]{fontenc}
+\usepackage{trace}
 
 \chardef\_=`_% https://tex.stackexchange.com/a/301984/135718 
 
@@ -78,11 +79,15 @@
 
 \newmisc{J.A.}{J.A. \pin{}{}}
 \SetIndexType{J.A.}{}
-
 %The following line add ``U.S. Const. Amend. I'' to the Statutes index section, 
 % uses the aa@ prefix to order it first in the list, and marks it passim
-\index{Statute}{aa@\textsc{U.S. Const.} amend. I|idxpassim}
+% \index{Statute}{aa@\textsc{U.S. Const.} amend. I|idxpassim}
 
+{\makeatletter
+  % \traceon
+  \newstatute[AA@1st amendment]{\textsc{U.S. Const.} amend. I}{}
+  % \traceoff
+}
 %This commands creates the title page, table of contents, and table of authorities
 \makefrontmatter{Brief\\Proof of Service}
 
@@ -115,7 +120,7 @@ The District Court for the Eastern District of Michigan (Duggan, J.) dismissed t
 The judgment of the Court of Appeals was entered on March 29, 2010. The petition for writ of certiorari was filed on October 22, 2010, and was granted on March 28, 2011. This Court has jurisdiction under \index{Statute}{bb@Title 28, United States Code !\S1254}28 U.S.C. \S 1254(1).
 
 \section{Constitutional Provisions Involved} 
-This case implicates the Establishment and Free Exercise Clauses of the First Amendment of the U.S. Constitution: ``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof\ldotss''
+This case implicates the Establishment and Free Exercise Clauses of the First Amendment of the U.S. Constitution: ``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof\ldotss'' \cite[!]{1st amendment}
 
 \section{Background} 
 

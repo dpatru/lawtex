@@ -549,7 +549,7 @@
 }
 
 %%
-%%\cmd{newstatute}{Short Name}{Parenthetical}[Define a new statute citation.]
+%%\cmd{newstatute}[optional handle@index-place]{Short Name}{Parenthetical}[Define a new statute citation.]
 %% \begin{Example}
 %%   \newstatute{42 U.S.C.}{(2006)}
 %%   \newstatute{Administrative Procedure Act}{(2006)}
@@ -558,29 +558,52 @@
 %%   \pincite{42 U.S.C.}{\S 1983}.
 %% \end{Example}
 %%
+%%
+%% Add position indexing and separate shortnaming.
+%%
+%%1) The references in the Statutes index can appear in the wrong order or
+%% 2) can involve formatting like small caps (\textsc) which cannot be used as
+%% the internal TeX handle. This change solves both problems. A new
+%% optional argument is added to \newstatute. The argument can take the
+%% following forms:
+%%
+%% \newstatute[AA@]{MCL}{} - put the MCL statute at place AA in the index.
+%%
+%% \newstatute[am1]{\textsc{U.S. Const.} amend. I} - use am1 as the handle
+%% for the first ammendment. (The \textsc prevents the name from being used
+%% as a handle.)
+%%
+%% \newstatute[1@am1]{\textsc{U.S. Const.} amend. I} - use am1 as the
+%% handle for the first ammendment, put it at position 1 in the index.
+
+
 \newcommand{\newstatute}[3][]{
-	\begingroup
-		\xdef\@HandleName{#2}
-		\XDef{\@HandleName @Type}{Statute}
-		\XDef{\@HandleName @IndexType}{Statute}
-
-                \if\empty\detokenize{#1}\empty%
-                \XDef{\@HandleName @IndexPosition}{}%
-                \else%
-                \XDef{\@HandleName @IndexPosition}{#1@}%
-                \fi%
-
-		\XDef{\@HandleName @ShortName}{#2}
-		\XDef{\@HandleName @IndexName}{\Call{\@HandleName @IndexPosition}#2 !}
-		\XDef{\@HandleName @Parenthetical}{#3}
-
-		\globaldefs=1
-		\newboolean{\@HandleName @FirstUse} 
-		\setboolean{\@HandleName @FirstUse}{true}
-		\globaldefs=0
-	\endgroup
-%
-	\XDef{\@HandleName @LastNote}{0}%
+  \begingroup
+  \makeatletter
+  % Use these next two macros like this: {\getIndexPosition#1@\stop}
+  % and {\getHandle#1@\stop}
+  \def\getIndexPosition##1@##2\stop{\if\relax\detokenize{##2}\relax\else##1@\fi}
+  \def\getHandle##1@##2\stop{\if\relax\detokenize{##2}\relax##1\else\stripAt##2\fi}
+  \def\stripAt##1@{##1}
+  \xdef\h{\noexpand\getHandle#1@\noexpand\stop}
+  \xdef\@HandleName{\h}
+  \ifx\@HandleName\empty%
+  \xdef\@HandleName{#2}\fi
+  \XDef{\@HandleName @Type}{Statute}
+  \XDef{\@HandleName @IndexType}{Statute}
+  \ProtectedXDef{\@HandleName @ShortName}{#2}
+  \XDef{\@HandleName @IndexPosition}{\getIndexPosition#1@\stop}
+  \ProtectedXDef{\@HandleName @IndexName}{%
+    \Call{\@HandleName @IndexPosition}%
+    \Call{\@HandleName @ShortName} !}
+  \XDef{\@HandleName @Parenthetical}{#3}
+  \globaldefs=1
+  \newboolean{\@HandleName @FirstUse} 
+  \setboolean{\@HandleName @FirstUse}{true}
+  \globaldefs=0
+  \endgroup
+  % 
+  \XDef{\@HandleName @LastNote}{0}%
 }
 
 %%
