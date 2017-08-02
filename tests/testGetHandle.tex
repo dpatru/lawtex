@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{trace}
+\begin{document}
+\makeatletter
+\def\getIndexPosition#1@#2\stop{\if\relax\detokenize{#2}\relax\else#1\fi}
+\def\getHandle#1@#2\stop{\if\relax\detokenize{#2}\relax#1\else\stripAt#2\fi}
+\def\stripAt#1@{#1}
+\newcommand{\newstatute}[3][]{%
+  \begingroup%
+  \edef\handle{\noexpand\getHandle#1@\noexpand\stop}
+  \edef\handle{\handle}
+  \ifx\handle\empty\edef\handle{#2}\fi
+%   detokenize{
+%   \xdef\@HandleName{\getHandle#
+%     % 1: #1\par2: #2\par3: #3\par%
+%     \if\relax\detokenize{#1}\relax#2\else%
+%     \expandafter\if\expandafter\relax\expandafter
+%     \detokenize\expandafter{\getHandle#1@\stop}\relax#2\else%
+%   \getHandle#1@\stop%
+% \fi\fi}%
+% handle = \@HandleName\par% 
+handle = \handle\par
+index = \getIndexPosition#1@\stop\par
+\hrule\par
+\endgroup
+}
+
+try nothing\par
+\newstatute{citation}{}
+
+only indexposition\par
+\newstatute[place@]{citation}{}\par 
+
+ handle plus indexplace\par
+\traceon 
+\newstatute[place@handle]{citation}{}\par 
+\traceoff\par 
+
+handle only\par
+\newstatute[handle]{citation}{}\par
+
+\def\nothing{}
+nothing: (\expandafter\detokenize\expandafter{\nothing})\par
+\end{document}
