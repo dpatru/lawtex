@@ -1,0 +1,405 @@
+\parskip=6pt
+\parindent=1.5em
+\leftskip=0em
+\frenchspacing
+\font\parasymbolfont=phvr at 10pt
+\font\sectionsymbolfont=pncr at 10pt
+ \section{Defining Sources}\vspace{-8pt}
+
+\citecase[Steel Seizure Case]{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
+\cmd{citecase}[Short Name]{Standard Case Citation}[Defines a new case citation, using standard citation form.]
+   \citecase{Miller-Davis v. Ahrens Const., 296 Mich. App. 56; 817 N.W.2d 609 (2012)}
+ \begin{Example}
+   %\citecase{Lochner v. New York, 198 U.S. 45 (1905)}
+   %\citecase[Steel Seizure Case]
+   %{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
+   %\citecase{Miller-Davis v. Ahrens Const., 296 Mich. App. 56; 817 N.W.2d 609 (2012)}
+   \cite[l]{Lochner}. \\ 
+   \pincite{Lochner}{48}. \\
+   \pincite{Steel Seizure Case}{602}. \\
+   \pincite{Lochner}{52}. \\
+   \See \pincite{Steel Seizure Case}{625}. \\
+   \pincite{Miller-Davis}{57; 610}
+ \end{Example}
+ \noindent To cite legal sources in the body of the text, first include a _\citecase_ command with the 
+ case citation to define the case as a source. At the point in the text where the citation should appear, use
+ _\cite_ or _\pincite_, passing the short name as an argument.  Spacing and commas are important (extra spaces will be preserved). 
+
+ By default, the first party is used for the short name of the case, unless that party is 
+ ``United States,'' ``State,'' ``Commonwealth,'' or ``People,'' in which case the second party is used.  
+ To override the choice of short name, set the optional parameter. 
+
+ Separate parallel cites with a semicolon and space. This applies
+ both when defining the case with a _\citecase_ and when citing it
+ with _\pincite_.
+ 
+ With case citations that differ from the standard format, you may need to use the _\newcase_ command.
+ For example, in ``\emph{Marbury v. Madison}, 5 U.S. (1 Cranch), 137 (1803)'', the extra parentheses around
+ the ``(1~Cranch.)'' will throw off the parser. See the way that this is cited below. 
+
+
+\cmd{newcase}{Short Name}{Full Name}{Reporter}{Starting Page}{Parenthetical}[Defines a new case citation.]
+ \newcase{Marbury}{Marbury v. Madison}{5 U.S. (1 Cranch)}{137}{(1803)}
+ \begin{Example}
+   %\newcase{Marbury}{Marbury v. Madison}{5 U.S. (1 Cranch)}{137}{(1803)}
+   \pincite{Marbury}{140}.
+ \end{Example}
+
+ \noindent The _\newcase_ command is equivalent to the _\citecase_ command (which in fact calls _\newcase_ internally). 
+ Generally, it is simpler to use the _\citecase_ command, but _\newcase_ is necessary for case citations that differ from the usual, 
+ such as \textit{Marbury}, above, because of the parentheses around the ``(1 Cranch)''. 
+
+ For parallel citations, separate the reporters and starting pages
+ with a semicolon followed by a space as in _\citecase_. Up to three
+ reporters and three start pages are allowed.
+
+% Actually invoke the commands for the documentation:
+
+
+\cmd{newbook}{Short Name}{Authors}{Title}{Parenthetical}[Define a new book citation.]
+ \begin{Example}
+   \newbook{Prosser and Keaton}{William Lloyd Prosser & W. Page Keaton}
+     {The Law of Torts}{(2nd ed., 1953)} 
+   \newbook{Schelling}{Thomas Schelling}
+     {A Process of Residential Segregation: Neighborhood Tipping, 
+     {\upshape\it reprinted in} Economic Foundations of Property Law {\upshape 307,}}
+     {(Bruce A. Ackerman ed., 1975)}
+   \pincite{Schelling}{308} \\
+   \pincite{Prosser and Keaton}{vol. 2, 15}. \\
+   \pincite{Prosser and Keaton}{vol. 2, 345}. \\
+   \pincite{Prosser and Keaton}{vol. 4, 876}. \\ 
+   \pincite{Schelling}{310}.
+ \end{Example}
+ 
+ \noindent This command introduces a new book citation. Such citations are first written with a 
+ long name that includes [volume] author, title, citation and parenthetical. Subsequent invocations will use the short name given by the first argument,
+ which is also used as the argument to _\cite_, followed by \textit{supra}. In law-review mode, this is further followed by ``note n,'' the first 
+ footnote in which the article was cited. Note that any _\textit_ or _\emph_ and their braces are stripped out of the short name (see _\newarticle_ for an example). 
+
+ To cite a particular volume, use a pincite in the form _\pincite_\arg{Short Name}\{vol. 1, 123\}. That is, it must start with ``vol.''
+ followed by exactly one space, then the number followed by a comma and another space. 
+
+ This command is also used for a \textit{reprinted in} citation. Note the use of _\upshape_ and _\it_ (or equivalent) that is necessary
+ to ensure the correct formatting.
+
+
+\cmd{newarticle}{Short Name}{Authors}{Title}{Journal}{Start Page}{Parenthetical}[Define a new article citation.]
+ \begin{Example}
+   \newarticle{Note, \textit{The Ministerial Exception}}
+     {Note}{The Ministerial Exception To Title VII}
+     {121 Harv. L. Rev.}{1776}{(2009)}
+   \newarticle{Ward}{Barbara Ward}{Progress for a Small Planet}
+     {Harv. Bus. Rev.}{Sept.--Oct. 1979, at 89}{}
+   \cite[l]{Note, The Ministerial Exception}.  \\
+   \pincite{Ward}{90}. \\
+   \pincite{Note, The Ministerial Exception}{1800}. 
+ \end{Example}
+
+ \noindent This command introduces a new law-review article-type citation. Such citations are first written with a 
+ long name that includes author, title, citation and parenthetical. Subsequent invocations will use the short name given by the first argument,
+ which is also used as the argument to _\cite_, followed by \textit{supra}. In law-review mode, this is further followed by ``note n,'' the first 
+ footnote in which the article was cited. Note that any _\textit_ or _\emph_ and their braces are stripped out of the short name. 
+
+ Note that in law review mode, the journal name is by default set in \textsc{Small Caps}, which is the Bluebook standard for 
+ consecutivly-paginated journals. To produce standard type, use the
+ form of _{{\upshape Harv. L. Rev.}}_ when defining the citation. 
+
+
+\cmd{newincollection}{Short Name}{Authors}{Article Title}{Collection Title}{Page}{Parenthetical}[Defines a new article/chapter-in-collection citation.]
+
+ \begin{Example}
+   \newincollection{Allen, \textit{Oration}}{John Allen}
+     {Oration Upon The Beauties Of Liberty}
+     {Political Sermons of the American Founding Era}{vol. 1, 58}
+     {(Ellis Sandoz ed., 1991)}
+   \newincollection{Mather}{Moses Mather}{America's Appeal To The Impartial World}
+     {Political Sermons of the American Founding Era}{vol. 1, 103}
+     {(Ellis Sandoz ed., 1991)}
+
+   \pincite{Allen, Oration}{62}. \\
+   \pincite{Mather}{103}. \\
+   \pincite{Allen, Oration}{78}. \\
+   \pincite{Mather}{119}. \\
+ \end{Example}
+
+ Note that the parenthetical will be placed after the collection title, and therefore not printed if the collection itself is cited a second time. Note additionally
+ that if the parenthetical changes across definitions for multiple documents in the collection, whichever source is actually cited first defines the parenthetical that is used.
+ 
+
+\cmd{newinsingleauthorcollection}{Short Name}{Author}{Title}{Collection Title}{Page}{Parenthetical}[Defines a citation to a single-author collection.]
+
+ \begin{Example}
+   \newinsingleauthorcollection{Holmes}{Oliver Wendell Holmes}
+     {Law in Science and Science in Law}{Collected Legal Papers}
+     {210}{(1920)}
+   \pincite{Holmes}{vol. 1, 120}. \\
+   \pincite[s]{Holmes}{vol. 1, 133}. 
+ \end{Example}
+
+ \noindent This command is similar to _\newincollection_, for collections whose documents are all from the same author. The Bluebook specifies that these should
+ be cited like a book, and therefore with the volume number before the author, and the author's name in small caps.
+
+
+\cmd{newstatute}[optional handle@index-place]{Short Name}{Parenthetical}[Define a new statute citation.]
+ \begin{Example}
+   \newstatute{42 U.S.C.}{(2006)}
+   \newstatute{Administrative Procedure Act}{(2006)}
+   \pincite{Administrative Procedure Act}{\S 1, 5 U.S.C. \S 551}. \\
+   \pincite{Administrative Procedure Act}{\S 2}. \\
+   \pincite{42 U.S.C.}{\S 1983}.
+ \end{Example}
+
+
+ Add position indexing and separate shortnaming.
+
+1) The references in the Statutes index can appear in the wrong order or
+ 2) can involve formatting like small caps (\textsc) which cannot be used as
+ the internal TeX handle. In these cases, you can use the optional
+ argument in square brackets. The argument can take the
+ following forms:
+
+ \newstatute[AA@]{MCL}{} - put the MCL statute at place AA in the index.
+
+ \newstatute[am1]{\textsc{U.S. Const.} amend. I} - use am1 as the handle
+ for the first ammendment. (The \textsc prevents the name from being used
+ as a handle.)
+
+ \newstatute[1@am2]{\textsc{U.S. Const.} amend. I} - use am2 as the
+ handle for the second ammendment, put it at position 1 in the index.
+
+\cmd{newmisc}{Short Name}{Full Name}[Define a general source by explicitly providing long and short citations.]
+ \begin{Example}
+   \newmisc{Bill of Rights 1689}{Act Declaring the Rights and Liberties of the 
+     Subject and Settling the Succession of the Crown (Bill of Rights), 
+     1 W. & M., sess. 2 c. 2\pin{, }{} (1689)}
+   
+   \pincite{Bill of Rights 1689}{\S 2}. \\
+   \pincite[s]{Bill of Rights 1689}{\S 3}.
+ \end{Example}
+
+ \noindent The long cite may have the command _\Pin_\arg{Text Before}\arg{Text After}, which in the case of 
+ a pincite, will insert the cite at the given location, surrounded by the text as indicated.
+\section{Citing Sources}
+
+\noindent\texttt{\large\bf\textbackslash{}[pin]cite} --- Cite a legal source using Bluebook style
+
+\noindent Usage: 
+
+ \texttt{\textbackslash{}cite}[\textit{Formatting}]\{\textit{Short Name}\} \\
+ \hspace*{\parindent}\texttt{\textbackslash{}pincite}[\textit{Formatting}]\{\textit{Short Name}\}\{\textit{Pin Page}\} 
+
+ \begin{Example}
+   \cite[l]{Marbury}. \\ 
+   \pincite[i]{Marbury}{117}. \\
+   \pincite[s]{Marbury}{117}. \\
+   \pincite{Steel Seizure Case}{602}. \\
+   \pincite{Marbury}{122}. \\
+   \See \pincite[n]{Steel Seizure Case}{625}. \\
+   \Cf \pincite[s]{Steel Seizure Case}{625}.
+ \end{Example}
+	 
+ \noindent The optional first argument forces a particular citation form, which is useful where the correct form cannot be determined automatically
+ (\textit{e.g.}, the rule that one may not use \Id. in the next citation after a string cite), or that one does not capitalize id. 
+ when it appears in the middle of a sentence (although when using the signal macros _\See_, _\Seealso_, etc.) this will be
+ handled automatically. These options consist of a single letter, from the list as follows:  
+
+ \noindent
+	_l_ - Force long form citation, regardless if the source has appeared before. \\
+	_s_ - Force short form citation, even if this is the first cite to this source. \\
+	_n_ - Force reporter and page number-only citation (for cases only). \\
+	_I_ - If and only if ``\textit{id.}'' is used, force it to be capitalized. \\ 
+	_i_ - If and only if ``\textit{Id.}'' is used, force it to be non-capitalized. \\
+	_!_ - Record a cite at this location (and thus to the ToA / record Supra), but do not actually print anything. \\ 
+	_*_ - Print the citation here, but do not record it to the table of authorities.  
+
+
+\cmd{Id, \textbackslash{}id}[Pin Page][Cite the previous source]
+ \begin{Example}
+   \pincite{Marbury}{140}. \\
+   \See \id[140]. \\
+   \Id[141].
+ \end{Example}
+
+ \noindent The effect is to repeat the previous cite, including the previous pin page (unless the optional argument is used
+ to cite a different page). _\Id_ should generally be followed by a period or other punctuation, as the trailing period 
+ will not be added automatically.
+
+\cmd{citetext}{Arbitrary text}[Automatically place law review citations in footnotes.]
+
+ \noindent The purpose of this command is primarily to work with automatic footnotes in law review mode. 
+ Whatever text is passed as its argument will automatically be put in a footnote, if it is not already in 
+ a footnote (in which case _\citetext_ does nothing). If you are not using law review mode, this command 
+ is not necessary. You would ordinarily put a space between the closing punctuation and the _\citetext_,
+ the macro will automatically remove that space, if appropriate.
+
+\cmd{citeclause}{Arbitrary Text}[Cite arbitrary text in an intra-sentence citation clause]
+
+\noindent Example:
+
+ \begin{quote}\texttt{It is the role of the judicial department to say what the law is \\ \textbackslash{}citeclause\{\textbackslash{}see \textbackslash{}cite\{Marbury\}\} and the present case is no exception.}\end{quote}
+
+\noindent Result (Normal Mode):
+
+ \begin{quote}It is the role of the judicial department to say what the law is, \see \cite[s]{Marbury}, and the present case is no exception.\end{quote}
+
+\noindent Result (Law Review mode):
+
+ \begin{quote}It is the role of the judicial department to say what the law is,\footnote{\See \cite[s]{Marbury}} and the present case is no exception.\end{quote}
+
+ \noindent This function is probably not necessary for production use, but allows the samples to have one source code for both
+ normal and lawreview mode. When using a citation clause in the middle of a sentence, use _\citeclause_ at the location,
+ WITHOUT any surrounding punctutation. In standard mode, _\citeclause_ will add surrounding commas, unless the following
+ character is a period, in which case it add a preceding comma and leaves the period to follow, as-is.
+
+ In lawreview mode, _\citeclause_ will insert a preceding comma, and insert a footnote with the cited text immediately 
+ after the comma, with no punctuation following -- UNLESS the following character is a period. In the latter case, 
+ _\citeclause_ will add only a preceding period, with the footnote immediately following. Also, if the first token of the 
+ citation clause is one of %% the pre-defined lowercase citation signals (_\see, \cf_ etc.), it will be automatically 
+ converted to the uppercase equivalent.
+
+ Note that in either case, _\citeclause_ is not able to properly handle a citation for a quote, in which case the punctuation
+ should go inside the closing ''. In that case, you will either need to make the change manually when changing between
+ normal and lawreview modes, or use the _\PeriodOrComma_ macro. The latter is a Period in lawreview, and a Comma normally. 
+
+ If you're thinking this is more hassle than its worth, you're right. Feel free to just write out the correct form manually.
+
+%\cmd{@autofootnote}{Put argument in a footnote, if in lawreview mode}
+
+~\par
+
+\noindent
+\begingroup\raggedright\hyphenpenalty=10000\hangindent=1.5em
+\texttt{\bf \textbackslash{}Reporter, \textbackslash{}ShortName, \textbackslash{}FullName, \textbackslash{}StartPage, \textbackslash{}Parenthetical, \textbackslash{}Authors, \textbackslash{}BookTitle, \textbackslash{}SrcType, \textbackslash{}SupraNote, \textbackslash{}LastNote} \par\noindent
+\endgroup
+ Usage: \\
+	_\Reporter_\arg{Short Name}, _\StartPage_\arg{Short Name}, \emph{etc.}
+
+\begin{Example}
+   \FullName{Steel Seizure Case} \\
+   \Reporter{Marbury} \\
+   \StartPage{Marbury} 
+\end{Example}
+
+ \noindent These functions are predominantly helper functions used elsewhere in the code; they print components of the source. If the field
+ that you have selected is inapplicable to the source, latex will give an error. Most should be clear by their name; _\Prefix_ is the 
+ leading number of a statute source, if applicable (such as the ``42'' in ``42 U.S.C. \S 1983''). _\SrcType_ is one of ``Case,'' ``Book,'' 
+ ``Statute,'' or ``Other.'' _\SupraNote_ is the first footnote in which a source appears. _\LastNote_ is the most recent note
+ in which a source appears.
+
+
+ \cmd{SetIndexType}{Short Name}{New Index Type}[Change a source's destination index / table of authorities] 
+
+ \noindent This command set the destination index for the source provided as their argument. The default index files are ``Case''
+ ``Statute'' and ``Other,'' for cases, statutes, and everything else, respectively. _\SetIndexType_ can be used to alter the index file. 
+ Note in particular that if _\SetIndexType_ is set to an empty string, indexing will be disabled for the given source. 
+ The current index for a source can be queried with _\IndexType_. 
+
+
+ \cmd{SetIndexName}{Short Name}{Name To Appear In Index}[Change the appearance of a source in the index / table of authorities]
+
+ \noindent This can be used to provide additional detail in the Table of Authorities that would not be appropriate in the flow of the text.
+ For example, consider the Federal Rules of Civil Procedure:
+
+ _\newstatute{Fed. R. Civ. P.}{}_ \\
+ \hspace*{\parindent}_\SetIndexName{Fed. R. Civ. P.}{Federal Rules of Civil Procedure !Rule }_
+
+ \noindent The second line ensures that ``Federal Rules of Civil Procedure'' will be written long form in the Table, and that each rule will
+ be a subentry under this heading, to be preceded by ``Rule.'' Currently, this has effect only for statutes.
+
+
+~\par
+
+\noindent
+\begingroup\raggedright\hyphenpenalty=10000\hangindent=1.5em
+\texttt{\bf \textbackslash{}See, \textbackslash{}Seealso, \textbackslash{}Seeeg, \textbackslash{}Seegenerally, \textbackslash{}Cf, \textbackslash{}Butsee, \textbackslash{}Butseeeg, \textbackslash{}Butcf, \textbackslash{}Compare, \textbackslash{}Contra, \textbackslash{}Accord} --- Introductory Signals 
+\endgroup
+
+ \begin{Example}
+   \See \pincite{Marbury}{117}. \\
+   \Seealso \pincite{Marbury}{120}. \\
+   \Cf \pincite{Lochner}{602}. 
+ \end{Example}
+
+  \noindent These commands insert the italicized signal word in front of the citation,
+  and cause the cite command to automatically handle correct capitalization of an ``\textit{id.},'' should one be used.
+  Each command has both a capitalized (_\See_, _\Cf_, etc.) and a non-capitalized (_\see_, _\cf_, etc.) version.
+  Also, in law review mode, they will correctly appear in the footnote with the citation, obviating the need to wrap 
+  every source in a _\footnote_ command. 
+
+\section{Miscellaneous}
+
+
+ \noindent
+_\S, \P_ --- Section and Paragraph symbols ``\S\unskip, \P\unskip,'' preserving following space.
+
+
+ \noindent
+_\ldots, \ldotss_ --- Non-breaking 3-dot and 4-dot Ellipses ``\ldots , \ldotss'' 
+
+ \noindent
+_\ellipsedotspacing_ --- Gap between dots in _\ldots_ (default \ellipsedotspacing) 
+
+
+ \noindent
+_\Ordinal, \ordinal_ --- Given an integer, convert into a textual ordinal number (through Tenth) 
+
+
+ \noindent
+_\availableat{URL}_ --- Provides a web citation in the text, using the URL package 
+
+
+ \noindent
+ _\makeandletter_ --- Allows ampersands to appear in the text.
+
+ \noindent
+ _\makeandtab_ --- Returns ampersands to their default definition.
+
+
+\section{Configuration Options}
+
+ \noindent _\CF, \BTF, \ATF, \BAF_ --- Fonts to be used in citations
+
+ These define the fonts used for Cases, Book Titles, Article Titles, and Book Authors, respectively.
+ In normal mode, the latter three are defined to _\em_, and _\BAF_ is empty (roman).
+ In lawreview mode, cases are in roman font, Article Titles _\em_,  and Book Titles and Authors small-capped.
+
+ These can be redefined as needed. Note that, because _\em_ is used, italics can be converted to underlines by including
+ _\usepackage{ulem}_ at the start of the file.
+
+~\par
+
+\noindent {\bf\large Package Option _lawreview_} --- Switch to Law Review-type formatting 
+
+ By adding this option to the package declaration, citations will display case titles in roman font, 
+ while author and title are in small-caps. Citations will automatically be made into footnotes, by default 10pt. 
+ If the source is combined with a introductory signal (\emph{See, Cf., etc.} ), the signal will also be 
+ placed in the footnote. However, if a citation has multiple source in a string cite or parentheticals, 
+ the entire footnote should be put into a LaTeX _\footnote_ command, or _\citetext_.
+%
+%\noindent Package Option _casesupra_ --- Use \emph{supra} in case short-form citations. 
+%
+% The Bluebook says that subsequent citations to a case should not use the word \textit{supra}
+% to indicate that the case has been fully cited previously. However, in practice, this is 
+% often seen, especially in Supreme Court opinions with their three parallel citations. 
+
+\noindent _\indexglue, \indexpenalty_ --- Parameters for line-breaking Table of Authorities entries 
+
+ In classes that create a table of authorities (such as _lawbrief.cls_), we encourage LaTeX to break
+ long lines immediately after the Long Name, such that the citation is put on the next line
+ (i.e. rather than putting a break in the middle of the citation). These two parameters control that,
+ and generally will not need to be changed. The _\indexglue_ defaults to _0in plus 1.fil_, and _\indexpenalty_
+ defaults to _-999_. 
+
+\noindent _\maxsequentialids_ --- Maximum number of \textit{Id.}'s in a row
+
+ After this number of sequential id's, we force a short cite for clarity. 
+ Set it very large to disable this functionality.
+ 
+
+\noindent _\forcelongevery_ --- Force a long citation after a source has not appeared in this many footnotes 
+
+ The Bluebook has a ``5 Footnote Rule,'' in which a source that has not appeared in the last five footnotes is required
+ to be provided as a long citation. Therefore, this parameter is set to 5 by default. Disable it by setting it to a large 
+ value. Note that it has no effect unless in lawreview mode.
+ 
+%\end{document}

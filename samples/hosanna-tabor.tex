@@ -5,11 +5,14 @@
 \usepackage{newcent,microtype}
 \usepackage{setspace,xcolor}
 \usepackage[hyperindex=false,linkbordercolor=white,pdfborder={0 0 0}]{hyperref}
+\usepackage{trace}
 
 %%Citations
 
 %The command \makeandletter turns the ampersand into a printable character, rather than a special alignment tab
 \makeandletter
+%The command \makeatletter makes the at sign a normal letter rather than in the category of other.
+\makeatletter
 
 %We use \newcase because the \emph will throw off parsing in \citecase
 \newcase{Hosanna-Tabor I}{E.E.O.C. v. Hosanna-Tabor Evangelical Lutheran Church and School \emph{(Hosanna-Tabor I)}}
@@ -51,7 +54,13 @@
 
 %The following line add ``U.S. Const. Amend. I'' to the Statutes index section, 
 % uses the aa@ prefix to order it first in the list, and marks it passim
-\index{Statute}{aa@\textsc{U.S. Const.} amend. I|idxpassim}
+% \index{Statute}{aa@\textsc{U.S. Const.} amend. I|idxpassim}
+{\makeatletter % it's not necessary to make at a letter if this is already true. But calling \makeatletter in a brace-delimited block is good practice because it always works and does not affect the rest of the document.
+  \newstatute[0@1stamend]{\textsc{U.S. Const.} amend. I}{} % put at place 0, call it 1stamend
+  \newstatute[42@42 USC]{Title 42, United States Code}{}
+  \newstatute[28@28 USC]{Title 28, United States Code}{}
+}
+
 
 %Set the information for the title page (later produced by \makefrontmatter)
 \docket{No. 10-553} 
@@ -77,7 +86,10 @@
 
 Petitioner Hosanna-Tabor Evangelical Lutheran Church and School is a Michigan Ecclesiastical Corporation.  \vspace{12pt} 
 
-\noindent{}Respondent Equal Employment Opportunity Commission (EEOC) is a federal agency charged with the enforcement of Title I of the Americans with Disabilities Act and is expressly authorized to bring such actions. \citetext{\See 42 U.S.C. \S\S 12117(a) and 12203(c).} \index{Statute}{bb@Title 42, United States Code !\S 12117} \index{Statute}{bb@Title 42, United States Code !\S 12203}\vspace{12pt} 
+\noindent{}Respondent Equal Employment Opportunity Commission (EEOC) is a federal agency charged with the enforcement of Title I of the Americans with Disabilities Act and is expressly authorized to bring such actions. \citetext{\See 42 U.S.C. \S\S 12117(a) and 12203(c).}%
+\pincite[!]{42 USC}{\S 12117}\pincite[!]{42 USC}{\S 12203}%
+% \index{Statute}{bb@Title 42, United States Code !\S 12117} \index{Statute}{bb@Title 42, United States Code !\S 12203}
+\vspace{12pt} 
 
 \noindent{}Respondent Cheryl Perich is a resident of the State of Michigan.  
 
@@ -87,10 +99,12 @@ The District Court for the Eastern District of Michigan (Duggan, J.) dismissed t
 \end{flushleft}
 
 \section{Jurisdiction} 
-The judgment of the Court of Appeals was entered on March 29, 2010. The petition for writ of certiorari was filed on October 22, 2010, and was granted on March 28, 2011. This Court has jurisdiction under \index{Statute}{bb@Title 28, United States Code !\S1254}28 U.S.C. \S 1254(1).
+The judgment of the Court of Appeals was entered on March 29, 2010. The petition for writ of certiorari was filed on October 22, 2010, and was granted on March 28, 2011. This Court has jurisdiction under
+\pincite[l]{28 USC}{\S1254(1)}.
+%\index{Statute}{bb@Title 28, United States Code !\S1254}28 U.S.C. \S 1254(1).
 
 \section{Constitutional Provisions Involved} 
-This case implicates the Establishment and Free Exercise Clauses of the First Amendment of the U.S. Constitution: ``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof\ldotss''
+This case implicates the Establishment and Free Exercise Clauses of the First Amendment of the U.S. Constitution\cite[!]{1stamend}: ``Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof\ldotss''
 
 \section{Background} 
 

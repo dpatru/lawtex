@@ -86,18 +86,22 @@
 
 %%\citecase[Steel Seizure Case]{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
 %%\cmd{citecase}[Short Name]{Standard Case Citation}[Defines a new case citation, using standard citation form.]
+%%   \citecase{Miller-Davis v. Ahrens Const., 296 Mich. App. 56; 817 N.W.2d 609 (2012)}
+
 %% \begin{Example}
 %%   %\citecase{Lochner v. New York, 198 U.S. 45 (1905)}
 %%   %\citecase[Steel Seizure Case]
 %%   %{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
+%%   %\citecase{Miller-Davis v. Ahrens Const., 296 Mich. App. 56; 817 N.W.2d 609 (2012)}
 %%   \cite[l]{Lochner}. \\ 
 %%   \pincite{Lochner}{48}. \\
 %%   \pincite{Steel Seizure Case}{602}. \\
 %%   \pincite{Lochner}{52}. \\
-%%   \See \pincite{Steel Seizure Case}{625}.
+%%   \See \pincite{Steel Seizure Case}{625}. \\
+%%   \pincite{Miller-Davis}{57; 610}
 %% \end{Example}
  
-%% \noindent In order to cite legal sources in the body of the text, first include a _\citecase_ command with the 
+%% \noindent To cite legal sources in the body of the text, first include a _\citecase_ command with the 
 %% case citation to define the case as a source. At the point in the text where the citation should appear, use
 %% _\cite_ or _\pincite_, passing the short name as an argument.  Spacing and commas are important (extra spaces will be preserved). 
 %%
@@ -105,6 +109,10 @@
 %% ``United States,'' ``State,'' ``Commonwealth,'' or ``People,'' in which case the second party is used.  
 %% To override the choice of short name, set the optional parameter. 
 %%
+%% Separate parallel cites with a semicolon and space. This applies
+%% both when defining the case with a _\citecase_ and when citing it
+%% with _\pincite_.
+%% 
 %% With case citations that differ from the standard format, you may need to use the _\newcase_ command.
 %% For example, in ``\emph{Marbury v. Madison}, 5 U.S. (1 Cranch), 137 (1803)'', the extra parentheses around
 %% the ``(1~Cranch.)'' will throw off the parser. See the way that this is cited below. 
@@ -216,6 +224,10 @@
 %% \noindent The _\newcase_ command is equivalent to the _\citecase_ command (which in fact calls _\newcase_ internally). 
 %% Generally, it is simpler to use the _\citecase_ command, but _\newcase_ is necessary for case citations that differ from the usual, 
 %% such as \textit{Marbury}, above, because of the parentheses around the ``(1 Cranch)''. 
+%%
+%% For parallel citations, separate the reporters and starting pages
+%% with a semicolon followed by a space as in _\citecase_. Up to three
+%% reporters and three start pages are allowed.
 %%
 %%% Actually invoke the commands for the documentation:
 %%
@@ -563,8 +575,8 @@
 %%
 %%1) The references in the Statutes index can appear in the wrong order or
 %% 2) can involve formatting like small caps (\textsc) which cannot be used as
-%% the internal TeX handle. This change solves both problems. A new
-%% optional argument is added to \newstatute. The argument can take the
+%% the internal TeX handle. In these cases, you can use the optional
+%% argument in square brackets. The argument can take the
 %% following forms:
 %%
 %% \newstatute[AA@]{MCL}{} - put the MCL statute at place AA in the index.
@@ -573,8 +585,8 @@
 %% for the first ammendment. (The \textsc prevents the name from being used
 %% as a handle.)
 %%
-%% \newstatute[1@am1]{\textsc{U.S. Const.} amend. I} - use am1 as the
-%% handle for the first ammendment, put it at position 1 in the index.
+%% \newstatute[1@am2]{\textsc{U.S. Const.} amend. I} - use am2 as the
+%% handle for the second ammendment, put it at position 1 in the index.
 
 
 \newcommand{\newstatute}[3][]{

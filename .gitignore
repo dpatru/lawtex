@@ -219,3 +219,5 @@ TSWLatexianTemp*
 *-tags.tex
 appealBrief.*
 curry*.pdf
+
+*.tmp

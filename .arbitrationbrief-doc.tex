@@ -1,0 +1,28 @@
+\section{Arbitration Brief Document Class}
+ The file _arbitrationbrief.cls_ provides a document class (derived from _memoir_) for arbitration-style briefs, such as is used
+ in the annual Willem C. Vis International Arbitration Moot. It does not actually share much in the way
+ of code with other LawTeX packages, but is included due to it's related subject matter.
+
+ This class file was used for the Yale Law School respondant's submission to the 2012 Vis Moot. Much of the boilerplate text 
+ (title page, headers, etc.) do not have commands provided to adapt them to other uses, therefore you will need to edit these 
+ portions of the class file yourself.
+
+
+\cmd{newauthority}{Type}{Short Name}{Full Name}[Declare a new authority]
+
+ \noindent This is the _arbitrationbrief.cls_ equivalent of the LawTeX _\newcase_, etc. New authorities are declared with this command, to which one
+ must provide an Authority Type (Commentary, Statutes, Rules, or Cases), a short name to appear in the body of the text, and a long name to 
+ appear in the table of authorities.
+
+
+\cmd{cite}{Short Name}[Cite an authority in a citation block]
+
+ \noindent This adds a citation to the text, ensuring that it will be recorded in the table of authorities, and providing a hyperlink thereto.
+ This command does not take a pin cite; that should be given explicitly in the flow of the text, if appropriate.
+
+
+\cmd{romancite}{Short Name}[Cite an authority in the body text.]
+
+ \noindent This adds a citation to the text, in roman (not italic) font, ensuring that it will be recorded in the table of authorities, and providing a hyperlink thereto.
+ This command does not take a pin cite; that should be given explicitly in the flow of the text, if appropriate. 
+

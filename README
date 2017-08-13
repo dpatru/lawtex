@@ -32,7 +32,9 @@ Note that this package makes use of the multind and xstring packages, and thus m
 installation of texlive-latex-extra.
 
 CHANGELOG:
-
+2017-08-13: Add support for parallel case citations and flexible statute names.
+ * See how statutes are handled in samples/hosanna-tabor.tex.
+ 
 2014-10-7: Primarily bug fixes.  
  * Change permissions on files to group- and world-readable, removed execute
  * Removes erroneous hidden text in samples/SupremeBrief.pdf
