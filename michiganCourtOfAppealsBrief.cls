@@ -37,15 +37,77 @@
 \RequirePackage{array}
 \RequirePackage{bluebook}
 \RequirePackage[T1]{fontenc}
-\usepackage[T1]{fontenc}
+\RequirePackage{setspace}
+
+%%%  ------------ from Document --------------------------
+\RequirePackage{relsize}
+\RequirePackage{etoolbox}
+\RequirePackage[margin=1in]{geometry}
+\RequirePackage{newcent,microtype}
+\RequirePackage{setspace,xcolor}
+\RequirePackage{trace}
+\RequirePackage[T1]{fontenc}
+
+% \RequirePackage[group-separator={,}]{siunitx} % comment out, probably not needed.
+
+\RequirePackage{lipsum}
+
+% From tex.stackexchange.com (https://tex.stackexchange.com/a/142258/135718)
+\RequirePackage{xcolor}
+\RequirePackage{todonotes}
+% horizontal rule with text, https://tex.stackexchange.com/a/15122/135718
+\newcommand*\ruleline[1]{%
+  \par\noindent%
+  \raisebox{.8ex}{\makebox[\linewidth]{\hrulefill\hspace{1ex}%
+      \raisebox{-.8ex}{#1}%
+      \hspace{1ex}\hrulefill}}}%
+
+% https://www.overleaf.com/learn/latex/Environments
+\newenvironment{draft}{%
+  \color{blue}%
+  \ruleline{Begin Draft}
+}{%
+  \ruleline{End Draft}
+  \color{black}%
+}
+% 
+% 
+
+% \RequirePackage{xr-hyper}
+\RequirePackage[hyperindex=false,linkbordercolor=white]{hyperref}
+\RequirePackage{pdfpages}
+%\RequirePackage{multirow}
+%\RequirePackage{tabulary} % use ctable instead
+\RequirePackage{ctable}
+\RequirePackage{footmisc}% footnote references
+\RequirePackage{needspace}
+\RequirePackage[footnotes=multiple]{scrextend} % for footnotes in quotations https://tex.stackexchange.com/a/23612/135718
+
+%%% -------------------------------------
+
+
+% \RequirePackage{titlesec}
+
+
+% \setcounter{secnumdepth}{4}
+% \setcounter{tocdepth}{4}
+% \setcounter{paragraph}{1}
+
+% \titleformat{\paragraph}
+% {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+% \titlespacing*{\paragraph}
+% {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 
 \newcommand{\@RunMakeIndex}{%
-	\immediate\closeout\Case@idxfile%
-	\immediate\closeout\Statute@idxfile%
-	\immediate\closeout\Other@idxfile%
-	\write18{makeindex -r -s lawcitations.ist Case}%
-	\write18{makeindex -L -r -s lawcitations.ist Statute}%
-	\write18{makeindex -r -s lawcitations.ist Other}%
+  \message{At the end, running Index...\par}
+  \immediate\closeout\Case@idxfile%
+  \immediate\closeout\Statute@idxfile%
+  \immediate\closeout\Other@idxfile%
+  \write18{makeindex -r -s lawcitations.ist Case}%
+  \write18{makeindex -L -r -s lawcitations.ist Statute}%
+  \write18{makeindex -r -s lawcitations.ist Other}%
+  \message{Ran make index\par}
 }
 
 \AtEndDocument{%
@@ -69,7 +131,23 @@
 % \renewcommand\cftsecaftersnum{.}
 \def\section{\@startsection{section}{1}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\centering\normalsize\bfseries}}%
 \def\subsection{\@startsection{subsection}{2}{0pt}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=10000\normalsize\bfseries}}%
-\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=10000\bfseries}}%
+% reduce the hyphenpenalty in hopes of encouraging line breaks
+%\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=10000\bfseries}}%
+\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=1\bfseries}}%
+
+
+\newcounter{subsubsubsection}
+% \makeatletter                 
+\@addtoreset{subsubsubsection}{subsubsection}
+\@addtoreset{subsubsubsection}{subsection}
+\@addtoreset{subsubsubsection}{section}
+% \makeatother
+% \counterwithin{subsubsubsection}{subsubsection}
+% \counterwithin{subsubsubsection}{subsection}
+% \counterwithin{subsubsubsection}{section}
+\setcounter{secnumdepth}{4}
+
+\def\subsubsubsection{\@startsection{subsubsubsection}{4}{2\parindent}{-.999\baselineskip}{0.001\baselineskip}{\singlespacing\hyphenpenalty=1\bfseries}}%\let\subsubsubsection\@gobble}%
 
 \DeclareRobustCommand{\@seccntformat}[1]{%https://tex.stackexchange.com/a/308739/135718
   \def\temp@@a{#1}%
@@ -80,7 +158,7 @@
   \csname the#1\endcsname .\quad%
   \fi
 } 
-
+\newcommand\subsubsubsectionmark[1]{}
 
 % \renewcommand{\@seccntformat}[1]{\csname the#1\endcsname\quad}
 % \def\section{\@startsection{section}{1}{0pt}{-10pt}{2pt}{\centering\normalsize\bfseries}}%
@@ -90,8 +168,14 @@
 
 %No numbers printed for section (remove \quad); I. Subsection; A. Subsubsection
 \renewcommand{\thesection}{\hspace{-1em}}
+% Add a section counter to fix includepdf error, See https://tex.stackexchange.com/questions/119719/add-an-item-in-the-table-of-contents and https://tex.stackexchange.com/questions/103706/includepdf-and-tableofcontents-without-numbering
+%\newpage\addcontentsline{toc}{section}{Appendix}
+\renewcommand\thesection{}
+\addtocounter{section}{-1}
+
 \renewcommand{\thesubsection}{\Roman{subsection}}
 \renewcommand{\thesubsubsection}{\Alph{subsubsection}}
+\renewcommand{\thesubsubsubsection}{\roman{subsubsubsection}}
 
 %==============================================================================
 %%
@@ -128,12 +212,13 @@
 \newcommand{\pagenumber}[1]{%
 	\addtocounter{@passimcount}{1}%
 	\ifnum\value{@passimcount}=1%
-		\edef\@pagenums{#1}%
+        \edef\@pagenums{#1}%
+        \edef\@firstpage{#1}%
 	\else% 
 		\ifnum\value{@passimcount}<\passimlimit%
 			\edef\@pagenums{\@pagenums, #1}%
 		\else
-			\def\@pagenums{\emph{passim}}%
+			\def\@pagenums{\@firstpage, \emph{passim}}%
 		\fi%
 	\fi%
 	\IfSubStr{#1}{passim}{\setcounter{@passimcount}{\passimlimit}\def\@pagenums{\emph{passim}}}{}%
@@ -197,10 +282,12 @@
 {%
 \singlespacing
 \section{Table of Authorities} \pagestyle{toa}\thispagestyle{romanparen}%
+	\iffileexists{Case.ind}{%
 	\noindent\sc \@caseindextitle\hfill\rm Page\par
 	% \vspace{6pt}
 	\everypar={\mark{\@caseindextitle---Continued}}
 	\printindex{Case}
+        }{}
 %
 	\iffileexists{Statute.ind}{%
 		\everypar={\mark{\@statutesindextitle---Continued}}
@@ -230,6 +317,7 @@
 \renewcommand\tableofcontents{\@starttoc{toc}}
 
 \def\@snumwidth{2em}		%Size of box around toc section number
+\def\@ssnumwidth{4em}		%Size of box around toc section number
 \def\@pnumwidth{2em}		%Size of right margin in toc for all but last line
 \def\@smallpnumwidth{1em}	%Size of box put around toc pagenumber
 
@@ -275,6 +363,22 @@
     \@tempdima=\@snumwidth%         Size of the space reserved for the subsubsection letter
 	{
       \parindent=\@snumwidth%		Indent first line equal to the previous subsection's letter indent
+	  \rightskip=\@pnumwidth%		Reserve a larger-than-usual right margin
+      \parfillskip=-\@pnumwidth%	And then compensate the last line, so that it is full width
+      \leavevmode
+      \advance\leftskip2\@tempdima% This is an odd trick that basically does the same as a \hangindent,
+      \hskip -\leftskip%			but has the effect of keeping the leaders aligned
+	  \@tocline{#1}{#2}
+	}
+}
+
+%%\noindent _\l@subsubsection_ --- Formats Third-level headings indented more from left with a hanging indent of _\@pnumwidth_
+%%
+\newcommand*\l@subsubsubsection[2]{%
+    \addpenalty\@secpenalty%		Prefer to break before or after the tocline, not during
+    \@tempdima=\@snumwidth%         Size of the space reserved for the subsubsection letter
+	{
+      \parindent=\@ssnumwidth%		Indent first line equal to the previous subsection's letter indent
 	  \rightskip=\@pnumwidth%		Reserve a larger-than-usual right margin
       \parfillskip=-\@pnumwidth%	And then compensate the last line, so that it is full width
       \leavevmode
@@ -402,7 +506,8 @@
 
 \newcommand{\questionpresented}[1]{\def\@questionpresented{#1}}
 
-\renewcommand{\maketitle}{\makesupremetitle}
+\renewcommand{\maketitle}{}
+% \renewcommand{\maketitle}{\makesupremetitle}
 
 
 
@@ -493,14 +598,27 @@
 \clubpenalty=3000
 \widowpenalty=3000
 
-\usepackage[shortlabels]{enumitem}% remove extra spaces in itemize and enumerate, see http://mirror.utexas.edu/ctan/macros/latex/contrib/enumitem/enumitem.pdf
+\RequirePackage[shortlabels]{enumitem}% remove extra spaces in itemize and enumerate, see http://mirror.utexas.edu/ctan/macros/latex/contrib/enumitem/enumitem.pdf
 \setlist[enumerate]{nosep}
 \setlist[itemize]{nosep}
 \setlist[description]{nosep}
+\deffootnote[1.8em]{0em}{1em}{\textsuperscript{\thefootnotemark}}%%\parindent 1em\noindent \hb@xt@ 1.8em{\hss \textsuperscript{\thefootnotemark}}}%\parindent 1em\noindent \hb@xt@ 1.8em{\hss \@makefnmark }
+\providecommand\qfootnote[1]{{\deffootnotemark{\textsuperscript{\thefootnotemark}}\footnote{#1}}}%
 \renewenvironment{quote}%
-{\begin{singlespacing}\list{}{\rightmargin=\leftmargin\topsep=0pt\itemsep=0pt\parsep=0pt}\item\relax}%
+{\begin{singlespacing}%\smaller
+    % \renewcommand{\thefootnote}{[\arabic{footnote}]}
+    % See https://tex.stackexchange.com/a/23612/135718
+    \deffootnotemark{\textsuperscript{[\thefootnotemark]}}%
+    \list{}{\rightmargin=\leftmargin\topsep=0pt\itemsep=0pt\parsep=0em}\item\relax}%
 {\endlist\end{singlespacing}}
-% \AtBeginEnvironment{quote}{\singlespacing}%\small}
+%\AtBeginEnvironment{quote}{\singlespacing}%\small}
+
+\renewenvironment{quotation}%
+%{\begin{singlespacing}\list{}{\rightmargin=\leftmargin\topsep=0pt}\item\relax}%
+{\begin{singlespacing}%\smaller
+    \deffootnotemark{\textsuperscript{[\thefootnotemark]}}%
+    \list{}{}\item\relax}%
+{\endlist\end{singlespacing}}
 
 
 % vim: set syntax=tex :

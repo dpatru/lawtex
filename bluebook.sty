@@ -24,17 +24,15 @@
 %If short cite to "supra" is in same note, omit "note"
 %Make SetIndexName work for all source types (currently just statutes) 
 
-%NOTE: This file is self-documented, and when all lines marked with %% are pulled 
-%      out into their own file, they form a valid latex document. To make the docs:
-% cat bluebook.sty | sed -n 's/^\%\%\(.*\)/\1/p' > bluebook-doc.tex; pdflatex bluebook-doc.tex 
-
-%=========================BEGIN DOCUMENTATION PREAMBLE==========================
+% =========================BEGIN DOCUMENTATION PREAMBLE==========================
 %%\parskip=6pt
 %%\parindent=1.5em
 %%\leftskip=0em
 %%\frenchspacing
 %%\font\parasymbolfont=phvr at 10pt
 %%\font\sectionsymbolfont=pncr at 10pt
+%% %\RequirePackage{xr} % in preamble
+
 %=========================END DOCUMENTATION PREAMBLE===========================
 
 \NeedsTeXFormat{LaTeX2e}
@@ -73,35 +71,37 @@
 \def\ProtectedXDef#1#2{\expandafter\protected@xdef\csname#1\endcsname{#2}}
 \def\GDef#1#2{\expandafter\gdef\csname#1\endcsname{#2}}
 \def\Call#1{\csname#1\endcsname}
+\def\IfCall#1{\ifcsname #1\endcsname\relax\csname#1\endcsname\else\empty\fi}
 \def\SafeUnskip{\ifvmode\relax\else\unskip\fi}
 \def\globalsetboolean#1#2{\globaldefs=1\setboolean{#1}{#2}\globaldefs=0\relax}
 
-\def\ifempty#1#2#3{\if\relax\expandafter\detokenize\expandafter{#1}\relax #2\else #3\fi} 
+\def\ifempty#1#2#3{\if\relax\expandafter\detokenize\expandafter{#1}\relax #2\else #3\fi}
+%\def\eifempty#1#2#3{\def\temp{#1}\if\relax\temp\relax #2\else #3\fi}
 \def\ifpin#1{\ifempty{##2}{}{#1}}
+%\def\ifpin#1{\eifempty{##2}{(empty)}{(not empty)#1}}
 \def\FillIn#1#2#3{\noexpand\edef\@tmp{#2}\ifempty{\@tmp}{}{#1#2#3}}
 \def\IfFootnote#1{\ifthenelse{\boolean{@bbInFootnote}}{#1}{}}
 
 %% \section{Defining Sources}\vspace{-8pt}
 %%
 
-%%\citecase[Steel Seizure Case]{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
+%% \citecase[Steel Seizure Case]{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
+%% \citecase[Menard]{Menard, Inc. v Escanaba, 315 Mich. App. 512; 891 N.W.2d 1 (2016)}
 %%\cmd{citecase}[Short Name]{Standard Case Citation}[Defines a new case citation, using standard citation form.]
-%%   \citecase{Miller-Davis v. Ahrens Const., 296 Mich. App. 56; 817 N.W.2d 609 (2012)}
-
 %% \begin{Example}
 %%   %\citecase{Lochner v. New York, 198 U.S. 45 (1905)}
-%%   %\citecase[Steel Seizure Case]
-%%   %{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
-%%   %\citecase{Miller-Davis v. Ahrens Const., 296 Mich. App. 56; 817 N.W.2d 609 (2012)}
+%%   %\citecase[Steel Seizure Case]{Youngstown Sheet & Tube Co. v. Sawyer, 343 U.S. 579 (1952)}
 %%   \cite[l]{Lochner}. \\ 
 %%   \pincite{Lochner}{48}. \\
 %%   \pincite{Steel Seizure Case}{602}. \\
 %%   \pincite{Lochner}{52}. \\
-%%   \See \pincite{Steel Seizure Case}{625}. \\
-%%   \pincite{Miller-Davis}{57; 610}
+%%   
+%%   %\citecase[Menard]{Menard, Inc. v Escanaba, 315 Mich. App. 512; 891 N.W.2d 1 (2016)} \\
+%%   \pincite{Menard}{513; 2} \\ % will cite both reporters. 
+%%   \pincite{Menard}{\_; 2} \\ % will cite both reporters for long citations, but only the second reporter for short cites. The single \_ indicates that the writer does not know where the quote is in the first reporter. If this is a short cite only, the first reporter will be skipped and only the second reporter will appear. If you want to force appearance of the first reporter, just use something different than a single \_, a \_\_ will work. This hack accommodates situations where the official reporter is not available, such as when only a copy of the unafficial reporter is available online.
 %% \end{Example}
  
-%% \noindent To cite legal sources in the body of the text, first include a _\citecase_ command with the 
+%% \noindent In order to cite legal sources in the body of the text, first include a _\citecase_ command with the 
 %% case citation to define the case as a source. At the point in the text where the citation should appear, use
 %% _\cite_ or _\pincite_, passing the short name as an argument.  Spacing and commas are important (extra spaces will be preserved). 
 %%
@@ -109,10 +109,6 @@
 %% ``United States,'' ``State,'' ``Commonwealth,'' or ``People,'' in which case the second party is used.  
 %% To override the choice of short name, set the optional parameter. 
 %%
-%% Separate parallel cites with a semicolon and space. This applies
-%% both when defining the case with a _\citecase_ and when citing it
-%% with _\pincite_.
-%% 
 %% With case citations that differ from the standard format, you may need to use the _\newcase_ command.
 %% For example, in ``\emph{Marbury v. Madison}, 5 U.S. (1 Cranch), 137 (1803)'', the extra parentheses around
 %% the ``(1~Cranch.)'' will throw off the parser. See the way that this is cited below. 
@@ -177,31 +173,43 @@
   % Debug
   % parenpos = (\@parenpos)\par paren = (\@paren)\par withoutparen = (\@withoutparen)\par%
   % 
-  % With the parenthetical gone, we look for the LAST comma,
-  % and assume the citation is there to the end, parallel cites are
-  % separated by a semicolon.
-  \StrCount{\@withoutparen}{,}[\@commacount]%
-  \StrPosition[\@commacount]{\@withoutparen}{,}[\@lastcommapos]%
-  \StrGobbleLeft{\@withoutparen}{\numexpr \@lastcommapos+1}[\@citation]%
-  \StrLeft{\@withoutparen}{\numexpr \@lastcommapos-1}[\@casename]%
-  %
-  % Debug
-  % citation = (\@citation)\par casename = (\@casename)\par%
-  %
-  \let\reporters\empty\let\startpages\empty%
-  % Parsing Citations: (\@citation)
-  \expandafter\parseCitations\@citation; X X X; %
-
-  % Set the short name
-  \IfEq{#1}{\empty}{% Short name was not given explicitly
-    % Deriving shortname\par%
-    % an edef here causes an error
-    \deriveShortCaseName[\@shortname]{\@casename}%
-  }{% else a short name is given explicitly, use that
-  % Using explicit shortname (#1)\par%
-    \edef\@shortname{#1}%edef throws error here
+  % With the parenthetical gone, we check if this case is unpublished.
+  \IfSubStr[1]{#2}{, unpublished}{% case is unpublished
+    \edef\unpublished{unpublished}%
+    \StrBefore{\@withoutparen}{, unpublished}[\@casename]%
+    \StrDel[1]{\@withoutparen}{\@casename ,}[\reporters]%
+    \def\startpages{\empty}% 
+    % \wlog{Unpublished case: #2}%
+    % \wlog{casename: \@casename}%
+    % \wlog{reporters: \reporters}%
+  }{% case is published
+    \edef\unpublished{\empty}%
+    % we look for the LAST comma,
+    % and assume the citation is there to the end, parallel cites are
+    % separated by a semicolon.
+    \StrCount{\@withoutparen}{,}[\@commacount]%
+    \StrPosition[\@commacount]{\@withoutparen}{,}[\@lastcommapos]%
+    \StrGobbleLeft{\@withoutparen}{\numexpr \@lastcommapos+1}[\@citation]%
+    \StrLeft{\@withoutparen}{\numexpr \@lastcommapos-1}[\@casename]%
+    %
+    % Debug
+    % published case\par citation = (\@citation)\par casename = (\@casename)\par%
+    %
+    \let\reporters\empty\let\startpages\empty%
+    % Parsing Citations: (\@citation)
+    \expandafter\parseCitations\@citation; X X X; %
+    }% end unpublished/published split
+    % Set the short name
+    %\wlog{setting short name}%
+    \IfEq{#1}{\empty}{% Short name was not given explicitly
+      % Deriving shortname\par%
+      % an edef here causes an error
+      \deriveShortCaseName[\@shortname]{\@casename}%
+    }{% else a short name is given explicitly, use that
+      % Using explicit shortname (#1)\par%
+      \edef\@shortname{#1}%edef throws error here
   }%
-  #3{\@shortname}{\@casename}{\reporters}{\startpages}{\@paren}%
+  #3[\unpublished]{\@shortname}{\@casename}{\reporters}{\startpages}{\@paren}%
 } % end parseCase
 
 \newcommand{\citecase}[2][]{%
@@ -212,8 +220,42 @@
   \fi%
 }
 
-    
+%% \cmd{addReference}{[AppendixName]}{ShortName}{reference name}[Links a case to an appendix record. To use this with an external appendix, put in the preamble: \\RequirePackage{xr} and \\externaldocument{appendix-file-name}.]
+%% \citecase[Patru]{Patru v City of Wayne, unpublished per curiam opinion of the Court of Appeals, issued May 8, 2018 (Docket No. 337547)}
+%% \addReference[sample-appendix]{Patru}{patruvwayne}
+%% \begin{Example}
+%%   %\RequirePackage{xr} % in preamble
+%%   %\externaldocument{sample-appendix} % in preamble
+%%   %\citecase[Patru]{Patru v City of Wayne, unpublished per curiam opinion of the Court of Appeals, issued May 8, 2018 (Docket No. 337547)}
+%%   %\addReference[Sample Appendix]{Patru}{patruvwayne}
+%%   \pincite{Patru}{3}
+%% \end{Example}
+
+%% \noindent The _\caseReference_ command links a case to an appendix. Call it after you've defined a case. Whenever you cite to the case, a reference will be made to the right page in the Appendix. In Michigan, unpublished cases must be provided. This command makes it easy for people to look up the case in the appendix.
+
+\newcommand{\addReference}[3][Appendix]{% 1: Optional Appendix name
+  \expandafter\newcommand\expandafter{\csname#2@Reference\endcsname}{%
+  \ (#1 at \pageref{#3})}%
+  \expandafter\newcommand\expandafter{\csname#2@ReferenceP\endcsname}[1][]{%
+    \ (#1 at %
+    \if\relax##1\relax% No page
+    \pageref{#3}%
+    \else% Some pages
+    \IfSubStr{##1}{-}{% Multiple pages, eg 3-10
+      \def\pageRefRange####1-####2XXX{%
+        \pageref{#3.####1}--\pageref{#3.####2}}%
+      \pageRefRange##1XXX}%
+    {\pageref{#3.##1}}% One page
+    \fi%
+    )}%
+}%
+
+
+% \newcommand{\newunpublishedcase}[6][empty]{%
+%   \newcase{#1}{#2}{#3}{#4}{#5}{#6}%
+%   \EDef{#2@Unpublished}{unpublished}}%
 %%
+%% 
 %%\cmd{newcase}{Short Name}{Full Name}{Reporter}{Starting Page}{Parenthetical}[Defines a new case citation.]
 %% \newcase{Marbury}{Marbury v. Madison}{5 U.S. (1 Cranch)}{137}{(1803)}
 %% \begin{Example}
@@ -225,14 +267,19 @@
 %% Generally, it is simpler to use the _\citecase_ command, but _\newcase_ is necessary for case citations that differ from the usual, 
 %% such as \textit{Marbury}, above, because of the parentheses around the ``(1 Cranch)''. 
 %%
-%% For parallel citations, separate the reporters and starting pages
-%% with a semicolon followed by a space as in _\citecase_. Up to three
-%% reporters and three start pages are allowed.
-%%
 %%% Actually invoke the commands for the documentation:
 %%
 \newcommand{\newcase}[6][empty]{%
   % \par newcase 1(#1), 2(#2), 3(#3), 4(#4), 5(#5), 6(#6)\par%
+  % 1: unpublished flag (if the case is unpublished, use "unpublished", otherwise leave blank
+  % 2: short name
+  % 3: long name
+  % 4: reporters (separated by ;)
+  % 5: start pages (separated by ;)
+  % 6: parenthetical
+  \IfSubStr{unpublished}{#1}%
+  {\EDef{#2@Unpublished}{unpublished}}%
+  {\EDef{#2@Unpublished}{}}%
   \EDef{#2@Type}{Case}%
   % \par setting index type\par%
   \EDef{#2@IndexType}{Case}%
@@ -251,6 +298,8 @@
   % \par setting first use\par%
   \setboolean{#2@FirstUse}{true}%
   % \par setting last note\par%
+  % \ProtectedXDef{#2@CaseIndexCitations}{\bbCaseLongCitations{#2}{}}%
+  %\EDef{#2@ShortCitations}{bbCaseShortCitations{#2}}%
   \XDef{#2@LastNote}{0}%
   \bgroup%
   \def\helper##1; ##2; ##3; ##4;;##5; ##6; ##7; ##8;;{%%
@@ -265,7 +314,18 @@
   }%
   \edef\helpertwo{\noexpand\helper#4; ; ; ;;#5; ; ; ;;}%
   \helpertwo%
-  \egroup% erase helper and helpertwo 
+  \egroup% end group - erase helper and helpertwo
+  % Debug
+  % newcase:\par\ 
+  % #2@Type: \Call{#2@Type}\par
+  % #2@IndexType: \Call{#2@IndexType}\par
+  % #2@ShortName: \Call{#2@ShortName}\par
+  % #2@FullName: \Call{#2@FullName}\par
+  % #2@Reporter: \Call{#2@Reporter}\par
+  % #2@StartPage: \Call{#2@StartPage}\par
+  % #2@Parenthetical: \Call{#2@Parenthetical}\par
+  % unpublished: \Unpublished{#2}
+  % \edef\temp{\Unpublished{#2}} \if\relax\temp\relax no\else yes\fi
 }%end \newcase definition
 
 \newcommand{\bbFirstReporterLong}[4]{%1: reporter, 2: start page, 3:
@@ -277,12 +337,6 @@
   \if\relax\detokenize{#4}\relax, #3\else, #2%
   \fi\fi\fi}
 
-% \newcommand{\bbFollowingReporterLong}[4]{%1: reporter, 2: start page,
-%                                 %3: page, 4: slip presence
-%   \ifdefempty{#1}{}{; #1 #2%
-%     \ifdefempty{#3}{}{%
-%       \ifdefempty{#4}{, #3}{}}}}
-
 \newcommand{\bbFollowingReporterLong}[4]{%1: reporter, 2: start page,
                                 %3: page, 4: slip presence
   \if\relax#1\relax\else; #1 #2%
@@ -290,39 +344,51 @@
   \if\relax\detokenize{#4}\relax, #3\else, #2%
   \fi\fi\fi}
 
-\newcommand{\bbFirstReporterShort}[4]{%1: reporter, 2: start page, 3: 
-                                %page, 4: slip presence 
+\newcommand{\bbFirstReporterShort}[4]{%1: reporter, 2: start page, 3: page, 4: slip presence
+  %bbFirstReporterShort 
+  \def\SecondReporterSep{; }%
   \if\relax\detokenize{#1}\relax%
   \errmessage{Error in FirstReporterShort! no reporter for this case.}%
   \else% show something, no error 
-  \if\relax\detokenize{#3}\relax\else% no page, show nothing 
-  \if\relax\detokenize{#4}\relax#1\penalty100\ at~#3% no slip, show page 
+  \if\relax\detokenize{#3}\relax\else% no page, show nothing
+  % \if\relax\detokenize{#4}\relax#1\penalty100\ at~#3% no slip, show page
+  \if\relax\detokenize{#4}\relax\IfStrEq{#3}{\_}{\def\SecondReporterSep{}}{#1\penalty100\ at~#3}% no slip, show page 
   \else#1\penalty100\ at~#2% slip, show start page 
   \fi\fi\fi}
 
 \newcommand{\bbFirstReporterShortWithComma}[4]{%1: reporter, 2: start page, 3: 
-                                %page, 4: slip presence 
+  % page, 4: slip presence
+  \def\SecondReporterSep{; }%
   \if\relax\detokenize{#1}\relax%
   \errmessage{Error in FirstReporterShort! no reporter for this case.}%
   \else% show something, no error 
   \if\relax\detokenize{#3}\relax\else% no page, show nothing 
-  \if\relax\detokenize{#4}\relax, #1\penalty100\ at~#3% no slip, show page 
+  %\if\relax\detokenize{#4}\relax, #1\penalty100\ at~#3% no slip, show page
+  \if\relax\detokenize{#4}\relax\IfStrEq{#3}{\_}{\def\SecondReporterSep{, }}{, #1\penalty100\ at~#3}% no slip, show page 
   \else, #1\penalty100\ at~#2% slip, show start page 
   \fi\fi\fi}
 
 \newcommand{\bbFollowingReporterShort}[4]{%1: reporter, 2: start page, 3: 
-                                %page, 4: slip presence 
+  % page, 4: slip presence
+  %bbFollowingReporterShort: \SecondReporterSep: %
   \if\relax#1\relax% No reporter, do nothing
   \else%
-  \if\relax\detokenize{#3}\relax\else% no page, show nothing 
-  \if\relax\detokenize{#4}\relax; #1\penalty100\ at~#3% no slip, show page 
-  \else; #1\penalty100\ at~#2% slip, show start page 
-  \fi\fi\fi}
+  \if\relax\detokenize{#3}\relax\else% no page, show nothing
+  \SecondReporterSep %
+  \def\SecondReporterSep{;}%
+  \if\relax\detokenize{#4}\relax#1\penalty100\ at~#3% no slip, show page 
+  \else#1\penalty100\ at~#2% slip, show start page 
+  \fi\fi\fi%
+}
 
 \newcommand{\bbSlipParenthetical}[2]{%1: slip test, 2: slip content 
   \if\relax\detokenize{#1}\relax\else; #2\fi}
 
 \def\bbCaseLongCitationsHelper #1; #2; #3; #4XXX#5XXX#6slip#7XXX{%
+  %\\bbCaseLongCitationsHelper: %
+  % #1 = page of 1st reporter, #2 = page of 2nd reporter, #3 = page of 3rd reporter
+  % #4 = overflow junk
+  % #5 = shortname, #7 slip
   \bbFirstReporterLong{\ReporterA{#5}}{\StartPageA{#5}}{#1}{#7}%
   \bbFollowingReporterLong{\ReporterB{#5}}{\StartPageB{#5}}{#2}{#7}%
   \bbFollowingReporterLong{\ReporterC{#5}}{\StartPageC{#5}}{#3}{#7} %
@@ -330,28 +396,57 @@
   \bbSlipParenthetical{#7}{#1}%
 }%
 
-\newcommand{\bbCaseLongCitations}[2]{% 1: shortname, 3: page 
-  \bbCaseLongCitationsHelper#2; ; ; XXX#1XXX#2slipXXX}
+\newcommand{\bbCaseLongCitations}[2]{% 1: shortname, 2: page
+  %\\bbCaseLongCitations 1: (#1) 2:(#2): %
+  \expandafter\if\Call{#1@Unpublished}\relax\relax%
+  \bbCaseLongCitationsHelper#2; ; ; XXX#1XXX#2slipXXX%
+  \else% unpublished, check for page
+  \ReporterA{#1} \Call{#1@Parenthetical}%
+  \ifempty{#2}{\empty}{, p #2}%
+  \fi%
+  % \ifcsname #1@Reference\endcsname%
+  % \if\relax#2\relax\protect\Call{#1@Reference}%
+  % \else\Call{#1@ReferenceP}[#2]\fi%
+  % \else\relax\fi%
+}%
 
 \def\bbCaseShortCitationsHelper #1; #2; #3; #4XXX#5XXX#6slip#7XXX{%
+  %bbCaseShortCitationsHelper (#1) (#2) (#3) (#4) (#5) (#6) (#7): %
   \bbFirstReporterShort{\ReporterA{#5}}{\StartPageA{#5}}{#1}{#7}%
   \expandafter\bbFollowingReporterShort\expandafter{\ReporterB{#5}}{\StartPageB{#5}}{#2}{#7}%
   \expandafter\bbFollowingReporterShort\expandafter{\ReporterC{#5}}{\StartPageC{#5}}{#3}{#7}%
   \bbSlipParenthetical{#7}{#1}%
 }%
-\newcommand{\bbCaseShortCitations}[2]{% 1: shortname, 3: page 
-  \bbCaseShortCitationsHelper#2; ; ; XXX#1XXX#2slipXXX}
+\newcommand{\bbCaseShortCitations}[2]{% 1: shortname, 2: page
+  %bbCaseShortCitations: %
+  \expandafter\if\Call{#1@Unpublished}\relax\relax% This is true if the case is NOT unpublished.
+  \bbCaseShortCitationsHelper#2; ; ; XXX#1XXX#2slipXXX%
+  \else% unpublished, check for page
+  \ifempty{#2}{\empty}{, p #2}%
+  \fi%
+  %short citations %
+  \ifcsname#1@Reference\endcsname\if\relax#2\relax\else\Call{#1@ReferenceP}[#2]\fi\fi% Refer to the record only if there is a page
+}%
 
 \def\bbCaseShortCitationsWithCommaHelper #1; #2; #3; #4XXX#5XXX#6slip#7XXX{%
+  %bbCaseShortCitationsWithCommaHelper: %
   \bbFirstReporterShortWithComma{\ReporterA{#5}}{\StartPageA{#5}}{#1}{#7}%
   \expandafter\bbFollowingReporterShort\expandafter{\ReporterB{#5}}{\StartPageB{#5}}{#2}{#7}%
   \expandafter\bbFollowingReporterShort\expandafter{\ReporterC{#5}}{\StartPageC{#5}}{#3}{#7}%
-  \bbSlipParenthetical{#7}{#1}%
+  \bbSlipParenthetical{#7}{#1}% 
 }%
-\newcommand{\bbCaseShortCitationsWithComma}[2]{% 1: shortname, 3: page 
-  \bbCaseShortCitationsWithCommaHelper#2; ; ; XXX#1XXX#2slipXXX}
-
-
+\newcommand{\bbCaseShortCitationsWithComma}[2]{% 1: shortname, 2: page 
+  %bbCaseShortCitationsWithComma: #1: #2: %
+  \expandafter\if\Call{#1@Unpublished}\relax\relax%
+  \bbCaseShortCitationsWithCommaHelper#2; ; ; XXX#1XXX#2slipXXX%
+  \else% unpublished, check for page
+  \ifempty{#2}{\empty}{, p #2}%
+  \fi%
+  %\ short citation with comma\ %
+  \ifcsname#1@Reference\endcsname%
+  \if\relax#2\relax\else\Call{#1@ReferenceP}[#2]\fi%
+  \fi% Refer to the record only if there is a page
+}%
 %%
 %%\cmd{newbook}{Short Name}{Authors}{Title}{Parenthetical}[Define a new book citation.]
 %% \begin{Example}
@@ -575,8 +670,8 @@
 %%
 %%1) The references in the Statutes index can appear in the wrong order or
 %% 2) can involve formatting like small caps (\textsc) which cannot be used as
-%% the internal TeX handle. In these cases, you can use the optional
-%% argument in square brackets. The argument can take the
+%% the internal TeX handle. This change solves both problems. A new
+%% optional argument is added to \newstatute. The argument can take the
 %% following forms:
 %%
 %% \newstatute[AA@]{MCL}{} - put the MCL statute at place AA in the index.
@@ -585,8 +680,8 @@
 %% for the first ammendment. (The \textsc prevents the name from being used
 %% as a handle.)
 %%
-%% \newstatute[1@am2]{\textsc{U.S. Const.} amend. I} - use am2 as the
-%% handle for the second ammendment, put it at position 1 in the index.
+%% \newstatute[1@amendment1]{\textsc{U.S. Const.} amend. I} - use amendment1 as the
+%% handle for the first ammendment, put it at position 1 in the index.
 
 
 \newcommand{\newstatute}[3][]{
@@ -703,9 +798,15 @@
 \def\@absorbperiod.{}
 %\def\absorbcomma,{}
 
-\renewcommand{\cite}[2][]{\@startcitation\@ifnextchar.{\@bbsource{#2}{}{#1.}\@absorbperiod}{\@bbsource{#2}{}{#1}\xspace}}
-\newcommand{\pincite}[3][]{\@startcitation\@ifnextchar.{\@bbsource{#2}{#3}{#1.}\@absorbperiod}{\@bbsource{#2}{#3}{#1}\xspace}}
+%remove xspace
+%\renewcommand{\cite}[2][]{\@startcitation\@ifnextchar.{\@bbsource{#2}{}{#1.}\@absorbperiod}{\@bbsource{#2}{}{#1}\xspace}}%
+%\newcommand{\pincite}[3][]{\@startcitation\@ifnextchar.{\@bbsource{#2}{#3}{#1.}\@absorbperiod}{\@bbsource{#2}{#3}{#1}\xspace}}%
 
+\renewcommand{\cite}[2][]{%
+  \@startcitation\@ifnextchar.{\@bbsource{#2}{}{#1.}\@absorbperiod}{\@bbsource{#2}{}{#1}}}%
+\newcommand{\pincite}[3][]{\@startcitation\@ifnextchar.{\@bbsource{#2}{#3}{#1.}\@absorbperiod}{\@bbsource{#2}{#3}{#1}}}%
+
+\def\nobreakseq{\nobreak \hskip 0pt \hbox}
 %%
 %%\cmd{Id, \textbackslash{}id}[Pin Page][Cite the previous source]
 %% \begin{Example}
@@ -719,8 +820,10 @@
 %% will not be added automatically.
 %%
 
-\newcommand{\Id}[1][]{\@ifnextchar.{\@bbId{#1}{I.}\@absorbperiod}{\@bbId{#1}{I}}}
-\newcommand{\id}[1][]{\@ifnextchar.{\@bbId{#1}{i.}\@absorbperiod}{\@bbId{#1}{i}}}
+\newcommand{\Id}[1][]{%doing Id
+  \@ifnextchar.{\@bbId{#1}{I.}\@absorbperiod}{\@bbId{#1}{I}}}
+\newcommand{\id}[1][]{%doing id
+  \@ifnextchar.{\@bbId{#1}{i.}\@absorbperiod}{\@bbId{#1}{i}}}
 \def\@bbId#1#2{\@bbsource{\@bbLastSource}{\ifempty{#1}{\@bbLastPinPage}{#1}}{#2}}
 
 %%\cmd{citetext}{Arbitrary text}[Automatically place law review citations in footnotes.]
@@ -869,7 +972,10 @@
 \newcommand{\SupraNote}[1]{\Call{#1@SupraNote}}
 \newcommand{\LastNote}[1]{\Call{#1@LastNote}}
 \newcommand{\LongCite}[2]{\Call{@bb\SrcType{#1}LongCite}{#1}{#2}}
-\newcommand{\ShortCite}[2]{\Call{@bb\SrcType{#1}ShortCite}{#1}{#2}}
+\newcommand{\ShortCite}[2]{%
+  %ShortCite: %
+  \Call{@bb\SrcType{#1}ShortCite}{#1}{#2}}
+\newcommand{\Unpublished}[1]{\Call{#1@Unpublished}}
 
 %%
 %% \cmd{SetIndexType}{Short Name}{New Index Type}[Change a source's destination index / table of authorities] 
@@ -904,7 +1010,14 @@
 \newcommand{\@bbLink}[1]{#1}
 
 \newcommand{\@bbCaseIndexCite}[2]{%
-  #1@{\CF\FullName{#1}},\idxbreak\ \bbCaseLongCitations{#1}{}%
+  #1@{\CF\FullName{#1}},\idxbreak%
+  \ \bbCaseLongCitations{#1}{}%
+  %\ \Call{#1@CaseIndexCitations}%
+  \ifcsname#1@Reference\endcsname%
+  \csname #1@Reference\endcsname
+  \fi
+  % #1@{\CF\FullName{#1}},\idxbreak\ \bbCaseLongCitations{#1}{}%
+  %#1@{\CF\FullName{#1}},\idxbreak\   facts (\pageref{patruvwayne}) bbCaseLongCitations{#1}{}%
 }%
 %\newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ \FillIn{}{\@vol}{ }{\em\Title{#1}} \Parenthetical{#1}}
 \newcommand{\@bbBookIndexCite}[2]{\Authors{#1},\idxbreak\ {\em\Title{#1}} \Parenthetical{#1}}
@@ -914,33 +1027,78 @@
 \newcommand{\@bbInSingleAuthorCollectionIndexCite}[2]{\Authors{#1}, \Title{#1}}
 %\newcommand{\@bbMiscIndexCite}[2]{{\def\pin##1##2{}\FullName{#1}}}
 
-\def\@bbMiscIndexCite#1#2{\FullName{#1}}
+\def\@bbMiscIndexCite#1#2{%
+  \FullName{#1}%
+  \ifcsname #1@Reference\endcsname%
+  \Call{#1@Reference}%
+  \fi%
+}
 
 \newcommand{\@bbCaseLongCite}[2]{%
-  {\CF\FullName{#1}},  \bbCaseLongCitations{#1}{#2}%
+  {\CF\FullName{#1}},  %
+  \bbCaseLongCitations{#1}{#2}%
+  \ifcsname #1@Reference\endcsname%
+  \Call{#1@ReferenceP}[#2]%
+  \fi%
 }
-\newcommand{\@bbStatuteLongCite}[2]{\ShortName{#1} #2\FillIn{ }{\Parenthetical{#1}}{}}
-\newcommand{\@bbBookLongCite}[2]{\FillIn{}{\@vol}{ }{\BAF\Authors{#1}}, {\BTF\Title{#1}}\FillIn{ }{#2}{}\ \Parenthetical{#1}}
+%\newcommand{\@bbStatuteLongCite}[2]{\ShortName{#1} #2\FillIn{ }{\Parenthetical{#1}}{}}
+\newcommand{\@bbStatuteLongCite}[2]{\ShortName{#1}\if\relax#2\relax\relax\else #2\fi\FillIn{ }{\Parenthetical{#1}}{}}% no space if no page
+\newcommand{\@bbBookLongCite}[2]{\FillIn{}{\@vol}{ }{\BAF\Authors{#1}}, {\BTF\Title{#1}}\ \Parenthetical{#1}\FillIn{, at~}{#2}{}}
 \newcommand{\@bbArticleLongCite}[2]{\Authors{#1}, {\ATF\Title{#1}}, {\JTF\Reporter{#1}} \StartPage{#1}\FillIn{, }{#2}{} \Parenthetical{#1}\unskip}
 %\newcommand{\@bbInCollectionLongCite}[2]{\Authors{#1}, {\ATF\Title{#1}} \emph{in} \@vol{\BTF\CollectionTitle{#1}} \StartPage{#1}\FillIn{, }{#2}{} \Parenthetical{#1}}
 \newcommand{\@bbInCollectionLongCite}[2]{\Authors{#1}, {\ATF\Title{#1}}, \emph{in} \@bbsource{\CollectionTitle{#1}}{\StartPage{#1}, #2}{}}
 \newcommand{\@bbInSingleAuthorCollectionLongCite}[2]{\FillIn{}{\@vol}{ }{\BAF\Authors{#1}}, {\ATF\Title{#1}}, \emph{in} \@bbsource{\CollectionTitle{#1}}{\StartPage{#1}, #2}{}}
-\newcommand{\@bbCollectionLongCite}[2]{\FillIn{}{\@vol}{ }{\BTF\Title{#1}}\FillIn{, }{#2}{} \Parenthetical{#1}}
-\def\@bbMiscLongCite#1#2{{\def\pin##1##2{\FillIn{##1}{#2}{##2}}\FullName{#1}}}
+\newcommand{\@bbCollectionLongCite}[2]{\FillIn{}{\@vol}{ }{\BTF\Title{#1}}\FillIn{, }{#2}{} \Parenthetical{#1}}%
+
+\def\@bbMiscLongCite#1#2{%
+  % bbMiscLongCite
+  % 1: #1
+  % 2: #2
+  {% create block
+    \def\pin##1##2{\FillIn{##1}{#2}{##2}}%
+    \FullName{#1}%\ifpin{ #2}
+    \if\relax#2\relax\empty%
+    \else, at~#2%
+    \fi%
+  }%
+  % add reference to appendix
+  \ifcsname #1@Reference\endcsname%
+  \ \Call{#1@ReferenceP}[#2]%
+  \fi%
+}
 
 % Short-form citation, with and without a pin cite
 \newcommand{\@bbCaseShortCite}[2]{%
+  %bbCaseShortCite: %
   {\CF\ShortName{#1}}%
   \ifdefined\@bbCaseSupra{, {\em supra}}\fi%
   \bbCaseShortCitationsWithComma{#1}{#2}%
 }
-\newcommand{\@bbBookShortCite}[2]{\FillIn{}{\@vol}{ }{\BTF\ShortName{#1}}, {\em supra}\IfFootnote{ note \SupraNote{#1}}\ifpin{, at #2}}
-\newcommand{\@bbStatuteShortCite}[2]{\ShortName{#1} #2}
+\newcommand{\@bbBookShortCite}[2]{%
+  %bookShortCite \{#1\}\{#2\}: %
+  \FillIn{}{\@vol}{ }{\BTF\ShortName{#1}}%
+  %, {\em supra}%
+  \IfFootnote{ note \SupraNote{#1}}%
+  % \if\pin{, at #2}%
+  \ifx&#2&%
+  \else%
+  , at~#2\fi%
+}
+\newcommand{\@bbStatuteShortCite}[2]{\ShortName{#1}\if\relax#2\relax\relax\else #2\fi}% no space if no page
 \newcommand{\@bbArticleShortCite}[2]{\ShortName{#1}, {\em supra}\IfFootnote{ note \SupraNote{#1}}\ifpin{, at #2}}
 \newcommand{\@bbInCollectionShortCite}[2]{\ShortName{#1}, {\em supra}\IfFootnote{ note \SupraNote{#1}}\ifpin{, at #2}}
 \newcommand{\@bbInSingleAuthorCollectionShortCite}[2]{\FillIn{}{\@vol}{ }{\BTF\ShortName{#1}}, {\em supra}\IfFootnote{ note \SupraNote{#1}}\ifpin{, at #2}}
 \newcommand{\@bbCollectionShortCite}[2]{\FillIn{}{\@vol}{ }{\BTF\Title{#1}}, \emph{supra}\IfFootnote{ note \SupraNote{#1}},\ifpin{ at #2}}
-\newcommand{\@bbMiscShortCite}[2]{\ShortName{#1}\ifpin{ #2}}
+% \newcommand{\@bbMiscShortCite}[2]{bbMiscShortCite (#1)(#2)[\ShortName{#1}|\ifpin{ #2}]}
+\newcommand{\@bbMiscShortCite}[2]{%
+  \ShortName{#1}%
+  \if\relax#2\relax\empty%
+  \else, at #2%
+  \ifcsname #1@Reference\endcsname%
+  \ (\Call{#1@ReferenceP}[#2])%
+  \fi%
+  \fi%
+}
 
 %Reporter-number-only citation, with and without a pin cite
 \newcommand{\@bbReporterOnlyCite}[1]{\Call{#1@ShortCitations}{}}
@@ -950,12 +1108,12 @@
 %\newcommand{\@bbIndexCite}[2]{{\protect\frenchspacing\Call{@bb\SrcType{#1}IndexCite}{#1}{#2}}}
 \newcommand{\@bbIndexCite}[2]{\Call{@bb\SrcType{#1}IndexCite}{#1}{#2}}
 \newcommand{\@bbLongCite}[2]{{\protect\frenchspacing\Call{@bb\SrcType{#1}LongCite}{#1}{#2}}}
-\newcommand{\@bbShortCite}[2]{{\protect\frenchspacing\Call{@bb\SrcType{#1}ShortCite}{#1}{#2}}}
+\newcommand{\@bbShortCite}[2]{%bbShortCite: %
+  {\protect\frenchspacing\Call{@bb\SrcType{#1}ShortCite}{#1}{#2}}}
 
 %Inner command that performs the citations
 % #1 is cite handle, #2 is pin or blank, #3 can include any of 'lsniIp' 
-\newcommand{\@bbsource}[3] 
-{%
+\newcommand{\@bbsource}[3]{%
 	%Check that this source is defined
 	\ifcsname #1@Type\endcsname%
 		\relax%
@@ -1025,11 +1183,11 @@
                   \@autofootnote{\@bbSignal\@bbLongCite{#1}{#2}\@Period}%
 			\setcounter{@bbSequentialIds}{0}%
 			\ifthenelse{\boolean{#1@FirstUse}}{\XDef{#1@SupraNote}{\thefootnote}}{}%
-		}{%
+                      }{%
 			%If this is the second occurance of this authority in a row, use Id
 			\ifthenelse{\equal{\@bbLastSource}{#1} \and \not \boolean{@forceShort}%
 				\and \value{@bbSequentialIds} < \maxsequentialids}%
-			{%
+                              {%
 				%We only display the volume if it exists, and is DIFFERENT from the last; otw clear out
 				\ifthenelse{\equal{\@vol}{\@bbLastVol}}{\edef\@vol{}}{}%
 %
@@ -1041,7 +1199,14 @@
 				\IfSubStr{#3}{i}{\def\@Id{id}}{}%
 %
 				%Choose either ``at'' or just a space based on the type of authority
-				\def\@At{\ifthenelse{\equal{\SrcType{#1}}{Statute}}{~}{~at~}}%
+				%\def\@At{\ifthenelse{\equal{\SrcType{#1}}{Statute}}{~}{~at~}}%
+                                \ifthenelse{\equal{\SrcType{#1}}{Statute}}{%
+                                  \def\@At{~}}{% <- Statute
+                                  \ifthenelse{\equal{\SrcType{#1}}{Case} \and%
+                                    \equal{\Unpublished{#1}}{unpublished}}{%
+                                    \def\@At{~p~}}{%
+                                    \def\@At{~at~}}}%
+                                %
 				%ALTERNATE: Use "at" iff the pin is numeric
                                 % But how to test for numeric range?
                                 % (e.g., 7-12) We need to strip out
@@ -1053,11 +1218,17 @@
 				%If the exact page as well (or there is no pincite), just use id; otherwise use Id. with pin cite
 				\ifthenelse{\equal{\@bbLastPinPage}{#2} \or \equal{}{#2} }%
                                 % {\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id}\@Period}} %I eliminated this because I found cases where there was no way to have a period after the Id.
-                                {\@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id\@Period}}}%
-                                {\ifthenelse{\equal{\SrcType{#1}}{Case} \and%
+                                {%
+                                  %id exact: %
+                                  \@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id\@Period}}}%
+                                {%
+                                  %id inexact: %
+                                  \ifthenelse{\equal{\SrcType{#1}}{Case} \and%
                                     \boolean{@multiplepin}}{%
+                                    %\\multiple pin: %
                                     \@autofootnote{\@bbSignal\FillIn{}{\@vol}{%
-                                      }\emph{\@Id.}, \Call{#1@ShortCitations}{#2}
+                                      }\emph{\@Id.}\bbCaseShortCitationsWithComma{#1}{#2}\@Period%
+                                      % \Call{#1@ShortCitations}{#2}%
                                       % 
                                       % note comma is used before the
                                       % call to ShortCitations, this
@@ -1074,19 +1245,21 @@
                                       % if nothing is printed.
                                     }%
                                   }{%
+                                    %single pin: %
                                     \@autofootnote{\@bbSignal\FillIn{}{\@vol}{ }\emph{\@Id.}\@At\@pin\@Period}%
                                   }%
                                 }%
 				\stepcounter{@bbSequentialIds}%
 			}%
 			{%	
-				%If this is not the second-in-a-row occurence of this authority, use short form
+                          % If this is not the second-in-a-row occurence of this authority, use short form
+                          %Short Form: %
 				\@autofootnote{\@bbSignal\@bbShortCite{#1}{#2}\@Period}%tk
 				\setcounter{@bbSequentialIds}{0}%
 			}%
 		}%
 	}%
-%
+        % 
 	%Indicate that this source has been used, so subsequent uses use short form
 	%This gets into the internals of ifthen.sty, basically \setboolean calls the macro \<Boolean-Variable-Name><true-or-false>
 	%By default, \setboolean is local to the group; we do the following to make the change global
@@ -1374,4 +1547,3 @@
 
 %\endinput
 
-%%%\end{document}

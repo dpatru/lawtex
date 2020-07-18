@@ -5,6 +5,10 @@
 \usepackage{newcent,microtype,hyperref}
 \usepackage{xparse}
 \usepackage{trace}
+
+\RequirePackage{xr} % used in bluebook.sty for addReference
+\externaldocument{sample-appendix} % used in bluebook.sty for addReference
+
 \let\articleMaketitle=\maketitle
 \let\articleSection=\section
 \let\articleSubsection=\subsection

@@ -1,0 +1,114 @@
+% Appendix 
+% This is one of the samples from the lawtex package:
+% http://lawtex.sourceforge.net/
+% LawTeX is licensed under the GNU General Public License 
+%
+\pdfminorversion=7
+\providecommand{\documentclassflag}{}
+\documentclass[12pt,\documentclassflag]{article} 
+\usepackage{etoolbox}
+\usepackage[margin=1in]{geometry}
+\usepackage{newcent,microtype}
+\usepackage{setspace,xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{pdfpages}
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+%\usepackage{xr-hyper}
+\usepackage{hyperref}
+\setlength{\headheight}{15.2pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\begin{document}
+
+%\newpage 
+%\singlespacing%
+
+\begin{centering}
+  \bf\scshape Appellant's Corrected Appendix\par%
+  \rm Patru v City of Wayne\par%
+  Docket No. 346894\par%
+  \vspace{1em}%
+  This Appendix differs from the orginal one submitted \par%
+  only in that the footers on pages 37-42 have been corrected \par%
+  to reflect that the document presented there is Patru v Wayne.\par%
+\end{centering}
+
+\tableofcontents
+\newpage
+\renewcommand{\footrulewidth}{0.4pt}
+% \fancyfoot[C]{Appellant's Appendix page \thepage: \leftmark\firstrightmark}
+\fancyfoot[C]{Appellant's Appendix page \thepage: \firstxmark}
+%\renewcommand{\subsectionmark}[1]{\markright{/#1}} % Pick up non-first subsections
+
+% Place a label on each page so that we can reference the page numbers.
+% Use code from https://tex.stackexchange.com/a/25113/135718
+\newcounter{includepdfpage}
+\newcounter{currentpagecounter}
+\newcommand{\addLabelsToAllIncludedPages}[1]{%
+   \refstepcounter{includepdfpage}%
+   \stepcounter{currentpagecounter}%
+   \label{#1.\thecurrentpagecounter}}%
+
+ % Note that the page label, the toc label, the linkname, and the filename all match. 
+\newcommand{\myincludepdf}[2]{% 1:  reference label, 2: toc fields
+  \setcounter{currentpagecounter}{0}%
+  \includepdf[pages=-,pagecommand=\addLabelsToAllIncludedPages{#1},link=true,linkname=#1,addtotoc={#2,#1}]%
+  {appendix/#1.pdf}}%
+  
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}% must put the first subsection
+\extramarks{Tax Tribunal Docket}{}
+\myincludepdf{mttdocket}{1,section, 1, Tax Tribunal Docket}
+
+\extramarks{Board of Review Decision}{}
+\renewcommand{\sectionmark}[1]{\markboth{Board of Review Decision}{}}%
+\myincludepdf{boardOfReviewDecision}{1,section,1,Board of Review Decision (docket line 2)}% docket line 2
+
+
+\extramarks{Appellant's Evidence/Explanatory Letter}{}
+\myincludepdf{explanatoryLetter}{1,section,1,Appellant's Evidence,evidence,1,subsection,2,Explanatory Letter (docket line 38)}% docket line 38
+
+\extramarks{Appellant's Evidence/MLS History}{}%
+\myincludepdf{mlsHistory}{1,subsection,2,MLS History (docket line 33)}% docket line 33
+
+\extramarks{Appellant's Evidence/MLS Listing Sheet}{}%
+\myincludepdf{mlsListing}{1,subsection,2,MLS Listing Sheet (docket line 32)}% docket line 32
+
+\extramarks{Appellant's Evidence/List of Repairs}{}
+\myincludepdf{repairs}{1,subsection,2,List of Repairs (docket line 36)}% docket line 36
+
+\extramarks{Appellant's Evidence/STC Form 865}{}
+\myincludepdf{stcform}{1,subsection,2,STC Form 865 Request For Nonconsideration (docket line 35)}% docket line 35
+
+
+\extramarks{City's Evidence}{}
+\myincludepdf{cityEvidence}{1,section,1,City's Evidence (docket line 11)}% docket line 11
+
+\extramarks{Final Opinion and Judgement}{}
+\myincludepdf{foj}{1,section,1,Final Opinion and Judgement (docket line 48)}% docket line 48
+
+\extramarks{Motion For Reconsideration}{}
+\myincludepdf{motionForReconsideration}{1,section,1,Motion For Reconsideration (docket line 52)}% docket line 52
+
+\extramarks{Reconsideration Denied}{}
+\myincludepdf{reconsiderationDenied}{1,section,1,Reconsideration Denied (docket line 51)} % docket line 51
+
+\extramarks{Patru v Wayne}{}
+\myincludepdf{patruvwayne}{1,section,1,Patru v Wayne}
+
+\extramarks{STC Bulletin 7 of 2014 (Mathieu Gast Act)}{}
+\myincludepdf{bulletin7}{1,section,1,STC Bulletin 7 of 2014 (Mathieu Gast Act) (docket line 34)}% docket line 34
+
+
+\newpage\empty% we need a new page so that the index entries on the last
+        % page get written out to the right file.
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -28,6 +28,18 @@ with the following:
   sudo cp -R *doc* samples $(kpsewhich --var-value TEXMFLOCAL)/doc/latex/lawtex
   sudo mktexlsr
 
+To install in your home directory using links:
+
+  sudo mkdir -p $(kpsewhich --var-value TEXMFHOME)/tex/latex/lawtex
+  sudo mkdir -p $(kpsewhich --var-value TEXMFHOME)/makeindex/lawtex
+  sudo mkdir -p $(kpsewhich --var-value TEXMFHOME)/doc/latex/lawtex
+
+
+  sudo ln -sr  *.cls bluebook.sty $(kpsewhich --var-value TEXMFHOME)/tex/latex/lawtex
+  sudo ln -sr  *.ist $(kpsewhich --var-value TEXMFHOME)/makeindex/lawtex
+  sudo ln -sr *doc* samples $(kpsewhich --var-value TEXMFHOME)/doc/latex/lawtex
+  sudo mktexlsr
+
 Note that this package makes use of the multind and xstring packages, and thus may require 
 installation of texlive-latex-extra.
 
