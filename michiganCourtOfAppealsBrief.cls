@@ -617,7 +617,9 @@
 %{\begin{singlespacing}\list{}{\rightmargin=\leftmargin\topsep=0pt}\item\relax}%
 {\begin{singlespacing}%\smaller
     \deffootnotemark{\textsuperscript{[\thefootnotemark]}}%
-    \list{}{}\item\relax}%
+    \list{}{\rightmargin=\leftmargin\parsep=.7em%\topsep=0pt\itemsep=0pt\parsep=0em%
+    }\item\relax}%
+    % \list{}{}\item\relax}      
 {\endlist\end{singlespacing}}
 
 
