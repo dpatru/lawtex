@@ -119,26 +119,46 @@
 %%
 %
 %
-%Use parseCitations as: (\parseCitations 123 US 234; 345 SuprCt 456; X X 
-% X; ), note that "; X X X; " (9 characters) are  added after the last
-% cite.
-\def\parseCitations#1; {%Find the last space-delimited word for the
-  % page
-  % \par parseCitations (#1)\par
-  \IfSubStr{#1}{X X X}{% found the end marker, stop
-  }{%
-    \StrCount{#1}{ }[\@spacecount]%
-    \StrPosition[\@spacecount]{#1}{ }[\@lastspacepos]%
-    \StrGobbleLeft{#1}{\numexpr \@lastspacepos}[\@page]%
-    % \par Grabbed page (\@page) from (#1)\par 
-    \StrLeft{#1}{\numexpr \@lastspacepos-1}[\@reporter]%
-    % \par Grabbed reporter (\@reporter) from (#1)\par 
-    \edef\reporters{\ifempty{\reporters}{\@reporter}{\reporters; \@reporter}}%
-    \edef\startpages{\ifempty{\startpages}{\@page}{\startpages; \@page}}%
-    % Recursing\par%
-    \parseCitations%
-  }%
-}
+\newcommand{\parseCitations}[1]{
+  \StrCount{#1}{; }[\@separators]%
+  \ifnum \@separators>2 
+  \PackageError{bluebook}{Too many citations}{Citation parse error: ``#1'' contains too many citations (max 3)}%
+  \fi
+  \StrCut{#1}{; }{\@reporterAndPage}{\@rest}%
+  \StrCount{\@reporterAndPage}{ }[\@spacecount]%
+  \StrPosition[\@spacecount]{\@reporterAndPage}{ }[\@lastspacepos]%
+  \StrGobbleLeft{\@reporterAndPage}{\numexpr \@lastspacepos}[\@page]%
+  % \par Grabbed page (\@page) from (\@reporterAndPage)\par 
+  \StrLeft{\@reporterAndPage}{\numexpr \@lastspacepos-1}[\@reporter] %
+  % \par Grabbed reporter (\@reporter) from (\@reporterAndPage)\par 
+  \edef\reporters{\ifempty{\reporters}{\@reporter}{\reporters; \@reporter}}%
+  \edef\startpages{\ifempty{\startpages}{\@page}{\startpages; \@page}}%
+  \ifx \@rest\empty  \else \expandafter\parseCitations\expandafter{\@rest}%
+  \fi}
+     
+
+% %Use parseCitationOld as: (\parseCitationOld 123 US 234; 345 SuprCt 456; X X 
+% % X; ), note that "; X X X; " (9 characters) are  added after the last
+% % cite.
+% \def\parseCitationOld#1; {%Find the last space-delimited word for the
+%   % page
+%   % \par parseCitationOld (#1)\par
+%   \traceon
+%   \IfSubStr{#1}{X X X}{% found the end marker, stop
+%   }{%
+%     \StrCount{#1}{ }[\@spacecount]%
+%     \StrPosition[\@spacecount]{#1}{ }[\@lastspacepos]%
+%     \StrGobbleLeft{#1}{\numexpr \@lastspacepos}[\@page]%
+%     % \par Grabbed page (\@page) from (#1)\par 
+%     \StrLeft{#1}{\numexpr \@lastspacepos-1}[\@reporter]%
+%     % \par Grabbed reporter (\@reporter) from (#1)\par 
+%     \edef\reporters{\ifempty{\reporters}{\@reporter}{\reporters; \@reporter}}%
+%     \edef\startpages{\ifempty{\startpages}{\@page}{\startpages; \@page}}%
+%     % Recursing\par%
+%     \parseCitationOld%
+%   }%
+%   \traceoff
+% }
 
 \newcommand{\deriveShortCaseName}[2][\empty]{% Set case name to
                                 % optional argument if it's given,
@@ -201,7 +221,8 @@
     %
     \let\reporters\empty\let\startpages\empty%
     % Parsing Citations: (\@citation)
-    \expandafter\parseCitations\@citation; X X X; %
+    \parseCitations{\@citation}%
+    %\expandafter\parseCitationOld\@citation; X X X; %
     }% end unpublished/published split
     % Set the short name
     %\wlog{setting short name}%
@@ -212,9 +233,18 @@
     }{% else a short name is given explicitly, use that
       % Using explicit shortname (#1)\par%
       \edef\@shortname{#1}%edef throws error here
-  }%
-  #3[\unpublished]{\@shortname}{\@casename}{\reporters}{\startpages}{\@paren}%
-} % end parseCase
+    }%
+    % Stop here% 
+    % \begin{enumerate}
+    % \item \unpublished
+    % \item \@shortname
+    % \item \@casename
+    % \item \reporters
+    % \item \startpages
+    % \item \@paren
+    % \end{enumerate}
+#3[\unpublished]{\@shortname}{\@casename}{\reporters}{\startpages}{\@paren}%
+  } % end parseCase
 
 \newcommand{\citecase}[2][]{%
   \ifx\empty#1\empty%
@@ -231,7 +261,7 @@
 %%   %\RequirePackage{xr} % in preamble
 %%   %\externaldocument{sample-appendix} % in preamble
 %%   %\citecase[Patru]{Patru v City of Wayne, unpublished per curiam opinion of the Court of Appeals, issued May 8, 2018 (Docket No. 337547)}
-%%   %\addReference[Sample Appendix]{Patru}{patruvwayne}
+%%   \%addReference[Sample Appendix]{Patru}{patruvwayne}
 %%   \pincite{Patru}{3}
 %% \end{Example}
 
@@ -274,14 +304,14 @@
 %%% Actually invoke the commands for the documentation:
 %%
 \newcommand{\newcase}[6][empty]{%
-  % \par newcase 1(#1), 2(#2), 3(#3), 4(#4), 5(#5), 6(#6)\par%
+%  \par newcase unpublished flag=#1, shortname=#2, longname=#3, reporters=#4, startpages=#5, parenthetical=#6\par%
   % 1: unpublished flag (if the case is unpublished, use "unpublished", otherwise leave blank
   % 2: short name
   % 3: long name
   % 4: reporters (separated by ;)
   % 5: start pages (separated by ;)
   % 6: parenthetical
-  \IfSubStr{unpublished}{#1}%
+  \IfSubStr{#1}{unpublished}%
   {\EDef{#2@Unpublished}{unpublished}}%
   {\EDef{#2@Unpublished}{}}%
   \EDef{#2@Type}{Case}%
