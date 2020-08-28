@@ -326,7 +326,8 @@
   % \par setting start page\par%
   \EDef{#2@StartPage}{#5}%
   % \par setting parenthetical\par%
-  \EDef{#2@Parenthetical}{#6}%
+  % \EDef{#2@Parenthetical}{#6}%
+  \ProtectedEDef{#2@Parenthetical}{#6}% Parenthetical may contain formating, so protect it.
   % \par declaring first use\par%
   \newboolean{#2@FirstUse}%
   % \par setting first use\par%
